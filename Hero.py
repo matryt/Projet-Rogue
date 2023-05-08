@@ -1,5 +1,3 @@
-import time
-
 import Equipment
 import Creature
 
@@ -16,8 +14,6 @@ class Hero(Creature.Creature):
     _hp
     _strength
     _inventory
-    _timeCreation : float
-        Heure de création du héros
 
     """
     def __init__(self, name = "Hero", hp = 10, abbrv=None, strength=2, inventory=None):

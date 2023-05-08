@@ -7,7 +7,6 @@ from Creature import Creature
 import Hero
 import Map
 import Stairs
-import Room
 from Wearable import Wearable
 from utils import getch
 import Coord
