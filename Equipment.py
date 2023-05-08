@@ -38,7 +38,6 @@ class Equipment(Element.Element):
         bool
             True
         """
-        import Game
 
         elem.take(self)
         Game.theGame().addMessage(f"You pick up a {self._name}")
