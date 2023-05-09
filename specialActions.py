@@ -18,7 +18,6 @@ def heal(creature):
 		True
 
 	"""
-
 	creature.heal()
 	return True
 

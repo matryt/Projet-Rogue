@@ -336,7 +336,6 @@ class Map(object):
 
 	def moveAllMonsters(self):
 		"""Permet de déplacer tous les monstres de la carte"""
-
 		posHero = self._elem[self._hero]
 		for m in self._elem:
 			posMonster = self._elem[m]

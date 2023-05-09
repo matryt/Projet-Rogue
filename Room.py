@@ -107,7 +107,6 @@ class Room(object):
 			True s'il existe au moins une case dont la valeur est Map.ground dans la salle,
 			False sinon
 		"""
-
 		for x in range(self.c1.x, self.c2.x+1):
 			for y in range(self.c1.y, self.c2.y+1):
 				if m.get(Coord.Coord(x, y)) == Map.Map.ground:
