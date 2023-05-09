@@ -1,42 +1,42 @@
 class Element(object):
-    """
-    Définit les caractéristiques communes de tous les éléments du jeu (nom, abréviation)
+	"""
+	Définit les caractéristiques communes de tous les éléments du jeu (nom, abréviation)
 
-    ...
-    Attributes
-    ----------
-    _name
-    _abbrv
+	...
+	Attributes
+	----------
+	_name
+	_abbrv
 
-    Warnings
-    ----------
-    Cette classe est abstraite et ne doit pas être instanciée.
-    """
+	Warnings
+	----------
+	Cette classe est abstraite et ne doit pas être instanciée.
+	"""
 
-    def __init__(self, name, abbrv=None):
-        """
+	def __init__(self, name, abbrv=None):
+		"""
 
-        Parameters
-        ----------
-        name : str
-            Le nom de l'élément
-        abbrv : str, optional
-            L'abréviation représentant l'élément
-        """
-        self._name = name
-        self._abbrv = abbrv or name[0]
+		Parameters
+		----------
+		name : str
+			Le nom de l'élément
+		abbrv : str, optional
+			L'abréviation représentant l'élément
+		"""
+		self._name = name
+		self._abbrv = abbrv or name[0]
 
-    def __repr__(self):
-        return self._abbrv
+	def __repr__(self):
+		return self._abbrv
 
-    def description(self):
-        """
-        Returns
-        -------
-        str
-            La description de l'élément
-        """
-        return f"<{self._name}>"
+	def description(self):
+		"""
+		Returns
+		-------
+		str
+			La description de l'élément
+		"""
+		return f"<{self._name}>"
 
-    def meet(self, elem):
-        raise NotImplementedError()
+	def meet(self, elem):
+		raise NotImplementedError()
