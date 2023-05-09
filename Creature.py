@@ -1,4 +1,5 @@
 import Element
+import Game
 
 
 class Creature(Element.Element):
@@ -95,7 +96,6 @@ class Creature(Element.Element):
 		bool
 			True si la créature a encore des points de vie, False sinon
 		"""
-		import Game
 
 		self._hp -= creature.getStrength()
 		Game.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
