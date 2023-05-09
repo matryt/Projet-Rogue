@@ -96,6 +96,9 @@ class Game(object):
         """
         return self._hero
 
+    def getFloor(self):
+        return self._floor
+
     def addMessage(self, msg):
         """
         Ajoute un message dans la liste des messages à afficher
@@ -161,11 +164,12 @@ class Game(object):
             Le monstre tiré au hasard
         """
         s = self.randElement(Game.monsters)
-        s._idCreature = self._idMonsters
+        s.setID(self._idMonsters)
         self._idMonsters += 1
         return s
 
-    def select(self, listeChoix):
+    @staticmethod
+    def select(listeChoix):
         """
         Sélectionne un élément dans une liste
 
@@ -180,15 +184,15 @@ class Game(object):
             L'élément sélectionné
         """
         c = "Choose item> ["
-        for i in range(len(listeChoix)):
-            c += f"\'{i}: {listeChoix[i].getName()}\', "
+        for i, choice in enumerate(listeChoix):
+            c += f"\'{i}: {choice.getName()}\', "
         c = f"{c[:-2]}]"
         print(c)
         n = getch()
         while not n.isdigit() or int(n) < 0 or int(n) >= len(listeChoix):
             c = "Choose item> ["
-            for i in range(len(listeChoix)):
-                c += f"\'{i}: {listeChoix[i].getName()}\', "
+            for i, choice in enumerate(listeChoix):
+                c += f"\'{i}: {choice.getName()}\', "
             c = f"{c[:-2]}]"
             print(c)
             n = getch()

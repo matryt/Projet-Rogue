@@ -36,14 +36,14 @@ def teleport(creature, unique):
     bool
 
     """
-    m = Game.theGame()._floor
-    l = len(m._rooms)
+    m = Game.theGame().getFloor()
+    numberRooms = len(m.getRooms())
     i = 0
     p = m.pos(creature)
-    roomsAvailable = copy.deepcopy(m._rooms)
+    roomsAvailable = copy.deepcopy(m.getRooms())
     random.shuffle(roomsAvailable)
     moved = False
-    while not moved and i < l:
+    while not moved and i < numberRooms:
         room = roomsAvailable[i]
         r = room.randEmptyCoord(m)
         if r is not None and r != p:

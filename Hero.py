@@ -65,6 +65,14 @@ class Hero(Creature.Creature):
         self._inventory.append(elem)
 
     def meet(self, creature):
+        """Est appelé lorsque le héros rencontre une créature
+
+        Parameters
+        -------
+        creature : Creature
+            La créature qui est rencontrée
+        """
+        
         import Game
 
         self._hp -= creature.getStrength()
@@ -74,6 +82,7 @@ class Hero(Creature.Creature):
         return f"{super().description()}{self._inventory}"
 
     def fullDescription(self):
+        """ Permet d'afficher une description complète du héros """
         c = ""
         for name, elem in self.__dict__.items():
             if not name.startswith("__"):
@@ -104,6 +113,15 @@ class Hero(Creature.Creature):
         return self._hp
 
     def use(self, item):
+        """
+        Permet d'utiliser un item
+
+        Parameters
+        -------
+        item : Equipment.Equipment
+            L'item à utiliser
+
+        """
         if not isinstance(item, Equipment.Equipment):
             raise TypeError("L'élément à utiliser doit être du type Equipment")
         if item not in self._inventory:

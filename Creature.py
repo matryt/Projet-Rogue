@@ -78,6 +78,9 @@ class Creature(Element.Element):
         """
         return self._strength
 
+    def setID(self, idToSet):
+        self._idCreature = idToSet
+
     def meet(self, creature):
         """
         Méthode appelée quand une autre créature rencontre cette créature

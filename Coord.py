@@ -28,9 +28,12 @@ class Coord(object):
         return f"<{self.x},{self.y}>"
 
     def __eq__(self, other):
-        if type(self) == type(other):
+        if type(self) is type(other):
             return self.x == other.x and self.y == other.y
         return False
+
+    def __hash__(self):
+        return hash(str(self))
 
     def __add__(self, other):
         return Coord(self.x+other.x, self.y+other.y)

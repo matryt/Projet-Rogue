@@ -154,6 +154,7 @@ class Map(object):
             for j in range(len(self)):
                 if self._mat[j][i] == elem:
                     return Coord.Coord(i, j)
+        return None
 
     def put(self, c, e):
         """
@@ -328,18 +329,14 @@ class Map(object):
         self.corridor(A.center(), B.center())
 
     def reachAllRooms(self):
-        """
-        Permet de relier toutes les salles créées
-        """
+        """Permet de relier toutes les salles créées"""
         self._rooms.append(self._roomsToReach.pop(0))
         while len(self._roomsToReach) > 0:
             self.reach()
 
     def moveAllMonsters(self):
-        """
-        Permet de déplacer tous les monstres de la carte
-        """
-
+        """Permet de déplacer tous les monstres de la carte"""
+        
         posHero = self._elem[self._hero]
         for m in self._elem:
             posMonster = self._elem[m]
