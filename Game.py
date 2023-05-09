@@ -37,7 +37,7 @@ class Game(object):
                         Equipment("gold", "o")],
                     1: [Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
                     2: [Wearable("sword", place='right hand', effect={'strength': 2}),
-                        Equipment("bow", usage=lambda self, hero: throw(1, True)),
+                        Equipment("bow"),
                         Wearable("leather vest", place='torso', effect={'armor': 1})],
                     3: [Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False))],
                     4: [Wearable("chaimail", place='torso', effect={'armor': 2})]}
