@@ -30,6 +30,7 @@ class Coord(object):
     def __eq__(self, other):
         if type(self) == type(other):
             return self.x == other.x and self.y == other.y
+        return False
 
     def __add__(self, other):
         return Coord(self.x+other.x, self.y+other.y)
