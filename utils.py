@@ -3,7 +3,8 @@ def getch():
 	try:
 		import termios
 		# POSIX system. Create and return a getch that manipulates the tty.
-		import sys, tty
+		import sys
+		import tty
 		fd = sys.stdin.fileno()
 		old_settings = termios.tcgetattr(fd)
 		try:
