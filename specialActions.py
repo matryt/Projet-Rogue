@@ -2,6 +2,7 @@ import Game
 import random
 import copy
 
+
 def heal(creature):
 	"""
 	Soigne une créature
@@ -20,6 +21,7 @@ def heal(creature):
 
 	creature.heal()
 	return True
+
 
 def teleport(creature, unique):
 	"""

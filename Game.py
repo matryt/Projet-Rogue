@@ -27,7 +27,7 @@ class Game(object):
 	_hero
 	_messages
 	_level
-	_floor
+	_floor : Map
 	_actions : dict
 		Actions possibles du jeu
 	_idMonsters : int
@@ -111,7 +111,8 @@ class Game(object):
 
 	def readMessages(self):
 		"""
-		Renvoie une chaîne de caractère composée de tous les messages enregistrés et les supprime de la liste
+		Renvoie une chaîne de caractère composée de tous les messages enregistrés
+		et les supprime de la liste
 		Returns
 		-------
 		str
@@ -160,7 +161,7 @@ class Game(object):
 
 		Returns
 		-------
-		Monster
+		Creature.Creature
 			Le monstre tiré au hasard
 		"""
 		s = self.randElement(Game.monsters)

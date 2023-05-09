@@ -1,5 +1,6 @@
 from Equipment import Equipment
 
+
 class Wearable(Equipment):
 	"""A wearable equipment."""
 	def __init__(self, name, place, effect, abbrv="", usage=None):

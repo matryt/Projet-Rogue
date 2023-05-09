@@ -17,7 +17,7 @@ class Stairs(Element.Element):
 		super().__init__("Stairs", "E")
 
 	@staticmethod
-	def meet():
+	def meet(*args):
 		"""Permet de descendre d'un étage"""
 		Game.theGame().buildFloor()
 		Game.theGame().addMessage(f"The {Game.theGame().getHero().getName()} goes down")

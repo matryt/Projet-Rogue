@@ -104,7 +104,8 @@ class Room(object):
 		Returns
 		-------
 		bool
-			True s'il existe au moins une case dont la valeur est Map.ground dans la salle, False sinon
+			True s'il existe au moins une case dont la valeur est Map.ground dans la salle,
+			False sinon
 		"""
 
 		for x in range(self.c1.x, self.c2.x+1):
