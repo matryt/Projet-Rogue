@@ -38,7 +38,6 @@ class Equipment(Element.Element):
 		bool
 			True
 		"""
-
 		elem.take(self)
 		Game.theGame().addMessage(f"You pick up a {self._name}")
 		return True
@@ -66,7 +65,6 @@ class Equipment(Element.Element):
 		bool
 			True si l'objet a été utilisé, False sinon
 		"""
-
 		if self.usage is not None:
 			s = self.usage(self, creature)
 			Game.theGame().addMessage(f"The {creature.getName()} uses the {self._name}")

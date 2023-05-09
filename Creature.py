@@ -96,7 +96,6 @@ class Creature(Element.Element):
 		bool
 			True si la créature a encore des points de vie, False sinon
 		"""
-
 		self._hp -= creature.getStrength()
 		Game.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
 		return self._hp <= 0

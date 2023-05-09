@@ -67,7 +67,6 @@ class Game(object):
 		messages : list | None
 			La liste des messages à afficher au joueur
 		"""
-
 		self._hero = hero or Hero.Hero()
 		if not messages:
 			messages = []
@@ -80,7 +79,6 @@ class Game(object):
 		"""
 		Construit la carte
 		"""
-
 		self._floor = Map.Map(hero=self._hero)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())

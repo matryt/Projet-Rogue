@@ -72,7 +72,6 @@ class Hero(Creature.Creature):
 		creature : Creature
 			La créature qui est rencontrée
 		"""
-
 		import Game
 
 		self._hp -= creature.getStrength()
