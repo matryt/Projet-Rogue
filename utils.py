@@ -1,7 +1,3 @@
-import Creature
-import Game
-import Room
-
 def getch():
     """Single char input, only works on Mac/linux/Windows OS terminals"""
     try:

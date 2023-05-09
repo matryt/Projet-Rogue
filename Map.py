@@ -3,7 +3,6 @@ import random
 
 import Coord
 import Element
-from utils import getch
 import Hero
 import Room
 import Stairs
