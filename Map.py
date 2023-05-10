@@ -7,6 +7,7 @@ import Hero
 import Room
 import Stairs
 import Creature
+import Noeud
 
 
 class Map(object):
@@ -377,3 +378,35 @@ class Map(object):
 			s = self.randRoom()
 			if self.intersectNone(s):
 				self.addRoom(s)
+
+	def ajouter_cases_adjacentes(self, courant, s, arrivee: Coord, liste_fermee: dict, liste_ouverte: dict):
+		n = Noeud.Noeud()
+		n.parent = courant
+
+		for d in Map.dir:
+			newCoord = courant + d
+			if newCoord not in self:
+				# Case en dehors de la grille
+				continue
+
+			# On vérifie que la case n'est pas déjà dans la liste fermée
+			if newCoord in liste_fermee:
+				continue
+
+			# Calcul du coût G de la case
+			cout_g = n.cout_g + s.cout_case(courant, newCoord)
+
+			# Si la case n'est pas dans la liste ouverte, on l'y ajoute
+			if newCoord not in liste_ouverte:
+				n.position = newCoord
+				n.cout_g = cout_g
+				n.cout_h = s.cout_case(newCoord, arrivee)
+				n.cout_f = n.cout_g + n.cout_h
+				liste_ouverte[newCoord] = n
+			else:
+				# Si la case est déjà dans la liste ouverte, on vérifie si on trouve un chemin moins coûteux
+				tmp = liste_ouverte[newCoord]
+				if cout_g < tmp.cout_g:
+					tmp.parent = courant
+					tmp.cout_g = cout_g
+					tmp.cout_f = cout_g + tmp.cout_h

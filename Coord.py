@@ -82,3 +82,4 @@ class Coord(object):
 			return Coord(0, -1)
 		else:
 			return Coord(0, 1)
+
