@@ -2,15 +2,15 @@ import copy
 import math
 import random
 
-from Equipment import Equipment
-from Creature import Creature
-import Hero
-import Map
 import Stairs
-from Wearable import Wearable
 from utils import getch
 import Coord
 from specialActions import heal, teleport
+import Wearable
+import Equipment
+import Creature
+import Hero
+import Map
 
 
 class Game(object):
@@ -33,16 +33,16 @@ class Game(object):
 	_idMonsters : int
 		Identifiant des monstres
 	"""
-	equipments = {0: [Equipment("potion", "!", usage=lambda self, hero: heal(hero)),
-	                  Equipment("gold", "o")],
-	              1: [Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
-	              2: [Wearable("sword", place='right hand', effect={'strength': 2}),
-	                  Equipment("bow"),
-	                  Wearable("leather vest", place='torso', effect={'armor': 1})],
-	              3: [Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False))],
-	              4: [Wearable("chaimail", place='torso', effect={'armor': 2})]}
-	monsters = {0: [Creature("Goblin", 4), Creature("Bat", 2, "W")],
-	            1: [Creature("Ork", 6, strength=2), Creature("Blob", 10)], 5: [Creature("Dragon", 20, strength=3)]}
+	equipments = {0: [Equipment.Equipment("potion", "!", usage=lambda self, hero: heal(hero)),
+	                  Equipment.Equipment("gold", "o")],
+	              1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
+	              2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 2}),
+	                  Equipment.Equipment("bow"),
+	                  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1})],
+	              3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False))],
+	              4: [Wearable.Wearable("chaimail", place='torso', effect={'armor': 2})]}
+	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
+	            1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)], 5: [Creature.Creature("Dragon", 20, strength=3)]}
 
 	_actions = {'z': lambda hero: theGame()._floor.move(hero, Coord.Coord(0, -1)),
 	            's': lambda hero: theGame()._floor.move(hero, Coord.Coord(0, 1)),

@@ -1,6 +1,7 @@
 class Noeud:
-    def __init__(self, parent=None, cout_g=0, cout_h=0):
-        self.parent = parent
-        self.cout_g = cout_g
-        self.cout_h = cout_h
-        self.cout_f = cout_g + cout_h
+    def __init__(self, position=None):
+        self.parent = None
+        self.cout_g = 0
+        self.cout_h = 0
+        self.cout_f = 0
+        self.position = position   # ajout de l'attribut position
