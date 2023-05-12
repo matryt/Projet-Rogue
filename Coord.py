@@ -1,4 +1,7 @@
 import math
+import random
+import Hero
+import Map
 
 
 class Coord(object):
@@ -57,7 +60,7 @@ class Coord(object):
 		"""
 		return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
 
-	def direction(self, other):
+	def direction(self, other, map):
 		"""
 		Calcule la direction entre deux points
 
@@ -65,6 +68,8 @@ class Coord(object):
 		----------
 		other : Coord
 			Le deuxième point
+		map : Map.Map
+			La carte du jeu
 
 		Returns
 		-------
@@ -72,13 +77,10 @@ class Coord(object):
 			La direction entre les deux points
 
 		"""
-		difference = self - other
-		cos = difference.x / self.distance(other)
-		if cos > 1 / math.sqrt(2):
-			return Coord(-1, 0)
-		elif cos < -1 / math.sqrt(2):
-			return Coord(1, 0)
-		elif difference.y > 0:
-			return Coord(0, -1)
-		else:
-			return Coord(0, 1)
+		l = []
+		for d in map.dir.values():
+			elem = map.get(self + d)
+			if isinstance(elem, Hero.Hero) or elem == Map.Map.ground and other.distance(self+d) <= other.distance(self) and self+d in map:
+				l.append(d)
+		if l:
+			return random.choice(l)
