@@ -1,3 +1,5 @@
+import random
+
 def getch():
 	"""Single char input, only works on Mac/linux/Windows OS terminals"""
 	try:
@@ -17,4 +19,3 @@ def getch():
 		# Non-POSIX. Return msvcrt's (Windows') getch.
 		import msvcrt
 		return msvcrt.getch().decode('utf-8')
-

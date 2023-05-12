@@ -12,7 +12,6 @@ import Hero
 import Map
 import Coord
 
-
 class Game(object):
 	"""
 	La classe de jeu
@@ -51,7 +50,8 @@ class Game(object):
 	            "i": lambda hero: theGame().addMessage(hero.fullDescription()),
 	            "k": lambda hero: theGame()._hero.__setattr__('_hp', 0),
 	            " ": lambda hero: None,
-	            "u": lambda hero: hero.use(theGame().select(hero.getInventory()))
+	            "u": lambda hero: hero.use(theGame().select(hero.getInventory())),
+				"p": lambda hero: theGame().addMessage(f"Seed: {theGame().seed}"),
 	            }
 
 	def __init__(self, hero = None, level = 1, floor = None, messages = None):
@@ -74,6 +74,7 @@ class Game(object):
 		self._floor = floor
 		self._messages = messages
 		self._idMonsters = 0
+		self.seed = None
 
 	def buildFloor(self):
 		"""
@@ -199,6 +200,7 @@ class Game(object):
 
 	def play(self):
 		"""Main game loop"""
+		self.seed = setSeed()
 		self.buildFloor()
 		print("--- Welcome Hero! ---")
 		while self._hero.getHP() > 0:
@@ -212,6 +214,10 @@ class Game(object):
 			self._floor.moveAllMonsters()
 		print("--- Game Over ---")
 
+def setSeed():
+	r = random.randint(0, 1000000000)
+	random.seed(r)
+	return r
 
 def theGame(game = Game()):
 	"""
