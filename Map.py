@@ -6,7 +6,6 @@ import Element
 import Room
 import Stairs
 import Creature
-import Noeud
 import Hero
 
 
