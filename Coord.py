@@ -79,8 +79,9 @@ class Coord(object):
 		"""
 		l = []
 		for d in map.dir.values():
-			elem = map.get(self + d)
-			if isinstance(elem, Hero.Hero) or elem == Map.Map.ground and other.distance(self+d) <= other.distance(self) and self+d in map:
-				l.append(d)
+			if self + d in map:
+				elem = map.get(self + d)
+				if isinstance(elem, Hero.Hero) or elem == Map.Map.ground and other.distance(self+d) <= other.distance(self) and self+d in map:
+					l.append(d)
 		if l:
 			return random.choice(l)
