@@ -90,6 +90,12 @@ class Map(object):
 		return False
 
 	def getRooms(self):
+		"""
+		Returns
+		-------
+		list
+			La liste des salles de la carte
+		"""
 		return self._rooms
 
 	def checkCoord(self, c):

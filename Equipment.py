@@ -69,6 +69,5 @@ class Equipment(Element.Element):
 			s = self.usage(self, creature)
 			Game.theGame().addMessage(f"The {creature.getName()} uses the {self._name}")
 			return s
-		else:
-			Game.theGame().addMessage(f"The {self._name} is not usable")
-			return False
+		Game.theGame().addMessage(f"The {self._name} is not usable")
+		return False
