@@ -1,5 +1,7 @@
 import Element
-import Game
+import importlib
+
+theGame = importlib.import_module("theGame")
 
 
 class Creature(Element.Element):
@@ -103,5 +105,5 @@ class Creature(Element.Element):
 			True si la créature a encore des points de vie, False sinon
 		"""
 		self._hp -= creature.getStrength()
-		Game.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
+		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
 		return self._hp <= 0

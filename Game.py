@@ -11,6 +11,9 @@ import Creature
 import Hero
 import Map
 import Coord
+import importlib
+
+theGame = importlib.import_module("theGame")
 
 
 class Game(object):
@@ -44,14 +47,14 @@ class Game(object):
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
 	            1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)], 5: [Creature.Creature("Dragon", 20, strength=3)]}
 
-	_actions = {'z': lambda hero: theGame()._floor.move(hero, Coord.Coord(0, -1)),
-	            's': lambda hero: theGame()._floor.move(hero, Coord.Coord(0, 1)),
-	            'q': lambda hero: theGame()._floor.move(hero, Coord.Coord(-1, 0)),
-	            "d": lambda hero: theGame()._floor.move(hero, Coord.Coord(1, 0)),
-	            "i": lambda hero: theGame().addMessage(hero.fullDescription()),
-	            "k": lambda hero: theGame()._hero.__setattr__('_hp', 0),
+	_actions = {'z': lambda hero: theGame.theGame()._floor.move(hero, Coord.Coord(0, -1)),
+	            's': lambda hero: theGame.theGame()._floor.move(hero, Coord.Coord(0, 1)),
+	            'q': lambda hero: theGame.theGame()._floor.move(hero, Coord.Coord(-1, 0)),
+	            "d": lambda hero: theGame.theGame()._floor.move(hero, Coord.Coord(1, 0)),
+	            "i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
+	            "k": lambda hero: theGame.theGame()._hero.__setattr__('_hp', 0),
 	            " ": lambda hero: None,
-	            "u": lambda hero: hero.use(theGame().select(hero.getInventory()))
+	            "u": lambda hero: hero.use(theGame.theGame().select(hero.getInventory()))
 	            }
 
 	def __init__(self, hero = None, level = 1, floor = None, messages = None):
@@ -217,18 +220,3 @@ class Game(object):
 				Game._actions[c](self._hero)
 			self._floor.moveAllMonsters()
 		print("--- Game Over ---")
-
-
-def theGame(game = Game()):
-	"""
-	Retourne l'instance Game du programme en cours
-	Parameters
-	----------
-	game : Game, optional
-		L'instance de Game pour ce run
-
-	Returns
-	-------
-	Game
-	"""
-	return game

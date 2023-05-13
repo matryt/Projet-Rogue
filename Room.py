@@ -2,7 +2,9 @@ import random
 
 import Coord
 import Map
-import Game
+import importlib
+
+theGame = importlib.import_module("theGame")
 
 
 class Room(object):
@@ -147,5 +149,5 @@ class Room(object):
 			La carte dans laquelle prendre une coordonnée
 
 		"""
-		m.put(self.randEmptyCoord(m), Game.theGame().randEquipment())
-		m.put(self.randEmptyCoord(m), Game.theGame().randMonster())
+		m.put(self.randEmptyCoord(m), theGame.theGame().randEquipment())
+		m.put(self.randEmptyCoord(m), theGame.theGame().randMonster())

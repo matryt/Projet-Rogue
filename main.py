@@ -1,3 +1,3 @@
-from Game import theGame
+import theGame
 
-theGame().play()
+theGame.theGame().play()

@@ -1,7 +1,8 @@
-import Game
 import random
 import copy
+import importlib
 
+theGame = importlib.import_module("theGame")
 
 def heal(creature):
 	"""
@@ -37,7 +38,7 @@ def teleport(creature, unique):
 	bool
 
 	"""
-	m = Game.theGame().getFloor()
+	m = theGame.theGame().getFloor()
 	numberRooms = len(m.getRooms())
 	i = 0
 	p = m.pos(creature)
