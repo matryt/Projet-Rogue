@@ -15,7 +15,6 @@ import importlib
 
 theGame = importlib.import_module("theGame")
 
-
 class Game(object):
 	"""
 	La classe de jeu
@@ -55,6 +54,7 @@ class Game(object):
 	            "k": lambda hero: theGame.theGame()._hero.__setattr__('_hp', 0),
 	            " ": lambda hero: None,
 	            "u": lambda hero: hero.use(theGame.theGame().select(hero.getInventory()))
+				"p": lambda hero: theGame().addMessage(f"Seed: {theGame().seed}"),
 	            }
 
 	def __init__(self, hero = None, level = 1, floor = None, messages = None):
@@ -77,6 +77,7 @@ class Game(object):
 		self._floor = floor
 		self._messages = messages
 		self._idMonsters = 0
+		self.seed = None
 
 	def buildFloor(self):
 		"""
@@ -208,6 +209,7 @@ class Game(object):
 
 	def play(self):
 		"""Main game loop"""
+		self.seed = setSeed()
 		self.buildFloor()
 		print("--- Welcome Hero! ---")
 		while self._hero.getHP() > 0:
@@ -220,3 +222,8 @@ class Game(object):
 				Game._actions[c](self._hero)
 			self._floor.moveAllMonsters()
 		print("--- Game Over ---")
+
+def setSeed():
+	r = random.randint(0, 1000000000)
+	random.seed(r)
+	return r

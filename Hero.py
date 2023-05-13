@@ -82,7 +82,7 @@ class Hero(Creature.Creature):
 		return f"{super().description()}{self._inventory}"
 
 	def fullDescription(self):
-		"""Permet d'afficher une description complète du héros"""
+		"""Affiche une description complète du héros"""
 		c = ""
 		for name, elem in self.__dict__.items():
 			if not name.startswith("__"):

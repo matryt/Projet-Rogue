@@ -81,7 +81,8 @@ class Coord(object):
 		for d in floor.dir.values():
 			if self + d in floor:
 				elem = floor.get(self + d)
-				if isinstance(elem, Hero.Hero) or elem == Map.Map.ground and other.distance(self+d) <= other.distance(self) and self+d in floor:
+				if isinstance(elem, Hero.Hero) or elem == Map.Map.ground and other.distance(self + d) <= other.distance(
+						self) and self + d in floor:
 					possibleDirections.append(d)
 		if possibleDirections:
 			return random.choice(possibleDirections)
