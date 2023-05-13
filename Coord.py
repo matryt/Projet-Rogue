@@ -60,7 +60,7 @@ class Coord(object):
 		"""
 		return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
 
-	def direction(self, other, map):
+	def direction(self, other, floor):
 		"""
 		Calcule la direction entre deux points
 
@@ -68,7 +68,7 @@ class Coord(object):
 		----------
 		other : Coord
 			Le deuxième point
-		map : Map.Map
+		floor : Map.Map
 			La carte du jeu
 
 		Returns
@@ -77,11 +77,11 @@ class Coord(object):
 			La direction entre les deux points
 
 		"""
-		l = []
-		for d in map.dir.values():
-			if self + d in map:
-				elem = map.get(self + d)
-				if isinstance(elem, Hero.Hero) or elem == Map.Map.ground and other.distance(self+d) <= other.distance(self) and self+d in map:
-					l.append(d)
-		if l:
-			return random.choice(l)
+		possibleDirections = []
+		for d in floor.dir.values():
+			if self + d in floor:
+				elem = floor.get(self + d)
+				if isinstance(elem, Hero.Hero) or elem == Map.Map.ground and other.distance(self+d) <= other.distance(self) and self+d in floor:
+					possibleDirections.append(d)
+		if possibleDirections:
+			return random.choice(possibleDirections)
