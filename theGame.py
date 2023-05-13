@@ -12,6 +12,6 @@ def theGame(game = Game.Game()):
 
 	Returns
 	-------
-	Game
+	Game.Game
 	"""
 	return game

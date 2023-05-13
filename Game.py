@@ -53,8 +53,8 @@ class Game(object):
 	            "i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
 	            "k": lambda hero: theGame.theGame()._hero.__setattr__('_hp', 0),
 	            " ": lambda hero: None,
-	            "u": lambda hero: hero.use(theGame.theGame().select(hero.getInventory()))
-				"p": lambda hero: theGame().addMessage(f"Seed: {theGame().seed}"),
+	            "u": lambda hero: hero.use(theGame.theGame().select(hero.getInventory())),
+				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
 	            }
 
 	def __init__(self, hero = None, level = 1, floor = None, messages = None):

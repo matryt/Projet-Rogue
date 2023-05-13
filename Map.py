@@ -183,7 +183,7 @@ class Map(object):
 			raise KeyError("Already placed")
 
 		self._mat[c.y][c.x] = e
-		if e != Map.ground:
+		if e != Map.ground and isinstance(e, Creature.Creature):
 			self._elem[e] = c
 
 	def addRoom(self, room):
@@ -228,6 +228,7 @@ class Map(object):
 		way : Coord.Coord
 			Vecteur déplacement à appliquer à l'élément
 		"""
+		print(e._name)
 		orig = self.pos(e)
 		dest = orig + way
 		if dest in self:
@@ -235,7 +236,7 @@ class Map(object):
 				self._mat[orig.y][orig.x] = Map.ground
 				self._mat[dest.y][dest.x] = e
 				self._elem[e] = dest
-			if self.get(dest) != Map.empty and self.get(dest).meet(e) and self.get(dest) != self._hero:
+			if self.get(dest) != Map.empty and self.get(dest) != e and self.get(dest).meet(e) and self.get(dest) != self._hero:
 				self.rm(dest)
 
 	def __getitem__(self, key):
