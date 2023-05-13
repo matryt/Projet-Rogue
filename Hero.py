@@ -1,5 +1,8 @@
 import Equipment
 import Creature
+import importlib
+
+theGame = importlib.import_module("theGame")
 
 
 class Hero(Creature.Creature):
@@ -69,13 +72,11 @@ class Hero(Creature.Creature):
 
 		Parameters
 		-------
-		creature : Creature
+		creature : Creature.Creature
 			La créature qui est rencontrée
 		"""
-		import Game
-
 		self._hp -= creature.getStrength()
-		Game.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
+		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
 
 	def description(self):
 		return f"{super().description()}{self._inventory}"

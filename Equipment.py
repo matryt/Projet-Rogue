@@ -39,7 +39,7 @@ class Equipment(Element.Element):
 			True
 		"""
 		elem.take(self)
-		Game.theGame().addMessage(f"You pick up a {self._name}")
+		theGame.theGame().addMessage(f"You pick up a {self._name}")
 		return True
 
 	def getName(self):
@@ -67,7 +67,7 @@ class Equipment(Element.Element):
 		"""
 		if self.usage is not None:
 			s = self.usage(self, creature)
-			Game.theGame().addMessage(f"The {creature.getName()} uses the {self._name}")
+			theGame.theGame().addMessage(f"The {creature.getName()} uses the {self._name}")
 			return s
-		Game.theGame().addMessage(f"The {self._name} is not usable")
+		theGame.theGame().addMessage(f"The {self._name} is not usable")
 		return False

@@ -1,5 +1,7 @@
 import Element
-import Game
+import importlib
+
+theGame = importlib.import_module("theGame")
 
 
 class Stairs(Element.Element):
@@ -19,5 +21,5 @@ class Stairs(Element.Element):
 	@staticmethod
 	def meet(*args):
 		"""Permet de descendre d'un étage"""
-		Game.theGame().buildFloor()
-		Game.theGame().addMessage(f"The {Game.theGame().getHero().getName()} goes down")
+		theGame.theGame().buildFloor()
+		theGame.theGame().addMessage(f"The {theGame.theGame().getHero().getName()} goes down")
