@@ -96,6 +96,12 @@ class Game(object):
 		return self._hero
 
 	def getFloor(self):
+		"""
+		Returns
+		-------
+		Map.Map
+			La carte du jeu
+		"""
 		return self._floor
 
 	def addMessage(self, msg):

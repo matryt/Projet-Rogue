@@ -4,7 +4,6 @@ import random
 import Coord
 import Element
 import Room
-import Stairs
 import Creature
 import Hero
 
@@ -90,6 +89,12 @@ class Map(object):
 		return False
 
 	def getRooms(self):
+		"""
+		Returns
+		-------
+		list
+			La liste des salles de la carte
+		"""
 		return self._rooms
 
 	def checkCoord(self, c):
@@ -230,11 +235,8 @@ class Map(object):
 				self._mat[orig.y][orig.x] = Map.ground
 				self._mat[dest.y][dest.x] = e
 				self._elem[e] = dest
-			elif not isinstance(self.get(dest), Stairs.Stairs):
-				if self.get(dest) != Map.empty and self.get(dest).meet(e) and self.get(dest) != self._hero:
-					self.rm(dest)
-			else:
-				self.get(dest).meet()
+			if self.get(dest) != Map.empty and self.get(dest).meet(e) and self.get(dest) != self._hero:
+				self.rm(dest)
 
 	def __getitem__(self, key):
 		if isinstance(key, Coord.Coord):

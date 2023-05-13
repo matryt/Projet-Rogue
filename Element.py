@@ -39,4 +39,10 @@ class Element(object):
 		return f"<{self._name}>"
 
 	def meet(self, elem):
+		"""
+		Raises
+		-------
+		NotImplementedError
+			Cette méthode doit être implémentée dans les classes filles
+		"""
 		raise NotImplementedError()

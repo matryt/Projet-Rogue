@@ -80,6 +80,12 @@ class Creature(Element.Element):
 		return self._strength
 
 	def setID(self, idToSet):
+		"""
+		Parameters
+		----------
+		idToSet : int
+			L'identifiant à donner à la créature
+		"""
 		self._idCreature = idToSet
 
 	def meet(self, creature):
