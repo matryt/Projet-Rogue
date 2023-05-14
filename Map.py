@@ -228,7 +228,6 @@ class Map(object):
 		way : Coord.Coord
 			Vecteur déplacement à appliquer à l'élément
 		"""
-		print(e._name)
 		orig = self.pos(e)
 		dest = orig + way
 		if dest in self:

@@ -3,7 +3,7 @@ import math
 import random
 
 import Stairs
-from Wearable import Wearable
+import Wearable
 from utils import getch
 from specialActions import heal, teleport
 import Equipment
@@ -38,20 +38,20 @@ class Game(object):
 	equipments = {0: [Equipment.Equipment("potion", "!", usage=lambda self, hero: heal(hero)),
 	                  Equipment.Equipment("gold", "o")],
 	              1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
-	              2: [Wearable("sword", place='right hand', effect={'strength': 2}),
+	              2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 2}),
 	                  Equipment.Equipment("bow"),
-	                  Wearable("leather vest", place='torso', effect={'armor': 1})],
+	                  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1})],
 	              3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False))],
-	              4: [Wearable("chaimail", place='torso', effect={'armor': 2})]}
+	              4: [Wearable.Wearable("chaimail", place='torso', effect={'armor': 2})]}
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
 	            1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)], 5: [Creature.Creature("Dragon", 20, strength=3)]}
 
-	_actions = {'z': lambda hero: theGame.theGame()._floor.move(hero, Coord.Coord(0, -1)),
-	            's': lambda hero: theGame.theGame()._floor.move(hero, Coord.Coord(0, 1)),
-	            'q': lambda hero: theGame.theGame()._floor.move(hero, Coord.Coord(-1, 0)),
-	            "d": lambda hero: theGame.theGame()._floor.move(hero, Coord.Coord(1, 0)),
+	_actions = {'z': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, -1)),
+	            's': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, 1)),
+	            'q': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(-1, 0)),
+	            "d": lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(1, 0)),
 	            "i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
-	            "k": lambda hero: theGame.theGame()._hero.__setattr__('_hp', 0),
+	            "k": lambda hero: theGame.theGame().getHero().__setattr__('_hp', 0),
 	            " ": lambda hero: None,
 	            "u": lambda hero: hero.use(theGame.theGame().select(hero.getInventory())),
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
