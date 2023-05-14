@@ -79,9 +79,7 @@ class Game(object):
 		self._idMonsters = 0
 
 	def buildFloor(self):
-		"""
-		Construit la carte
-		"""
+		"""Construit la carte"""
 		self._floor = Map.Map(hero=self._hero)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())

@@ -56,9 +56,7 @@ class Creature(Element.Element):
 		return f"{super().description()}({self._hp})"
 
 	def heal(self):
-		"""
-		Permet de soigner la créature
-		"""
+		"""Permet de soigner la créature"""
 		self._hp += 3
 
 	def getName(self):

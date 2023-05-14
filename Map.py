@@ -323,9 +323,7 @@ class Map(object):
 			self.dig(s)
 
 	def reach(self):
-		"""
-		Rejoint deux salles au hasard (entre une déjà rejointe et une pas encore atteinte)
-		"""
+		"""Rejoint deux salles au hasard (entre une déjà rejointe et une pas encore atteinte)"""
 		A = random.choice(self._rooms)
 		B = random.choice(self._roomsToReach)
 		self.corridor(A.center(), B.center())
