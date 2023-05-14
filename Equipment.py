@@ -1,5 +1,7 @@
 import Element
-import Game
+import importlib
+
+theGame= importlib.import_module("theGame")
 
 
 class Equipment(Element.Element):
