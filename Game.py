@@ -3,7 +3,7 @@ import math
 import random
 
 import Stairs
-from Wearable import Wearable
+import Wearable
 from utils import getch
 from specialActions import heal, teleport
 import Equipment
@@ -14,7 +14,6 @@ import Coord
 import importlib
 
 theGame = importlib.import_module("theGame")
-
 
 class Game(object):
 	"""
@@ -39,11 +38,11 @@ class Game(object):
 	equipments = {0: [Equipment.Equipment("potion", "!", usage=lambda self, hero: heal(hero)),
 	                  Equipment.Equipment("gold", "o")],
 	              1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
-	              2: [Wearable("sword", place='right hand', effect={'strength': 2}),
+	              2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 2}),
 	                  Equipment.Equipment("bow"),
-	                  Wearable("leather vest", place='torso', effect={'armor': 1})],
+	                  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1})],
 	              3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False))],
-	              4: [Wearable("chaimail", place='torso', effect={'armor': 2})]}
+	              4: [Wearable.Wearable("chaimail", place='torso', effect={'armor': 2})]}
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
 	            1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)], 5: [Creature.Creature("Dragon", 20, strength=3)]}
 
@@ -54,7 +53,8 @@ class Game(object):
 	            "i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
 	            "k": lambda hero: theGame.theGame().getHero().__setattr__('_hp', 0),
 	            " ": lambda hero: None,
-	            "u": lambda hero: hero.use(theGame.theGame().select(hero.getInventory()))
+	            "u": lambda hero: hero.use(theGame.theGame().select(hero.getInventory())),
+				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
 	            }
 
 	def __init__(self, hero = None, level = 1, floor = None, messages = None):
@@ -77,6 +77,7 @@ class Game(object):
 		self._floor = floor
 		self._messages = messages
 		self._idMonsters = 0
+		self.seed = None
 
 	def buildFloor(self):
 		"""Construit la carte"""
@@ -206,6 +207,7 @@ class Game(object):
 
 	def play(self):
 		"""Main game loop"""
+		self.seed = setSeed()
 		self.buildFloor()
 		print("--- Welcome Hero! ---")
 		while self._hero.getHP() > 0:
@@ -218,3 +220,8 @@ class Game(object):
 				Game._actions[c](self._hero)
 			self._floor.moveAllMonsters()
 		print("--- Game Over ---")
+
+def setSeed():
+	r = random.randint(0, 1000000000)
+	random.seed(r)
+	return r

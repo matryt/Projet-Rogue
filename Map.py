@@ -183,7 +183,7 @@ class Map(object):
 			raise KeyError("Already placed")
 
 		self._mat[c.y][c.x] = e
-		if e != Map.ground:
+		if e != Map.ground and isinstance(e, Creature.Creature):
 			self._elem[e] = c
 
 	def addRoom(self, room):
