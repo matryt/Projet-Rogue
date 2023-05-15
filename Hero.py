@@ -122,6 +122,8 @@ class Hero(Creature.Creature):
 			L'item à utiliser
 
 		"""
+		if not item:
+			return
 		if not isinstance(item, Equipment.Equipment):
 			raise TypeError("L'élément à utiliser doit être du type Equipment")
 		if item not in self._inventory:

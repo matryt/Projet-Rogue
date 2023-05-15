@@ -191,6 +191,9 @@ class Game(object):
 		Equipment.Equipment | Wearable.Wearable
 			L'élément sélectionné
 		"""
+		if not listeChoix:
+			print("Nothing is in the inventory !")
+			return None
 		c = "Choose item> ["
 		for i, choice in enumerate(listeChoix):
 			c += f"\'{i}: {choice.getName()}\', "
