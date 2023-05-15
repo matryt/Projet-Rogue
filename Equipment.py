@@ -1,7 +1,7 @@
 import Element
 import importlib
 
-theGame= importlib.import_module("theGame")
+theGame = importlib.import_module("theGame")
 
 
 class Equipment(Element.Element):
@@ -14,6 +14,7 @@ class Equipment(Element.Element):
 	_name
 	_abbrv
 	"""
+
 	def __init__(self, name, abbrv="", usage=None):
 		"""
 
@@ -24,7 +25,7 @@ class Equipment(Element.Element):
 		abbrv : str, optional
 			L'abréviation représentant l'équipement
 		"""
-		Element.Element.__init__(self, name, abbrv)
+		super().__init__(name, abbrv)
 		self.usage = usage
 
 	def meet(self, elem):
@@ -67,9 +68,8 @@ class Equipment(Element.Element):
 		bool
 			True si l'objet a été utilisé, False sinon
 		"""
-		if self.usage is not None:
-			s = self.usage(self, creature)
+		if self.usage:
 			theGame.theGame().addMessage(f"The {creature.getName()} uses the {self._name}")
-			return s
+			return self.usage(self, creature)
 		theGame.theGame().addMessage(f"The {self._name} is not usable")
 		return False

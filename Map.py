@@ -32,6 +32,7 @@ class Map(object):
 	_rooms
 
 	"""
+
 	ground = "."
 	empty = " "
 	dir = {
@@ -80,8 +81,8 @@ class Map(object):
 		return self.size
 
 	def __contains__(self, item):
-		if isinstance(item, Coord.Coord) and 0 <= item.x < len(self) and 0 <= item.y < len(self):
-			return True
+		if isinstance(item, Coord.Coord):
+			return 0 <= item.x < len(self) and 0 <= item.y < len(self)
 		if isinstance(item, str):
 			for ligne in self._mat:
 				if item in ligne:
@@ -183,7 +184,7 @@ class Map(object):
 			raise KeyError("Already placed")
 
 		self._mat[c.y][c.x] = e
-		if e != Map.ground and isinstance(e, Creature.Creature):
+		if e != Map.ground:
 			self._elem[e] = c
 
 	def addRoom(self, room):
@@ -331,7 +332,7 @@ class Map(object):
 	def reachAllRooms(self):
 		"""Permet de relier toutes les salles créées"""
 		self._rooms.append(self._roomsToReach.pop(0))
-		while len(self._roomsToReach) > 0:
+		while self._roomsToReach:
 			self.reach()
 
 	def moveAllMonsters(self):
