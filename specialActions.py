@@ -4,6 +4,7 @@ import importlib
 
 theGame = importlib.import_module("theGame")
 
+
 def heal(creature):
 	"""
 	Soigne une créature

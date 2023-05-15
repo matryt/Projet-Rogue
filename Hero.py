@@ -19,7 +19,7 @@ class Hero(Creature.Creature):
 	_inventory
 
 	"""
-	def __init__(self, name = "Hero", hp = 10, abbrv=None, strength=2, inventory=None):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None):
 		"""
 
 		Parameters
@@ -35,6 +35,7 @@ class Hero(Creature.Creature):
 		inventory : list, optional
 			L'inventaire du héros
 		"""
+
 		if inventory is None:
 			inventory = []
 		if not abbrv:
@@ -85,13 +86,12 @@ class Hero(Creature.Creature):
 		"""Affiche une description complète du héros"""
 		c = ""
 		for name, elem in self.__dict__.items():
-			if not name.startswith("__"):
-				if name.startswith("_"):
-					name = name[1:]
-				if name == "inventory":
-					name = "INVENTORY"
-					elem = [e.description()[1:-1] for e in elem]
-				c += f"> {name} : {elem} \n"
+			if name.startswith("_"):
+				name = name[1:]
+			if name == "inventory":
+				name = "INVENTORY"
+				elem = [e.getName() for e in elem]
+			c += f"> {name} : {elem} \n"
 		return c[:-2]
 
 	def getInventory(self):
@@ -122,6 +122,8 @@ class Hero(Creature.Creature):
 			L'item à utiliser
 
 		"""
+		if not item:
+			return
 		if not isinstance(item, Equipment.Equipment):
 			raise TypeError("L'élément à utiliser doit être du type Equipment")
 		if item not in self._inventory:
