@@ -331,7 +331,7 @@ class Map(object):
 	def reachAllRooms(self):
 		"""Permet de relier toutes les salles créées"""
 		self._rooms.append(self._roomsToReach.pop(0))
-		while len(self._roomsToReach) > 0:
+		while self._roomsToReach:
 			self.reach()
 
 	def moveAllMonsters(self):

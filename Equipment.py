@@ -24,7 +24,7 @@ class Equipment(Element.Element):
 		abbrv : str, optional
 			L'abréviation représentant l'équipement
 		"""
-		Element.Element.__init__(self, name, abbrv)
+		super().__init__(name, abbrv)
 		self.usage = usage
 
 	def meet(self, elem):
@@ -68,8 +68,7 @@ class Equipment(Element.Element):
 			True si l'objet a été utilisé, False sinon
 		"""
 		if self.usage is not None:
-			s = self.usage(self, creature)
 			theGame.theGame().addMessage(f"The {creature.getName()} uses the {self._name}")
-			return s
+			return self.usage(self, creature)
 		theGame.theGame().addMessage(f"The {self._name} is not usable")
 		return False

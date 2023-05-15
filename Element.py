@@ -45,4 +45,4 @@ class Element(object):
 		NotImplementedError
 			Cette méthode doit être implémentée dans les classes filles
 		"""
-		raise NotImplementedError()
+		raise NotImplementedError("Not implemented yet")

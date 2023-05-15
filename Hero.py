@@ -85,13 +85,12 @@ class Hero(Creature.Creature):
 		"""Affiche une description complète du héros"""
 		c = ""
 		for name, elem in self.__dict__.items():
-			if not name.startswith("__"):
-				if name.startswith("_"):
-					name = name[1:]
-				if name == "inventory":
-					name = "INVENTORY"
-					elem = [e.description()[1:-1] for e in elem]
-				c += f"> {name} : {elem} \n"
+			if name.startswith("_"):
+				name = name[1:]
+			if name == "inventory":
+				name = "INVENTORY"
+				elem = [e.getName() for e in elem]
+			c += f"> {name} : {elem} \n"
 		return c[:-2]
 
 	def getInventory(self):
