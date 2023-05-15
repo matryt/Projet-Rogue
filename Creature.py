@@ -17,6 +17,7 @@ class Creature(Element.Element):
 	_strength
 	_idCreature
 	"""
+
 	def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None):
 		"""
 

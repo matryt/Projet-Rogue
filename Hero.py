@@ -19,7 +19,7 @@ class Hero(Creature.Creature):
 	_inventory
 
 	"""
-	def __init__(self, name = "Hero", hp = 10, abbrv=None, strength=2, inventory=None):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None):
 		"""
 
 		Parameters
@@ -35,6 +35,7 @@ class Hero(Creature.Creature):
 		inventory : list, optional
 			L'inventaire du héros
 		"""
+
 		if inventory is None:
 			inventory = []
 		if not abbrv:

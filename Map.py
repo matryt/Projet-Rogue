@@ -32,6 +32,7 @@ class Map(object):
 	_rooms
 
 	"""
+
 	ground = "."
 	empty = " "
 	dir = {

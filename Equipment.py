@@ -1,7 +1,7 @@
 import Element
 import importlib
 
-theGame= importlib.import_module("theGame")
+theGame = importlib.import_module("theGame")
 
 
 class Equipment(Element.Element):
@@ -14,6 +14,7 @@ class Equipment(Element.Element):
 	_name
 	_abbrv
 	"""
+
 	def __init__(self, name, abbrv="", usage=None):
 		"""
 

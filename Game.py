@@ -15,6 +15,7 @@ import importlib
 
 theGame = importlib.import_module("theGame")
 
+
 class Game(object):
 	"""
 	La classe de jeu
@@ -35,6 +36,7 @@ class Game(object):
 	_idMonsters : int
 		Identifiant des monstres
 	"""
+
 	equipments = {0: [Equipment.Equipment("potion", "!", usage=lambda self, hero: heal(hero)),
 	                  Equipment.Equipment("gold", "o")],
 	              1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
@@ -57,7 +59,7 @@ class Game(object):
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
 	            }
 
-	def __init__(self, hero = None, level = 1, floor = None, messages = None):
+	def __init__(self, hero=None, level=1, floor=None, messages=None):
 		"""
 		Parameters
 		----------
@@ -220,6 +222,7 @@ class Game(object):
 				Game._actions[c](self._hero)
 			self._floor.moveAllMonsters()
 		print("--- Game Over ---")
+
 
 def setSeed():
 	r = random.randint(0, 1000000000)
