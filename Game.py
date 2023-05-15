@@ -15,6 +15,7 @@ import importlib
 
 theGame = importlib.import_module("theGame")
 
+
 class Game(object):
 	"""
 	La classe de jeu
@@ -35,6 +36,7 @@ class Game(object):
 	_idMonsters : int
 		Identifiant des monstres
 	"""
+
 	equipments = {0: [Equipment.Equipment("potion", "!", usage=lambda self, hero: heal(hero)),
 	                  Equipment.Equipment("gold", "o")],
 	              1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
@@ -51,13 +53,13 @@ class Game(object):
 	            'q': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(-1, 0)),
 	            "d": lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(1, 0)),
 	            "i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
-	            "k": lambda hero: theGame.theGame().getHero().__setattr__('_hp', 0),
+	            "k": lambda hero: hero.__setattr__('_hp', 0),
 	            " ": lambda hero: None,
 	            "u": lambda hero: hero.use(theGame.theGame().select(hero.getInventory())),
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
 	            }
 
-	def __init__(self, hero = None, level = 1, floor = None, messages = None):
+	def __init__(self, hero=None, level=1, floor=None, messages=None):
 		"""
 		Parameters
 		----------
@@ -144,8 +146,7 @@ class Game(object):
 		Element.Element
 			L'élément tiré au hasard
 		"""
-		x = random.expovariate(1/self._level)
-		x = math.floor(x)
+		x = int(random.expovariate(1/self._level))
 		while not collection.get(x):
 			x -= 1
 		return copy.copy(random.choice(collection[x]))
@@ -190,6 +191,9 @@ class Game(object):
 		Equipment.Equipment | Wearable.Wearable
 			L'élément sélectionné
 		"""
+		if not listeChoix:
+			print("Nothing is in the inventory !")
+			return None
 		c = "Choose item> ["
 		for i, choice in enumerate(listeChoix):
 			c += f"\'{i}: {choice.getName()}\', "
@@ -220,6 +224,7 @@ class Game(object):
 				Game._actions[c](self._hero)
 			self._floor.moveAllMonsters()
 		print("--- Game Over ---")
+
 
 def setSeed():
 	r = random.randint(0, 1000000000)
