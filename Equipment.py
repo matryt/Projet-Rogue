@@ -68,7 +68,7 @@ class Equipment(Element.Element):
 		bool
 			True si l'objet a été utilisé, False sinon
 		"""
-		if self.usage is not None:
+		if self.usage:
 			theGame.theGame().addMessage(f"The {creature.getName()} uses the {self._name}")
 			return self.usage(self, creature)
 		theGame.theGame().addMessage(f"The {self._name} is not usable")

@@ -53,7 +53,7 @@ class Game(object):
 	            'q': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(-1, 0)),
 	            "d": lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(1, 0)),
 	            "i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
-	            "k": lambda hero: theGame.theGame().getHero().__setattr__('_hp', 0),
+	            "k": lambda hero: hero.__setattr__('_hp', 0),
 	            " ": lambda hero: None,
 	            "u": lambda hero: hero.use(theGame.theGame().select(hero.getInventory())),
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
@@ -146,8 +146,7 @@ class Game(object):
 		Element.Element
 			L'élément tiré au hasard
 		"""
-		x = random.expovariate(1/self._level)
-		x = math.floor(x)
+		x = int(random.expovariate(1/self._level))
 		while not collection.get(x):
 			x -= 1
 		return copy.copy(random.choice(collection[x]))
