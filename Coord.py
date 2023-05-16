@@ -2,6 +2,7 @@ import math
 import random
 import Hero
 import Map
+import Noeud
 
 
 class Coord(object):
@@ -86,3 +87,9 @@ class Coord(object):
 					possibleDirections.append(d)
 		if possibleDirections:
 			return random.choice(possibleDirections)
+
+	def direction(self, other, floor):
+		n1 = Noeud.Noeud(self)
+		n2 = Noeud.Noeud(other)
+		chemin = n1.shortestPath(n2, floor)
+		return chemin[0] - self
