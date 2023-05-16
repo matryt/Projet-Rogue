@@ -11,6 +11,7 @@ class Noeud(object):
 	def manhattanDistance(self, other):
 		if isinstance(other, Noeud):
 			return abs(self.pos.x - other.pos.x) + abs(self.pos.y - other.pos.y)
+		raise NotImplementedError
 
 	def shortestPath(self, other, map):
 		listeFermee = []
@@ -32,19 +33,27 @@ class Noeud(object):
 
 						if voisin not in listeOuverte:
 							listeOuverte.append(voisin)
-			listeFermee.append(noeudCourant)
+			if noeudCourant not in listeFermee:
+				listeFermee.append(noeudCourant)
+			if len(listeFermee) >= len(map)**2:
+				return None
 		return None
 
 	def voisins(self, map):
-		listeVoisins = []
-		for i in range(self.pos.x-1, self.pos.x+2):
-			for j in range(self.pos.y-1, self.pos.y+2):
-				if i == j == 0:
-					continue
-				if map.get(Coord.Coord(i, j)) in [Map.Map.ground, map._hero]:
-					listeVoisins.append(Noeud(Coord.Coord(i, j), self.cout+1, self.heuristique, self))
+		listeVoisins = [
+			Noeud(Coord.Coord(self.pos.x, self.pos.y+1), self.cout+1),
+			Noeud(Coord.Coord(self.pos.x, self.pos.y-1), self.cout+1),
+			Noeud(Coord.Coord(self.pos.x+1, self.pos.y), self.cout+1),
+			Noeud(Coord.Coord(self.pos.x-1, self.pos.y), self.cout+1)
+		]
+		i = 0
+		while i < len(listeVoisins):
+			v = listeVoisins[i]
+			if v.pos not in map or map.get(v.pos) not in [Map.Map.ground, map._hero]:
+				listeVoisins.pop(i)
+			else:
+				i+=1
 		return listeVoisins
-
 
 	def reconstructPath(self, noeud):
 		path = []

@@ -92,4 +92,6 @@ class Coord(object):
 		n1 = Noeud.Noeud(self)
 		n2 = Noeud.Noeud(other)
 		chemin = n1.shortestPath(n2, floor)
-		return chemin[0] - self
+		if chemin:
+			return chemin[0] - self
+		return None
