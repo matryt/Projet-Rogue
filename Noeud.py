@@ -26,7 +26,7 @@ class Noeud(object):
 			for voisin in voisins:
 				if voisin not in listeFermee:
 					newCost = noeudCourant.cout + 1
-					if voisin not in listeOuverte or newCost < voisin.cost:
+					if voisin not in listeOuverte or newCost < voisin.cout:
 						voisin.cout = newCost
 						voisin.heuristique = newCost + voisin.manhattanDistance(other)
 						voisin.parent = noeudCourant

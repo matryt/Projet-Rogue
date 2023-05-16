@@ -1,5 +1,5 @@
 import copy
-import math
+import time
 import random
 
 import Stairs
@@ -223,6 +223,40 @@ class Game(object):
 			if c in Game._actions:
 				Game._actions[c](self._hero)
 			self._floor.moveAllMonsters()
+		print("--- Game Over ---")
+
+	def getchSimulation(self):
+		return random.choice(list(Map.Map.dir.keys()))
+
+	def playSimulation(self):
+		"""Main game loop"""
+		self.seed = setSeed()
+		self.buildFloor()
+		print("--- Welcome Hero! ---")
+		i = 0
+		while self._hero.getHP() > 0:
+			print()
+			print(self._floor)
+			print(self._hero.description())
+			print(self.readMessages())
+			if i%10 == 0:
+				print("Entrez i pour jouer vous même !")
+				t = getch()
+				if t.lower() == "i":
+					print("OK ! Entrez l'action à effectuer : ")
+					c = getch()
+				else:
+					c = self.getchSimulation()
+					print("Touche choisie : ", c)
+					time.sleep(0.5)
+			else:
+				c = self.getchSimulation()
+				print("Touche choisie : ", c)
+				time.sleep(0.5)
+			if c in Game._actions:
+				Game._actions[c](self._hero)
+			self._floor.moveAllMonsters()
+			i+= 1
 		print("--- Game Over ---")
 
 
