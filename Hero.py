@@ -17,9 +17,10 @@ class Hero(Creature.Creature):
 	_hp
 	_strength
 	_inventory
+	_xp 
 
 	"""
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0):
 		"""
 
 		Parameters
@@ -34,6 +35,8 @@ class Hero(Creature.Creature):
 			La force de la créature
 		inventory : list, optional
 			L'inventaire du héros
+		xp : int, optional 
+		  les points d'expérience du héros 
 		"""
 
 		if inventory is None:
@@ -42,6 +45,7 @@ class Hero(Creature.Creature):
 			abbrv = "@"
 		super().__init__(name, hp, abbrv, strength)
 		self._inventory = inventory
+		self.xp = xp
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
