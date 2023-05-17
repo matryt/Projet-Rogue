@@ -249,14 +249,15 @@ class Game(object):
 					c = self.getchSimulation()
 					print("Touche choisie : ", c)
 					time.sleep(0.5)
+					i += 1
 			else:
 				c = self.getchSimulation()
 				print("Touche choisie : ", c)
 				time.sleep(0.5)
+				i += 1
 			if c in Game._actions:
 				Game._actions[c](self._hero)
 			self._floor.moveAllMonsters()
-			i+= 1
 		print("--- Game Over ---")
 
 
