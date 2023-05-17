@@ -343,11 +343,13 @@ class Map(object):
 			if (
 					isinstance(m, Creature.Creature)
 					and not isinstance(m, Hero.Hero)
-					and posHero.distance(posMonster) < 6
+					and posHero.distance(posMonster) < 8
 			):
 				d = posMonster.direction(posHero, self)
-				if d and self.get(posMonster + d) in [Map.ground, self._hero]:
-					self.move(m, d)
+				if d:
+					s = self.get(posMonster + d)
+					if d and self.get(posMonster + d) in [Map.ground, self._hero]:
+						self.move(m, d)
 
 	def randRoom(self):
 		"""
