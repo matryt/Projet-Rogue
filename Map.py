@@ -49,6 +49,8 @@ class Map(object):
 		----------
 		size : int, optional
 			La taille de la carte
+		hero : Hero.Hero, optional
+			Le héros du jeu
 		nbrooms : int, optional
 			Le nombre de salles dans la carte
 		"""
@@ -68,10 +70,12 @@ class Map(object):
 		self._elem = {hero: coordH}
 		for r in self._rooms:
 			r.decorate(self)
+		self._visibleMap = [["~" for _ in range(self.size)] for _ in range(self.size)]
+		self.setVisible(coordH)
 
 	def __repr__(self):
 		c = ""
-		for ligne in self._mat:
+		for ligne in self._visibleMap:
 			for elem in ligne:
 				c += str(elem)
 			c += "\n"
@@ -235,9 +239,15 @@ class Map(object):
 			if self.get(dest) == Map.ground:
 				self._mat[orig.y][orig.x] = Map.ground
 				self._mat[dest.y][dest.x] = e
+				if self._visibleMap[orig.y][orig.x] != "~" and isinstance(e, Hero.Hero):
+					self._visibleMap[orig.y][orig.x] = Map.ground
+				if self._visibleMap[dest.y][dest.x] != "~" and isinstance(e, Hero.Hero):
+					self._visibleMap[dest.y][dest.x] = e
 				self._elem[e] = dest
 			if self.get(dest) != Map.empty and self.get(dest) != e and self.get(dest).meet(e) and self.get(dest) != self._hero:
 				self.rm(dest)
+			if isinstance(e, Hero.Hero):
+				self.setVisible(dest)
 
 	def __getitem__(self, key):
 		if isinstance(key, Coord.Coord):
@@ -380,3 +390,19 @@ class Map(object):
 			s = self.randRoom()
 			if self.intersectNone(s):
 				self.addRoom(s)
+
+	def setVisible(self, coord):
+		"""
+		Permet de rendre visible une coordonnée
+		Parameters
+		----------
+		coord : Coord.Coord
+			La coordonnée à rendre visible
+		"""
+		if self.get(coord) != Map.empty:
+			self._visibleMap[coord.y][coord.x] = self._mat[coord.y][coord.x]
+		for r in self._rooms:
+			if coord in r:
+				coordsofRoom = r.coordsInRoom()
+				for c in coordsofRoom:
+					self._visibleMap[c.y][c.x] = self._mat[c.y][c.x]

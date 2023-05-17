@@ -226,7 +226,11 @@ class Game(object):
 		print("--- Game Over ---")
 
 	def getchSimulation(self):
-		return random.choice(list(Map.Map.dir.keys()))
+		for touche, dir in self._floor.dir.items():
+			newPos = self._floor.pos(self._hero)+dir
+			if newPos in self._floor and self._floor._visibleMap[newPos.y][newPos.x] == "~" and self._floor.get(newPos) != Map.Map.empty:
+				return touche
+		return random.choice(list(self._floor.dir.keys()))
 
 	def playSimulation(self):
 		"""Main game loop"""
