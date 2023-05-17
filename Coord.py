@@ -2,6 +2,7 @@ import math
 import random
 import Hero
 import Map
+import Noeud
 
 
 class Coord(object):
@@ -61,28 +62,12 @@ class Coord(object):
 		return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
 
 	def direction(self, other, floor):
-		"""
-		Calcule la direction entre deux points
-
-		Parameters
-		----------
-		other : Coord
-			Le deuxième point
-		floor : Map.Map
-			La carte du jeu
-
-		Returns
-		-------
-		Coord
-			La direction entre les deux points
-
-		"""
-		possibleDirections = []
-		for d in floor.dir.values():
-			if self + d in floor:
-				elem = floor.get(self + d)
-				if isinstance(elem, Hero.Hero) or elem == Map.Map.ground and other.distance(self + d) <= other.distance(
-						self) and self + d in floor:
-					possibleDirections.append(d)
-		if possibleDirections:
-			return random.choice(possibleDirections)
+		n1 = Noeud.Noeud(self)
+		n2 = Noeud.Noeud(other)
+		chemin = n1.shortestPath(n2, floor)
+		if isinstance(floor.get(self), Hero.Hero):
+			print("direction", self, other)
+			print("chemin", chemin)
+		if chemin:
+			return chemin[0] - self
+		return None
