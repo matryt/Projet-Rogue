@@ -239,10 +239,14 @@ class Map(object):
 			if self.get(dest) == Map.ground:
 				self._mat[orig.y][orig.x] = Map.ground
 				self._mat[dest.y][dest.x] = e
-				if self._visibleMap[orig.y][orig.x] != "~" and isinstance(e, Hero.Hero):
+				if self._visibleMap[orig.y][orig.x] != "~":
 					self._visibleMap[orig.y][orig.x] = Map.ground
-				if self._visibleMap[dest.y][dest.x] != "~" and isinstance(e, Hero.Hero):
+				else:
+					self._visibleMap[orig.y][orig.x] = "~"
+				if self._visibleMap[dest.y][dest.x] != "~":
 					self._visibleMap[dest.y][dest.x] = e
+				else:
+					self._visibleMap[dest.y][dest.x] = "~"
 				self._elem[e] = dest
 			if self.get(dest) != Map.empty and self.get(dest) != e and self.get(dest).meet(e) and self.get(dest) != self._hero:
 				self.rm(dest)
