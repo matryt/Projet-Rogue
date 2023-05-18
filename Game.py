@@ -89,8 +89,6 @@ class Game(object):
 
 	def getHero(self):
 		"""
-		Renvoie le héros du jeu
-
 		Returns
 		-------
 		Hero.Hero
@@ -226,6 +224,14 @@ class Game(object):
 		print("--- Game Over ---")
 
 	def getchSimulation(self):
+		"""
+		Renvoie une touche au hasard parmi les touches possibles
+
+		Returns
+		-------
+		str
+			La touche sélectionnée
+		"""
 		for touche, dir in self._floor.dir.items():
 			newPos = self._floor.pos(self._hero)+dir
 			if newPos in self._floor and self._floor._visibleMap[newPos.y][newPos.x] == "~" and self._floor.get(newPos) != Map.Map.empty:
@@ -266,6 +272,13 @@ class Game(object):
 
 
 def setSeed():
+	"""
+	Définit une graine aléatoire pour le jeu
+	Returns
+	-------
+	int
+		La graine aléatoire
+	"""
 	r = random.randint(0, 1000000000)
 	random.seed(r)
 	return r
