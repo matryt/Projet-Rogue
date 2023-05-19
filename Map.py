@@ -71,7 +71,7 @@ class Map(object):
 		for r in self._rooms:
 			r.decorate(self)
 		self._visibleMap = [["~" for _ in range(self.size)] for _ in range(self.size)]
-		self.setVisible(coordH)
+		self.setVisible(self.rangeElement(self._hero))
 
 	def __repr__(self):
 		c = ""
@@ -239,19 +239,10 @@ class Map(object):
 			if self.get(dest) == Map.ground:
 				self._mat[orig.y][orig.x] = Map.ground
 				self._mat[dest.y][dest.x] = e
-				if self._visibleMap[orig.y][orig.x] != "~":
-					self._visibleMap[orig.y][orig.x] = Map.ground
-				else:
-					self._visibleMap[orig.y][orig.x] = "~"
-				if self._visibleMap[dest.y][dest.x] != "~":
-					self._visibleMap[dest.y][dest.x] = e
-				else:
-					self._visibleMap[dest.y][dest.x] = "~"
 				self._elem[e] = dest
 			if self.get(dest) != Map.empty and self.get(dest) != e and self.get(dest).meet(e) and self.get(dest) != self._hero:
 				self.rm(dest)
-			if isinstance(e, Hero.Hero):
-				self.setVisible(dest)
+		self.setVisible(self.rangeElement(self._hero))
 
 	def __getitem__(self, key):
 		if isinstance(key, Coord.Coord):
@@ -361,8 +352,7 @@ class Map(object):
 			):
 				d = posMonster.direction(posHero, self)
 				if d:
-					s = self.get(posMonster + d)
-					if d and self.get(posMonster + d) in [Map.ground, self._hero]:
+					if self.get(posMonster + d) in [Map.ground, self._hero]:
 						self.move(m, d)
 
 	def randRoom(self):
@@ -395,18 +385,37 @@ class Map(object):
 			if self.intersectNone(s):
 				self.addRoom(s)
 
-	def setVisible(self, coord):
+	def setVisible(self, coords):
 		"""
-		Permet de rendre visible une coordonnée
+		Permet de rendre visible la liste de coordonnées passée en paramètre
 		Parameters
 		----------
-		coord : Coord.Coord
-			La coordonnée à rendre visible
+		coords : list
+			Liste de coordonnées à rendre visibles
 		"""
-		if self.get(coord) != Map.empty:
-			self._visibleMap[coord.y][coord.x] = self._mat[coord.y][coord.x]
-		for r in self._rooms:
-			if coord in r:
-				coordsofRoom = r.coordsInRoom()
-				for c in coordsofRoom:
-					self._visibleMap[c.y][c.x] = self._mat[c.y][c.x]
+		self._visibleMap = [["~" for _ in range(len(self))] for _ in range(len(self))]
+		for c in coords:
+			self._visibleMap[c.y][c.x] = self._mat[c.y][c.x]
+
+	def rangeElement(self, element, dist=5):
+		"""
+		Permet de renvoyer un ensemble de coordonnées à une distance donnée d'un élément
+		Parameters
+		----------
+		element : Element.Element
+			L'élément à partir duquel on veut calculer les coordonnées
+		dist : int
+			La distance à laquelle on veut trouver les cases
+
+		Returns
+		-------
+		list
+
+		"""
+		coordDepart = self.pos(element)
+		listeCoordonnees = []
+		for i in range(coordDepart.x-dist, coordDepart.x+dist+1):
+			for j in range(coordDepart.y-dist, coordDepart.y+dist+1):
+				if Coord.Coord(i, j) in self and coordDepart.distance(Coord.Coord(i, j)) <= dist:
+					listeCoordonnees.append(Coord.Coord(i, j))
+		return listeCoordonnees
