@@ -86,6 +86,14 @@ class Room(object):
 
 		return cote2
 
+	def coordsInRoom(self):
+		"""Returns a list of all the coordinates in the room"""
+		coords = []
+		for x in range(self.c1.x, self.c2.x+1):
+			for y in range(self.c1.y, self.c2.y+1):
+				coords.append(Coord.Coord(x, y))
+		return coords
+
 	def randCoord(self):
 		"""
 
