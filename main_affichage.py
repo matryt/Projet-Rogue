@@ -11,8 +11,6 @@ while running:
     fenetre = pygame.display.set_mode((0, 0), (pygame.RESIZABLE))
     fenetre.convert()
     pygame.display.update()
-
-    pygame.display.update()
     for event in pygame.event.get():
         if event.type == KEYDOWN and event.key == K_ESCAPE:
             pygame.quit()
