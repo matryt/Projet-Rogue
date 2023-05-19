@@ -7,7 +7,7 @@ game = False
 
 clock = pygame.time.Clock()
 while running:
-    pygame.display.set_caption("Calcul mental ")
+    pygame.display.set_caption("DONGEON MASTER")
     fenetre = pygame.display.set_mode((0, 0), (pygame.RESIZABLE))
     fenetre.convert()
     pygame.display.update()
