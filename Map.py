@@ -49,6 +49,8 @@ class Map(object):
 		----------
 		size : int, optional
 			La taille de la carte
+		hero : Hero.Hero, optional
+			Le héros du jeu
 		nbrooms : int, optional
 			Le nombre de salles dans la carte
 		"""
@@ -68,10 +70,12 @@ class Map(object):
 		self._elem = {hero: coordH}
 		for r in self._rooms:
 			r.decorate(self)
+		self._visibleMap = [["~" for _ in range(self.size)] for _ in range(self.size)]
+		self.setVisible(self.rangeElement(self._hero))
 
 	def __repr__(self):
 		c = ""
-		for ligne in self._mat:
+		for ligne in self._visibleMap:
 			for elem in ligne:
 				c += str(elem)
 			c += "\n"
@@ -238,6 +242,7 @@ class Map(object):
 				self._elem[e] = dest
 			if self.get(dest) != Map.empty and self.get(dest) != e and self.get(dest).meet(e) and self.get(dest) != self._hero:
 				self.rm(dest)
+		self.setVisible(self.rangeElement(self._hero))
 
 	def __getitem__(self, key):
 		if isinstance(key, Coord.Coord):
@@ -347,8 +352,7 @@ class Map(object):
 			):
 				d = posMonster.direction(posHero, self)
 				if d:
-					s = self.get(posMonster + d)
-					if d and self.get(posMonster + d) in [Map.ground, self._hero]:
+					if self.get(posMonster + d) in [Map.ground, self._hero]:
 						self.move(m, d)
 
 	def randRoom(self):
@@ -380,3 +384,38 @@ class Map(object):
 			s = self.randRoom()
 			if self.intersectNone(s):
 				self.addRoom(s)
+
+	def setVisible(self, coords):
+		"""
+		Permet de rendre visible la liste de coordonnées passée en paramètre
+		Parameters
+		----------
+		coords : list
+			Liste de coordonnées à rendre visibles
+		"""
+		self._visibleMap = [["~" for _ in range(len(self))] for _ in range(len(self))]
+		for c in coords:
+			self._visibleMap[c.y][c.x] = self._mat[c.y][c.x]
+
+	def rangeElement(self, element, dist=5):
+		"""
+		Permet de renvoyer un ensemble de coordonnées à une distance donnée d'un élément
+		Parameters
+		----------
+		element : Element.Element
+			L'élément à partir duquel on veut calculer les coordonnées
+		dist : int
+			La distance à laquelle on veut trouver les cases
+
+		Returns
+		-------
+		list
+
+		"""
+		coordDepart = self.pos(element)
+		listeCoordonnees = []
+		for i in range(coordDepart.x-dist, coordDepart.x+dist+1):
+			for j in range(coordDepart.y-dist, coordDepart.y+dist+1):
+				if Coord.Coord(i, j) in self and coordDepart.distance(Coord.Coord(i, j)) <= dist:
+					listeCoordonnees.append(Coord.Coord(i, j))
+		return listeCoordonnees
