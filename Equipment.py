@@ -15,7 +15,7 @@ class Equipment(Element.Element):
 	_abbrv
 	"""
 
-	def __init__(self, name, abbrv="", usage=None):
+	def __init__(self, name, abbrv="", usage=None,resum = "a thing"):
 		"""
 
 		Parameters
@@ -25,7 +25,7 @@ class Equipment(Element.Element):
 		abbrv : str, optional
 			L'abréviation représentant l'équipement
 		"""
-		super().__init__(name, abbrv)
+		super().__init__(name, abbrv,resum)
 		self.usage = usage
 
 	def meet(self, elem):

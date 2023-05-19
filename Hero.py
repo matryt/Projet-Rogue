@@ -1,6 +1,8 @@
 import Equipment
 import Creature
 import importlib
+import Map
+from utils import getch
 
 theGame = importlib.import_module("theGame")
 
@@ -137,3 +139,30 @@ class Hero(Creature.Creature):
 
 		if u:
 			self._inventory.remove(item)
+	
+	def opendescription(self,item):
+		choice = getch()
+		try:
+			c = int(choice)
+			
+		except:
+			print("t con où ? faut rentrer un chiffre")
+			self.opendescription(item)
+
+
+		if c < 0 or c > 2:
+			print("arreteeeeeee")
+			return 
+		## il y a parfois des problèmes de confusion entre les touches de l'inventaire et de cette methode:
+		#pour palier à ça on pourrait remplacer les numeros par d'autres input qui sont pas des chiffres
+		if int(choice) == 0:  
+			self.use(item)
+		if int(choice) == 1:
+			print(item.resume)
+		if int(choice) == 3:
+			self._inventory.remove(item)
+			Map.put(Map.get(self),item)
+
+		#itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
+		
+		#return itemdescription[int(choice)]

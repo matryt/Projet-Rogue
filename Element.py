@@ -13,7 +13,7 @@ class Element(object):
 	Cette classe est abstraite et ne doit pas être instanciée.
 	"""
 
-	def __init__(self, name, abbrv=None):
+	def __init__(self, name, abbrv=None,resum = "a thing"):
 		"""
 
 		Parameters
@@ -25,6 +25,7 @@ class Element(object):
 		"""
 		self._name = name
 		self._abbrv = abbrv or name[0]
+		self.resume = resum
 
 	def __repr__(self):
 		return self._abbrv
