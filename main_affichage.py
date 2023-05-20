@@ -13,6 +13,3 @@ while running:
         if event.type == KEYDOWN and event.key == K_ESCAPE:
             pygame.quit()
             running = False
-        if event.type==pygame.quit():
-            pygame.quit()
-            running = False
