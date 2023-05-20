@@ -263,7 +263,7 @@ class Game(object):
 
 
 def setSeed():
-	#r = random.randint(0, 1000000000)
-	r = 449676610
+	r = random.randint(0, 1000000000)
+	#r =  402779774
 	random.seed(r)
 	return r

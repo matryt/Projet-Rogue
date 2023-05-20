@@ -108,6 +108,18 @@ class Creature(Element.Element):
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
 		if self._hp <= 0:
 			creature.xp += random.randint(1*self._strength,20*self._strength)
+			if creature.xp >= 20*creature._level:
+				creature._level += 1
+				print(creature._level)
+				theGame.theGame().addMessage("vous avez gagné un niveau ! ")
+				creature.hpMax += 2
+				creature.strengthMax += 1
+				creature._hp = creature.hpMax
+				creature._strength = creature.strengthMax
+				
+
+
+
 			#print(creature.xp)
 			return True   
 		return False  

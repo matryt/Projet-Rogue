@@ -21,8 +21,9 @@ class Hero(Creature.Creature):
 	_inventory
 	_xp 
 
-	"""
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0):
+	""" 
+
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1):
 		"""
 
 		Parameters
@@ -48,6 +49,10 @@ class Hero(Creature.Creature):
 		super().__init__(name, hp, abbrv, strength)
 		self._inventory = inventory
 		self.xp = xp
+		self.GoldCount =  GoldCount 
+		self._level = level 
+		self.hpMax = 10
+		self.strengthMax = 2 
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
@@ -72,7 +77,10 @@ class Hero(Creature.Creature):
 		"""
 		if not isinstance(elem, Equipment.Equipment):
 			raise TypeError("L'élément à prendre doit être du type Equipment")
-		self._inventory.append(elem)
+		if elem._name == "gold":
+			self.GoldCount += 1
+		else:
+			self._inventory.append(elem)
 
 	def meet(self, creature):
 		"""Est appelé lorsque le héros rencontre une créature
@@ -144,24 +152,23 @@ class Hero(Creature.Creature):
 		choice = getch()
 		try:
 			c = int(choice)
+			if c < 0 or c > 2:
+				print("arreteeeeeee")
+				return
 			
 		except:
 			print("t con où ? faut rentrer un chiffre")
 			self.opendescription(item)
 
-
-		if c < 0 or c > 2:
-			print("arreteeeeeee")
-			return 
+ 
 		## il y a parfois des problèmes de confusion entre les touches de l'inventaire et de cette methode:
 		#pour palier à ça on pourrait remplacer les numeros par d'autres input qui sont pas des chiffres
 		if int(choice) == 0:  
 			self.use(item)
 		if int(choice) == 1:
 			print(item.resume)
-		if int(choice) == 3:
+		if int(choice) == 2:
 			self._inventory.remove(item)
-			Map.put(Map.get(self),item)
 
 		#itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
 		
