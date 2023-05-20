@@ -89,8 +89,6 @@ class Game(object):
 
 	def getHero(self):
 		"""
-		Renvoie le héros du jeu
-
 		Returns
 		-------
 		Hero.Hero
@@ -227,7 +225,15 @@ class Game(object):
 		print("--- Game Over ---")
 
 	def getchSimulation(self):
-		return random.choice(list(Map.Map.dir.keys()))
+		"""
+		Renvoie une touche au hasard parmi les touches possibles
+
+		Returns
+		-------
+		str
+			La touche sélectionnée
+		"""
+		return random.choice(list(self._floor.dir.keys()))
 
 	def playSimulation(self):
 		"""Main game loop"""
@@ -263,7 +269,13 @@ class Game(object):
 
 
 def setSeed():
-	#r = random.randint(0, 1000000000)
-	r = 449676610
+	"""
+	Définit une graine aléatoire pour le jeu
+	Returns
+	-------
+	int
+		La graine aléatoire
+	"""
+	r = random.randint(0, 1000000000)
 	random.seed(r)
 	return r

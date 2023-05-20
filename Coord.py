@@ -62,6 +62,20 @@ class Coord(object):
 		return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
 
 	def direction(self, other, floor):
+		"""
+		Calcule la direction entre deux points
+		Parameters
+		----------
+		other : Coord
+			Le deuxième point
+		floor : Map
+			La carte sur laquelle se trouvent les points
+
+		Returns
+		-------
+		Coord
+			La direction entre les deux points
+		"""
 		n1 = Noeud.Noeud(self)
 		n2 = Noeud.Noeud(other)
 		chemin = n1.shortestPath(n2, floor)

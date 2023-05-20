@@ -13,6 +13,7 @@ class Equipment(Element.Element):
 	----------
 	_name
 	_abbrv
+	usage
 	"""
 
 	def __init__(self, name, abbrv="", usage=None,resum = "a thing"):
@@ -24,6 +25,8 @@ class Equipment(Element.Element):
 			Le nom de l'équipement
 		abbrv : str, optional
 			L'abréviation représentant l'équipement
+		usage : function, optional
+			La fonction à appeler quand l'équipement est utilisé
 		"""
 		super().__init__(name, abbrv,resum)
 		self.usage = usage
