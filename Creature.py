@@ -63,7 +63,6 @@ class Creature(Element.Element):
 
 	def getName(self):
 		"""
-
 		Returns
 		-------
 		str
@@ -73,7 +72,6 @@ class Creature(Element.Element):
 
 	def getStrength(self):
 		"""
-
 		Returns
 		-------
 		int
