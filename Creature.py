@@ -118,6 +118,5 @@ class Creature(Element.Element):
 
 
 
-			#print(creature.xp)
 			return True   
 		return False  

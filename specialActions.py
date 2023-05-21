@@ -54,3 +54,36 @@ def teleport(creature, unique):
 			moved = True
 		i += 1
 	return unique
+
+def equip(creature,outfit):
+	"""
+	equipe une créature d'une arme ou tenue et lui applique ses effets 
+
+	Parameters
+	----------
+	creature : Creature.Creature
+		La créature à equiper
+	outfit : Wearable.Wearable
+		l'objet à equiper
+
+	Returns
+	-------
+	bool
+		True
+
+	"""
+	for key in outfit.effect:
+		if key == 'strength':
+			creature._strength += outfit.effect[key] 
+			theGame.theGame().equiped_outfits.append(outfit)
+			outfit.durability -= 1
+			if outfit.durability == 0:
+				theGame.theGame().equiped_outfits.remove(outfit) 
+			return True
+			
+		if key == 'armor':
+			creature._hp += outfit.effect[key]
+			theGame.theGame().equiped_outfits.append(outfit)
+			return True
+
+
