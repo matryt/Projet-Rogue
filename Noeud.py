@@ -58,7 +58,7 @@ class Noeud(object):
 		i = 0
 		while i < len(listeVoisins):
 			v = listeVoisins[i]
-			if v.pos not in map or v.pos == Map.Map.empty:
+			if v.pos not in map or map.get(v.pos) == Map.Map.empty:
 				listeVoisins.pop(i)
 			else:
 				i+=1

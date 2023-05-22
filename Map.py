@@ -107,6 +107,50 @@ class Map(object):
 		"""
 		return self._rooms
 
+	def getElem(self):
+		"""
+		Returns
+		-------
+		list
+			La liste des éléments de la carte
+		"""
+		return self._elem
+
+	def getVisitedRooms(self):
+		"""
+		Returns
+		-------
+		list
+			La liste des salles visitées par le héros
+		"""
+		if self._simulation:
+			return self._roomsVisited
+		raise ValueError("Not in simulation")
+
+	def isInSimulation(self):
+		"""
+		Returns
+		-------
+		bool
+			Si on est en simulation ou non
+		"""
+		return self._simulation
+
+	def setVisitedRooms(self, rooms):
+		"""
+		Permet de mettre à jour les salles visitées par le héros
+		"""
+		if self._simulation:
+			self._roomsVisited = rooms
+		else:
+			raise ValueError("Not in simulation")
+
+	def shuffleRooms(self):
+		"""
+		Mélange les salles de la carte
+		"""
+		random.shuffle(self._rooms)
+
 	def checkCoord(self, c):
 		"""
 
@@ -247,10 +291,10 @@ class Map(object):
 				self._elem[e] = dest
 			if self.get(dest) != Map.empty and self.get(dest) != e and self.get(dest).meet(e) and self.get(dest) != self._hero:
 				self.rm(dest)
-		if self._simulation:
-			for m in self._rooms:
-				if dest in m:
-					self._roomsVisited.append(m)
+			if self._simulation:
+				for m in self._rooms:
+					if dest in m.coordsInRoom() and m not in self._roomsVisited:
+						self._roomsVisited.append(m)
 		self.setVisible(self.rangeElement(self._hero))
 
 	def __getitem__(self, key):

@@ -30,7 +30,7 @@ class Game(object):
 	_hero
 	_messages
 	_level
-	_floor : Map
+	_floor : Map.Map
 	_actions : dict
 		Actions possibles du jeu
 	_idMonsters : int
@@ -232,12 +232,14 @@ class Game(object):
 		str
 			La touche sélectionnée
 		"""
+		roomsVisited = self._floor.getVisitedRooms()
+		if len(self._floor.getRooms()) == len(roomsVisited):
+			self._floor.setVisitedRooms([])
+			self._floor.shuffleRooms()
 		for m in self._floor.getRooms():
 			if m not in self._floor._roomsVisited:
-				print(m)
-				s = self._floor._elem[self._hero].direction(m.center(), self._floor)
+				s = self._floor.getElem()[self._hero].direction(m.center(), self._floor)
 				if s:
-					print("Voilà la direction choisie : ", s)
 					return self.dir[s]
 		return random.choice(list(self.dir.values()))
 
