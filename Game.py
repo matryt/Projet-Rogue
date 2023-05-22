@@ -67,7 +67,7 @@ class Game(object):
 			Le héros à insérer dans la carte
 		level : int | None
 			Le niveau du jeu
-		floor : int | None
+		floor : Map.Map | None
 			La carte
 		messages : list | None
 			La liste des messages à afficher au joueur

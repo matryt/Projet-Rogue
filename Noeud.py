@@ -39,13 +39,12 @@ class Noeud(object):
 						voisin.heuristique = newCost + voisin.manhattanDistance(other)
 						voisin.parent = noeudCourant
 
-						if voisin not in listeOuverte:
-							listeOuverte.append(voisin)
+					if voisin not in listeOuverte:
+						listeOuverte.append(voisin)
 			if noeudCourant not in listeFermee:
 				listeFermee.append(noeudCourant)
 			if len(listeFermee) > len(map)**2:
-				print(len(listeFermee), listeFermee)
-				raise Exception("Noeud.shortestPath: listeFermee trop grande")
+				raise ValueError("ListeFermee trop grande ! Il y a sûrement une erreur dans la fonction shortestPath.")
 		return None
 
 	def voisins(self, map):

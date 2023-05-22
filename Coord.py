@@ -1,5 +1,4 @@
 import math
-import Hero
 import Map
 import Noeud
 
