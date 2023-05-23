@@ -3,6 +3,7 @@ import time
 import random
 
 import Stairs
+import Chest
 import Wearable
 from utils import getch
 from specialActions import heal, teleport, equip
@@ -61,6 +62,7 @@ class Game(object):
 				"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory)),
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
 				}
+	Allmonsters = []
 
 	def __init__(self, hero=None, level=1, floor=None, messages=None,equiped_outfits = []):
 		"""
@@ -90,6 +92,10 @@ class Game(object):
 		self._floor = Map.Map(hero=self._hero)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
+		self._floor.put(self._floor.getRooms()[-2].center(), Chest.Chest())
+		self.special_id = random.randint(0,len(self.Allmonsters))
+		print(self.Allmonsters)
+
 
 	def getHero(self):
 		"""
@@ -166,7 +172,7 @@ class Game(object):
 
 	def randMonster(self):
 		"""
-		Renvoie un monstre au hasard
+		Renvoie un monstre au hasard et incrémente une liste de tout les monstres 
 
 		Returns
 		-------
@@ -176,6 +182,7 @@ class Game(object):
 		s = self.randElement(Game.monsters)
 		s.setID(self._idMonsters)
 		self._idMonsters += 1
+		self.Allmonsters.append(s)
 		return s
 
 	@staticmethod
