@@ -1,6 +1,4 @@
 import math
-import random
-import Hero
 import Map
 import Noeud
 
@@ -68,7 +66,7 @@ class Coord(object):
 		----------
 		other : Coord
 			Le deuxième point
-		floor : Map
+		floor : Map.Map
 			La carte sur laquelle se trouvent les points
 
 		Returns
@@ -79,9 +77,6 @@ class Coord(object):
 		n1 = Noeud.Noeud(self)
 		n2 = Noeud.Noeud(other)
 		chemin = n1.shortestPath(n2, floor)
-		if isinstance(floor.get(self), Hero.Hero):
-			print("direction", self, other)
-			print("chemin", chemin)
 		if chemin:
 			return chemin[0] - self
 		return None
