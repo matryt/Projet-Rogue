@@ -23,6 +23,7 @@ class Chest(Element.Element):
 		"""Permet d'ouvrir le coffre à condition d'avoir une clé'"""
 		for object in hero._inventory:
 			if  object._name == "key":
+				hero._equipments.pop(object)
 				Totalequipments = theGame.theGame().equipments 
 				theGame.theGame().addMessage(f"you open the chest with the key")
 				theGame.theGame().addMessage(f"wowie, you just gained gold and stuff : ")
