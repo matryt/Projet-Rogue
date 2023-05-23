@@ -5,11 +5,11 @@ pygame.init()
 
 running = True
 game = False
-
+flags= pygame.FULLSCREEN | pygame.RESIZABLE
 clock = pygame.time.Clock()
 pygame.display.set_caption("DONGEON MASTER")
-screen= pygame.display.set_mode((0, 0),FULLSCREEN)
-screen2 = pygame.display.set_mode((0, 0),FULLSCREEN)
+screen= pygame.display.set_mode((0, 0),pygame.RESIZABLE)
+screen2 = pygame.display.set_mode((0, 0),pygame.RESIZABLE)
 while running:
     background = pygame.image.load('assets/background lancement.png')
     screen.blit(background,(0,0))
