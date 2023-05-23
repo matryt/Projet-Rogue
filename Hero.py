@@ -23,7 +23,7 @@ class Hero(Creature.Creature):
 
 	""" 
 
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False):
 		"""
 
 		Parameters
@@ -39,7 +39,13 @@ class Hero(Creature.Creature):
 		inventory : list, optional
 			L'inventaire du héros
 		xp : int, optional 
-		  les points d'expérience du héros 
+		  les points d'expérience du héros
+		GoldCount : int, optional
+			Le nombre de pièces d'or du héros
+		level : int, optional
+			Le niveau du héros
+		poisonned : bool, optional
+			Indique si le héros est empoisonné
 		"""
 
 		if inventory is None:
@@ -52,7 +58,8 @@ class Hero(Creature.Creature):
 		self.GoldCount =  GoldCount 
 		self._level = level 
 		self.hpMax = 10
-		self.strengthMax = 2 
+		self.strengthMax = 2
+		self._poisoned = poisoned
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
@@ -91,10 +98,26 @@ class Hero(Creature.Creature):
 			La créature qui est rencontrée
 		"""
 		self._hp -= creature.getStrength()
+		if creature.isPoisoning and not self._poisoned:
+			self.poison()
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
 
 	def description(self):
 		return f"{super().description()}{self._inventory}"
+
+	def poison(self):
+		"""Empoisonne le héros"""
+		theGame.theGame().addMessage("The hero is poisoned !")
+		self._poisoned = True
+
+	def checkPoison(self):
+		if self._poisoned:
+			self._hp -= 1
+			theGame.theGame().addMessage("The hero suffers from poison !")
+
+	def recover(self):
+		"""Soigne le héros"""
+		self._poisoned = False
 
 	def fullDescription(self):
 		"""Affiche une description complète du héros"""
