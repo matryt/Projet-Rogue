@@ -6,7 +6,7 @@ import Stairs
 import Chest
 import Wearable
 from utils import getch
-from specialActions import heal, teleport, equip
+from specialActions import heal, teleport, equip, recover
 import Equipment
 import Creature
 import Hero
@@ -34,7 +34,7 @@ class Game(object):
 	_hero
 	_messages
 	_level
-	_floor : Map
+	_floor : Map.Map
 	_actions : dict
 		Actions possibles du jeu
 	_idMonsters : int
@@ -46,11 +46,15 @@ class Game(object):
 				  1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
 				  2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 2},usage=lambda self, hero: equip(hero, self)),
 					  Equipment.Equipment("bow"),
-					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1})],
+					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1}),
+				      Equipment.Equipment("antidotal", usage=lambda self, hero: recover(hero, True))],
 				  3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False))],
 				  4: [Wearable.Wearable("chaimail", place='torso', effect={'armor': 2})]}
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
-				1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)], 5: [Creature.Creature("Dragon", 20, strength=3)]}
+				1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
+	            3: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
+				#5: [Creature.Creature("Dragon", 20, strength=3)]
+	            }
 
 	_actions = {'z': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, -1)),
 				's': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, 1)),
@@ -72,7 +76,7 @@ class Game(object):
 			Le héros à insérer dans la carte
 		level : int | None
 			Le niveau du jeu
-		floor : int | None
+		floor : Map.Map | None
 			La carte
 		messages : list | None
 			La liste des messages à afficher au joueur
@@ -87,9 +91,9 @@ class Game(object):
 		self.seed = None
 		self.equiped_outfits = equiped_outfits
 
-	def buildFloor(self):
+	def buildFloor(self, s=False):
 		"""Construit la carte"""
-		self._floor = Map.Map(hero=self._hero)
+		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
 		self._floor.put(self._floor.getRooms()[-2].center(), Chest.Chest())
@@ -233,6 +237,7 @@ class Game(object):
 			c = getch()
 			if c in Game._actions:
 				Game._actions[c](self._hero)
+			self._hero.checkPoison()
 			self._floor.moveAllMonsters()
 		print("--- Game Over ---")
 
@@ -245,12 +250,27 @@ class Game(object):
 		str
 			La touche sélectionnée
 		"""
-		return random.choice(list(self._floor.dir.keys()))
+		roomsVisited = self._floor.getVisitedRooms()
+		if len(self._floor.getRooms()) == len(roomsVisited):
+			self._floor.setVisitedRooms([])
+			self._floor.shuffleRooms()
+		for m in self._floor.getRooms():
+			if m not in self._floor._roomsVisited:
+				s = self._floor.getElem()[self._hero].direction(m.center(), self._floor)
+				if s:
+					return self.dir[s]
+		return random.choice(list(self.dir.values()))
 
 	def playSimulation(self):
+		self.dir = {
+			Coord.Coord(0, -1) : 'z',
+			Coord.Coord(0, 1) : 's',
+			Coord.Coord(1, 0) : 'd',
+			Coord.Coord(-1, 0) : 'q'
+		}
 		"""Main game loop"""
 		self.seed = setSeed()
-		self.buildFloor()
+		self.buildFloor(True)
 		print("--- Welcome Hero! ---")
 		i = 0
 		while self._hero.getHP() > 0:
@@ -276,6 +296,7 @@ class Game(object):
 				i += 1
 			if c in Game._actions:
 				Game._actions[c](self._hero)
+			self._hero.checkPoison()
 			self._floor.moveAllMonsters()
 		print("--- Game Over ---")
 

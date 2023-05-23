@@ -34,6 +34,11 @@ class Room(object):
 	def __repr__(self):
 		return f"[{self.c1}, {self.c2}]"
 
+	def __eq__(self, other):
+		if type(self) is type(other):
+			return self.c1 == other.c1 and self.c2 == other.c2
+		raise NotImplementedError
+
 	def __contains__(self, other):
 		return self.c1.x <= other.x <= self.c2.x and self.c1.y <= other.y <= self.c2.y
 
