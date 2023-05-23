@@ -19,7 +19,7 @@ class Creature(Element.Element):
 	_idCreature
 	"""
 
-	def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None):
+	def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False):
 		"""
 
 		Parameters
@@ -34,11 +34,14 @@ class Creature(Element.Element):
 			La force de la créature
 		idCreature : int, optional
 			L'identifiant de la créature
+		isPoisoning : bool, optional
+			Indique si la créature empoisonne le héros
 		"""
 		super().__init__(name, abbrv)
 		self._hp = hp
 		self._strength = strength
 		self._idCreature = idCreature
+		self.isPoisoning = isPoisoning
 
 	def __eq__(self, other):
 		if isinstance(other, Creature):
