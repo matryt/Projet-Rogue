@@ -5,7 +5,7 @@ import random
 import Stairs
 import Wearable
 from utils import getch
-from specialActions import heal, teleport
+from specialActions import heal, teleport, equip
 import Equipment
 import Creature
 import Hero
@@ -27,6 +27,9 @@ class Game(object):
 		Equipements qui peuvent être positionnées sur la carte
 	monsters : list
 		Monstres pouvant être positionnées sur la carte
+	equiped_outfits : list 
+		tenues et armes equipés
+
 	_hero
 	_messages
 	_level
@@ -38,28 +41,28 @@ class Game(object):
 	"""
 
 	equipments = {0: [Equipment.Equipment("potion", "!", usage=lambda self, hero: heal(hero)),
-	                  Equipment.Equipment("gold", "o")],
-	              1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
-	              2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 2}),
-	                  Equipment.Equipment("bow"),
-	                  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1})],
-	              3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False))],
-	              4: [Wearable.Wearable("chaimail", place='torso', effect={'armor': 2})]}
+					  Equipment.Equipment("gold", "o")],
+				  1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
+				  2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 2},usage=lambda self, hero: equip(hero, self)),
+					  Equipment.Equipment("bow"),
+					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1})],
+				  3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False))],
+				  4: [Wearable.Wearable("chaimail", place='torso', effect={'armor': 2})]}
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
-	            1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)], 5: [Creature.Creature("Dragon", 20, strength=3)]}
+				1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)], 5: [Creature.Creature("Dragon", 20, strength=3)]}
 
 	_actions = {'z': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, -1)),
-	            's': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, 1)),
-	            'q': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(-1, 0)),
-	            "d": lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(1, 0)),
-	            "i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
-	            "k": lambda hero: hero.__setattr__('_hp', 0),
-	            " ": lambda hero: None,
-	            "u": lambda hero: hero.use(theGame.theGame().select(hero.getInventory())),
+				's': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, 1)),
+				'q': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(-1, 0)),
+				"d": lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(1, 0)),
+				"i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
+				"k": lambda hero: hero.__setattr__('_hp', 0),
+				" ": lambda hero: None,
+				"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory)),
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
-	            }
+				}
 
-	def __init__(self, hero=None, level=1, floor=None, messages=None):
+	def __init__(self, hero=None, level=1, floor=None, messages=None,equiped_outfits = []):
 		"""
 		Parameters
 		----------
@@ -80,6 +83,7 @@ class Game(object):
 		self._messages = messages
 		self._idMonsters = 0
 		self.seed = None
+		self.equiped_outfits = equiped_outfits
 
 	def buildFloor(self, s=False):
 		"""Construit la carte"""
@@ -205,6 +209,8 @@ class Game(object):
 			c = f"{c[:-2]}]"
 			print(c)
 			n = getch()
+		itemdescription = "\t Choose action>  [0: 'use' , 1: 'description', 2: 'drop']"
+		print(itemdescription)
 		return listeChoix[int(n)]
 
 	def play(self):

@@ -14,9 +14,10 @@ class Equipment(Element.Element):
 	_name
 	_abbrv
 	usage
+	resum
 	"""
 
-	def __init__(self, name, abbrv="", usage=None):
+	def __init__(self, name, abbrv="", usage=None,resum = "a thing"):
 		"""
 
 		Parameters
@@ -27,8 +28,10 @@ class Equipment(Element.Element):
 			L'abréviation représentant l'équipement
 		usage : function, optional
 			La fonction à appeler quand l'équipement est utilisé
+		resum : str, optional 
+			Un resumé sur l'equipment 
 		"""
-		super().__init__(name, abbrv)
+		super().__init__(name, abbrv,resum)
 		self.usage = usage
 
 	def meet(self, elem):
@@ -44,6 +47,12 @@ class Equipment(Element.Element):
 		bool
 			True
 		"""
+		"""inventaire limité: return False quand un equipment est rencontré par un element si l'inventaire du héro dépasse X valeur."""
+		if len(theGame.theGame()._hero._inventory) == 10:
+            
+			theGame.theGame().addMessage("Your inventory is full "+str(theGame.theGame()._hero._name))
+			return False
+
 		elem.take(self)
 		theGame.theGame().addMessage(f"You pick up a {self._name}")
 		return True
