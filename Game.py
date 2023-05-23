@@ -281,7 +281,6 @@ def setSeed():
 	int
 		La graine aléatoire
 	"""
-	r =  102781142
-	#r = random.randint(0, 1000000000)
+	r = random.randint(0, 1000000000)
 	random.seed(r)
 	return r
