@@ -11,14 +11,15 @@ pygame.display.set_caption("DONGEON MASTER")
 screen= pygame.display.set_mode((0, 0),FULLSCREEN)
 screen2 = pygame.display.set_mode((0, 0),FULLSCREEN)
 while running:
-    screen.fill([0,0,128])
+    background = pygame.image.load('assets/background lancement.png')
+    screen.blit(background,(0,0))
     varText = "Press ESCAPE to quit"
     font = pygame.font.Font('freesansbold.ttf', 40)
     text = font.render(varText, True, 'black')
     textRect = text.get_rect()
     textRect.center = (210,screen.get_size()[1]-25)
     screen.blit(text, textRect)
-    play_button = pygame.image.load('assets/bouton.png')
+    play_button = pygame.image.load('assets/LOGO-PLAY.png')
     play_button_rect = play_button.get_rect()
     play_button_rect.center=screen.get_rect().center
     screen.blit(play_button,play_button_rect)
