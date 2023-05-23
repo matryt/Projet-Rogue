@@ -87,4 +87,20 @@ def equip(creature,outfit):
 			theGame.theGame().equiped_outfits.append(outfit)
 			return True
 
+def recover(creature, unique):
+	"""
+	Soigne une créature
 
+	Parameters
+	----------
+	creature : Creature.Creature
+		La créature à soigner
+	unique : bool
+
+	Returns
+	-------
+	bool
+
+	"""
+	creature.recover()
+	return True
