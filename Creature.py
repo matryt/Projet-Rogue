@@ -94,7 +94,7 @@ class Creature(Element.Element):
 
 		Parameters
 		----------
-		creature : Creature
+		creature : Creature.Creature
 			L'autre créature
 
 		Returns
@@ -110,8 +110,8 @@ class Creature(Element.Element):
 				creature._level += 1
 				print(creature._level)
 				theGame.theGame().addMessage("vous avez gagné un niveau ! ")
-				creature.hpMax += 2
-				creature.strengthMax += 1
+				creature.hpMax += random.randint(0, 2)
+				creature.strengthMax += random.randint(0, 1)
 				creature._hp = creature.hpMax
 				creature._strength = creature.strengthMax
 				
