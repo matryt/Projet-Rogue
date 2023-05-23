@@ -74,12 +74,13 @@ def equip(creature,outfit):
 	"""
 	for key in outfit.effect:
 		if key == 'strength':
-			creature._strength += outfit.effect[key] 
+			creature._strength += outfit.effect[key] + 100
 			theGame.theGame().equiped_outfits.append(outfit)
 			outfit.durability -= 1
 			if outfit.durability == 0:
 				theGame.theGame().equiped_outfits.remove(outfit) 
-			return True
+				return True
+			return False 
 			
 		if key == 'armor':
 			creature._hp += outfit.effect[key]
