@@ -208,6 +208,7 @@ class Game(object):
 				c += f"\'{i}: {choice.getName()}\', "
 			c = f"{c[:-2]}]"
 			print(c)
+			n = getch()
 		itemdescription = "\t Choose action>  [0: 'use' , 1: 'description', 2: 'drop']"
 		print(itemdescription)
 		return listeChoix[int(n)]
