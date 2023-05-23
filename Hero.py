@@ -1,6 +1,8 @@
 import Equipment
 import Creature
 import importlib
+import Map
+from utils import getch
 
 theGame = importlib.import_module("theGame")
 
@@ -17,9 +19,11 @@ class Hero(Creature.Creature):
 	_hp
 	_strength
 	_inventory
+	_xp 
 
-	"""
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None):
+	""" 
+
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1):
 		"""
 
 		Parameters
@@ -34,6 +38,8 @@ class Hero(Creature.Creature):
 			La force de la créature
 		inventory : list, optional
 			L'inventaire du héros
+		xp : int, optional 
+		  les points d'expérience du héros 
 		"""
 
 		if inventory is None:
@@ -42,6 +48,11 @@ class Hero(Creature.Creature):
 			abbrv = "@"
 		super().__init__(name, hp, abbrv, strength)
 		self._inventory = inventory
+		self.xp = xp
+		self.GoldCount =  GoldCount 
+		self._level = level 
+		self.hpMax = 10
+		self.strengthMax = 2 
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
@@ -66,7 +77,10 @@ class Hero(Creature.Creature):
 		"""
 		if not isinstance(elem, Equipment.Equipment):
 			raise TypeError("L'élément à prendre doit être du type Equipment")
-		self._inventory.append(elem)
+		if elem._name == "gold":
+			self.GoldCount += 1
+		else:
+			self._inventory.append(elem)
 
 	def meet(self, creature):
 		"""Est appelé lorsque le héros rencontre une créature
@@ -133,3 +147,29 @@ class Hero(Creature.Creature):
 
 		if u:
 			self._inventory.remove(item)
+	
+	def opendescription(self,item):
+		choice = getch()
+		try:
+			c = int(choice)
+			if c < 0 or c > 2:
+				print("arreteeeeeee")
+				return
+			
+		except:
+			print("t con où ? faut rentrer un chiffre")
+			self.opendescription(item)
+
+ 
+		## il y a parfois des problèmes de confusion entre les touches de l'inventaire et de cette methode:
+		#pour palier à ça on pourrait remplacer les numeros par d'autres input qui sont pas des chiffres
+		if int(choice) == 0:  
+			self.use(item)
+		if int(choice) == 1:
+			print(item.resume)
+		if int(choice) == 2:
+			self._inventory.remove(item)
+
+		#itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
+		
+		#return itemdescription[int(choice)]
