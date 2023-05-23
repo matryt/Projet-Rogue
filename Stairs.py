@@ -21,5 +21,8 @@ class Stairs(Element.Element):
 	@staticmethod
 	def meet(*args):
 		"""Permet de descendre d'un étage"""
-		theGame.theGame().buildFloor()
+		if theGame.theGame().getFloor().isInSimulation():
+			theGame.theGame().buildFloor(True)
+		else:
+			theGame.theGame().buildFloor()
 		theGame.theGame().addMessage(f"The {theGame.theGame().getHero().getName()} goes down")

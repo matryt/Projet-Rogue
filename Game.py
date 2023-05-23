@@ -33,7 +33,7 @@ class Game(object):
 	_hero
 	_messages
 	_level
-	_floor : Map
+	_floor : Map.Map
 	_actions : dict
 		Actions possibles du jeu
 	_idMonsters : int
@@ -74,7 +74,7 @@ class Game(object):
 			Le héros à insérer dans la carte
 		level : int | None
 			Le niveau du jeu
-		floor : int | None
+		floor : Map.Map | None
 			La carte
 		messages : list | None
 			La liste des messages à afficher au joueur
@@ -89,9 +89,9 @@ class Game(object):
 		self.seed = None
 		self.equiped_outfits = equiped_outfits
 
-	def buildFloor(self):
+	def buildFloor(self, s=False):
 		"""Construit la carte"""
-		self._floor = Map.Map(hero=self._hero)
+		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
 
@@ -243,12 +243,27 @@ class Game(object):
 		str
 			La touche sélectionnée
 		"""
-		return random.choice(list(self._floor.dir.keys()))
+		roomsVisited = self._floor.getVisitedRooms()
+		if len(self._floor.getRooms()) == len(roomsVisited):
+			self._floor.setVisitedRooms([])
+			self._floor.shuffleRooms()
+		for m in self._floor.getRooms():
+			if m not in self._floor._roomsVisited:
+				s = self._floor.getElem()[self._hero].direction(m.center(), self._floor)
+				if s:
+					return self.dir[s]
+		return random.choice(list(self.dir.values()))
 
 	def playSimulation(self):
+		self.dir = {
+			Coord.Coord(0, -1) : 'z',
+			Coord.Coord(0, 1) : 's',
+			Coord.Coord(1, 0) : 'd',
+			Coord.Coord(-1, 0) : 'q'
+		}
 		"""Main game loop"""
 		self.seed = setSeed()
-		self.buildFloor()
+		self.buildFloor(True)
 		print("--- Welcome Hero! ---")
 		i = 0
 		while self._hero.getHP() > 0:
