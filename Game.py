@@ -134,7 +134,7 @@ class Game(object):
 		"""
 		if not self._messages:
 			return ""
-		msg = ". ".join(self._messages)+"."
+		msg = ". \n".join(self._messages)+"."
 		self._messages = []
 		return msg
 

@@ -100,10 +100,12 @@ class Hero(Creature.Creature):
 		self._hp -= creature.getStrength()
 		if creature.isPoisoning and not self._poisoned:
 			self.poison()
-		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
+		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.conciseDescription()}")
 
-	def description(self):
+	def conciseDescription(self):
 		return f"{super().description()}{self._inventory}"
+	def description(self):
+		return f"{super().description()} \nYou have {len(self._inventory)} object(s) : {self._inventory} and {self.GoldCount} gold(s)"
 
 	def poison(self):
 		"""Empoisonne le héros"""
