@@ -42,7 +42,7 @@ class Map(object):
 		'q': Coord.Coord(-1, 0)
 	}
 
-	def __init__(self, size=20, hero=None, nbrooms=7):
+	def __init__(self, size=20, hero=None, nbrooms=7, simulation=False):
 		"""
 
 		Parameters
@@ -53,6 +53,8 @@ class Map(object):
 			Le héros du jeu
 		nbrooms : int, optional
 			Le nombre de salles dans la carte
+		simulation : bool, optional
+			Si on est en simulation ou non
 		"""
 		self.size = size
 		if hero is None:
@@ -72,6 +74,9 @@ class Map(object):
 			r.decorate(self)
 		self._visibleMap = [["~" for _ in range(self.size)] for _ in range(self.size)]
 		self.setVisible(self.rangeElement(self._hero))
+		self._simulation = simulation
+		if simulation:
+			self._roomsVisited = []
 
 	def __repr__(self):
 		c = ""
@@ -101,6 +106,50 @@ class Map(object):
 			La liste des salles de la carte
 		"""
 		return self._rooms
+
+	def getElem(self):
+		"""
+		Returns
+		-------
+		list
+			La liste des éléments de la carte
+		"""
+		return self._elem
+
+	def getVisitedRooms(self):
+		"""
+		Returns
+		-------
+		list
+			La liste des salles visitées par le héros
+		"""
+		if self._simulation:
+			return self._roomsVisited
+		raise ValueError("Not in simulation")
+
+	def isInSimulation(self):
+		"""
+		Returns
+		-------
+		bool
+			Si on est en simulation ou non
+		"""
+		return self._simulation
+
+	def setVisitedRooms(self, rooms):
+		"""
+		Permet de mettre à jour les salles visitées par le héros
+		"""
+		if self._simulation:
+			self._roomsVisited = rooms
+		else:
+			raise ValueError("Not in simulation")
+
+	def shuffleRooms(self):
+		"""
+		Mélange les salles de la carte
+		"""
+		random.shuffle(self._rooms)
 
 	def checkCoord(self, c):
 		"""
@@ -242,6 +291,10 @@ class Map(object):
 				self._elem[e] = dest
 			if self.get(dest) != Map.empty and self.get(dest) != e and self.get(dest).meet(e) and self.get(dest) != self._hero:
 				self.rm(dest)
+			if self._simulation:
+				for m in self._rooms:
+					if dest in m.coordsInRoom() and m not in self._roomsVisited:
+						self._roomsVisited.append(m)
 		self.setVisible(self.rangeElement(self._hero))
 
 	def __getitem__(self, key):

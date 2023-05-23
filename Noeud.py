@@ -8,6 +8,14 @@ class Noeud(object):
 		self.heuristique = heuristique
 		self.parent = parent
 
+	def __repr__(self):
+		return f"{self.pos}"
+
+	def __eq__(self, other):
+		if isinstance(other, Noeud):
+			return self.pos == other.pos
+		raise NotImplementedError
+
 	def manhattanDistance(self, other):
 		if isinstance(other, Noeud):
 			return abs(self.pos.x - other.pos.x) + abs(self.pos.y - other.pos.y)
@@ -31,12 +39,12 @@ class Noeud(object):
 						voisin.heuristique = newCost + voisin.manhattanDistance(other)
 						voisin.parent = noeudCourant
 
-						if voisin not in listeOuverte:
-							listeOuverte.append(voisin)
+					if voisin not in listeOuverte:
+						listeOuverte.append(voisin)
 			if noeudCourant not in listeFermee:
 				listeFermee.append(noeudCourant)
-			if len(listeFermee) >= len(map)**2:
-				return None
+			if len(listeFermee) > len(map)**2:
+				raise ValueError("ListeFermee trop grande ! Il y a sûrement une erreur dans la fonction shortestPath.")
 		return None
 
 	def voisins(self, map):
@@ -49,7 +57,7 @@ class Noeud(object):
 		i = 0
 		while i < len(listeVoisins):
 			v = listeVoisins[i]
-			if v.pos not in map or map.get(v.pos) not in [Map.Map.ground, map._hero]:
+			if v.pos not in map or map.get(v.pos) == Map.Map.empty:
 				listeVoisins.pop(i)
 			else:
 				i+=1
