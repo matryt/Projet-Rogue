@@ -1,5 +1,6 @@
 import Element
 import importlib
+import random
 
 theGame = importlib.import_module("theGame")
 
@@ -93,7 +94,7 @@ class Creature(Element.Element):
 
 		Parameters
 		----------
-		creature : Creature
+		creature : Creature.Creature
 			L'autre créature
 
 		Returns
@@ -103,4 +104,19 @@ class Creature(Element.Element):
 		"""
 		self._hp -= creature.getStrength()
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
-		return self._hp <= 0
+		if self._hp <= 0:
+			creature.xp += random.randint(1*self._strength,20*self._strength)
+			if creature.xp >= 20*creature._level:
+				creature._level += 1
+				print(creature._level)
+				theGame.theGame().addMessage("vous avez gagné un niveau ! ")
+				creature.hpMax += random.randint(0, 2)
+				creature.strengthMax += random.randint(0, 1)
+				creature._hp = creature.hpMax
+				creature._strength = creature.strengthMax
+				
+
+
+
+			return True   
+		return False  
