@@ -8,11 +8,13 @@ game = False
 flags= pygame.FULLSCREEN | pygame.RESIZABLE
 clock = pygame.time.Clock()
 pygame.display.set_caption("DONGEON MASTER")
-screen= pygame.display.set_mode((0, 0),pygame.RESIZABLE)
-screen2 = pygame.display.set_mode((0, 0),pygame.RESIZABLE)
+screen= pygame.display.set_mode((0, 0),flags)
+scrrec=screen.get_rect()
+screen2 = pygame.display.set_mode((0, 0),flags)
+background=pygame.transform.scale(pygame.image.load('assets/background lancement.png').convert(),(scrrec.right,scrrec.bottom))
+screen.blit(background,(0,0))
 while running:
-    background = pygame.image.load('assets/background lancement.png')
-    screen.blit(background,(0,0))
+    
     varText = "Press ESCAPE to quit"
     font = pygame.font.Font('freesansbold.ttf', 40)
     text = font.render(varText, True, 'black')
@@ -27,8 +29,8 @@ while running:
     pygame.display.update()
     for event in pygame.event.get():
         if event.type ==pygame.QUIT :
-                running= False
-                pygame.quit()
+            running= False
+            pygame.quit()
         if event.type == KEYDOWN and event.key == K_ESCAPE:
             pygame.quit()
             running = False
