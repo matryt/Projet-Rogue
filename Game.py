@@ -98,7 +98,7 @@ class Game(object):
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
 		self._floor.put(self._floor.getRooms()[-2].center(), Chest.Chest())
 		self.special_id = random.randint(0,len(self.Allmonsters))
-		Chest.Chest().chestopened = False
+		#Chest.Chest().chestopened = False
 
 
 	def getHero(self):

@@ -4,7 +4,7 @@ import random
 
 theGame = importlib.import_module("theGame")
 
-chestopened = False
+
 
 class Chest(Element.Element):
 	"""
@@ -17,8 +17,9 @@ class Chest(Element.Element):
 		L'abréviation représentant le coffre 
 	"""
 
-	def __init__(self):
+	def __init__(self,chestopened = False):
 		super().__init__("Chest", "M")
+		self.chestopened = chestopened
 		
 	def meet(self,hero):
 		"""Permet d'ouvrir le coffre à condition d'avoir une clé'""" 
