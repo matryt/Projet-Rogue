@@ -74,9 +74,14 @@ def equip(creature,outfit):
 	"""
 	for key in outfit.effect:
 		if key == 'strength':
-			creature._strength += outfit.effect[key] + 100
-			theGame.theGame().equiped_outfits.append(outfit)
-			outfit.durability -= 1
+			#if creature.strengthMax != creature._strength + outfit.effect[key]:
+			#	theGame.theGame().equiped_outfits.append(outfit)
+			#	return True 
+			#JE SAIS PAS PUTAIN 		
+			while outfit.durability != 0:
+					creature._strength += outfit.effect[key] + 100
+					theGame.theGame().equiped_outfits.append(outfit)
+					outfit.durability -= 1
 			if outfit.durability == 0:
 				theGame.theGame().equiped_outfits.remove(outfit) 
 				return True
