@@ -62,8 +62,9 @@ class Game(object):
 				"i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
 				"k": lambda hero: hero.__setattr__('_hp', 0),
 				" ": lambda hero: None,
-				"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory)),
+				"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
+	            "f": lambda hero: theGame.theGame().floorInfos(),
 				}
 
 	def __init__(self, hero=None, level=1, floor=None, messages=None,equiped_outfits = []):
@@ -213,7 +214,7 @@ class Game(object):
 			c = f"{c[:-2]}]"
 			print(c)
 			n = getch()
-		itemdescription = "\t Choose action>  [0: 'use' , 1: 'description', 2: 'drop']"
+		itemdescription = "\t Choose action>  [0: 'use' , 1: 'description', 2: 'drop', 3: 'destroy']"
 		print(itemdescription)
 		return listeChoix[int(n)]
 
@@ -254,6 +255,17 @@ class Game(object):
 					return self.dir[s]
 		return random.choice(list(self.dir.values()))
 
+	def getLevel(self):
+		"""
+		Renvoie le niveau actuel
+
+		Returns
+		-------
+		int
+			Le niveau actuel
+		"""
+		return self._level
+
 	def playSimulation(self):
 		self.dir = {
 			Coord.Coord(0, -1) : 'z',
@@ -293,6 +305,11 @@ class Game(object):
 			self._floor.moveAllMonsters()
 		print("--- Game Over ---")
 
+	def floorInfos(self):
+		"""
+		Affiche l'étage actuel
+		"""
+		theGame.theGame().addMessage(f"You are at floor {self._level}")
 
 def setSeed():
 	"""

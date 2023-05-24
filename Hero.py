@@ -1,6 +1,8 @@
 import Equipment
 import Creature
 import importlib
+import random
+
 import Map
 from utils import getch
 
@@ -105,17 +107,17 @@ class Hero(Creature.Creature):
 	def conciseDescription(self):
 		return f"{super().description()}{self._inventory}"
 	def description(self):
-		return f"{super().description()} \nYou have {len(self._inventory)} object(s) : {self._inventory} and {self.GoldCount} gold(s)"
+		return f"{super().description()} - Level {self._level} - {self.xp} XP \nYou have {len(self._inventory)} object(s) : {self._inventory} and {self.GoldCount} gold(s)"
 
 	def poison(self):
 		"""Empoisonne le héros"""
-		theGame.theGame().addMessage("The hero is poisoned !")
+		theGame.theGame().addMessage("The hero is poisoned")
 		self._poisoned = True
 
 	def checkPoison(self):
 		if self._poisoned:
 			self._hp -= 1
-			theGame.theGame().addMessage("The hero suffers from poison !")
+			theGame.theGame().addMessage("The hero suffers from poison")
 
 	def recover(self):
 		"""Soigne le héros"""
@@ -173,27 +175,36 @@ class Hero(Creature.Creature):
 		if u:
 			self._inventory.remove(item)
 	
-	def opendescription(self,item):
+	def opendescription(self,item, map):
 		choice = getch()
 		try:
 			c = int(choice)
 			if c < 0 or c > 2:
 				print("arreteeeeeee")
 				return
-			
+
 		except:
 			print("t con où ? faut rentrer un chiffre")
 			self.opendescription(item)
 
- 
 		## il y a parfois des problèmes de confusion entre les touches de l'inventaire et de cette methode:
 		#pour palier à ça on pourrait remplacer les numeros par d'autres input qui sont pas des chiffres
-		if int(choice) == 0:  
+		if c == 0:
 			self.use(item)
-		if int(choice) == 1:
+		if c == 1:
 			print(item.resume)
-		if int(choice) == 2:
+		if c == 3:
 			self._inventory.remove(item)
+		if c == 2:
+			voisins = map.pos(self).voisins(map)
+			for v in voisins:
+				if map.get(v) != Map.Map.empty:
+					voisins.remove(v)
+			if v:
+				map.put(random.choice(voisins), item)
+				self._inventory.remove(item)
+			else:
+				theGame.theGame().addMessage("There is no place to drop the item")
 
 		#itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
 		
