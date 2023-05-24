@@ -42,6 +42,7 @@ class Game(object):
 	"""
 
 	equipments = {0: [Equipment.Equipment("potion", "!", usage=lambda self, hero: heal(hero)),
+		   			  Wearable.Wearable("broken sword", place='right hand', effect={'strength': 1},usage=lambda self, hero: equip(hero, self)),
 					  Equipment.Equipment("gold", "o")],
 				  1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
 				  2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 2},usage=lambda self, hero: equip(hero, self)),
@@ -96,14 +97,14 @@ class Game(object):
 		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
-		if Map.Map().nbRooms >= 2 and self._level >= 5 and self._level <= 15:
-			okcoord = Map.Map()._rooms
-			self._floor.put(self._floor.getRooms()[random.randint(1,len(okcoord)-1)].center(), Chest.Chest())
+		#if Map.Map().nbRooms >= 2 and self._level >= 5 and self._level <= 15:
+			#okcoord = Map.Map()._rooms
+			#self._floor.put(self._floor.getRooms()[random.randint(1,len(okcoord)-1)].center(), Chest.Chest())
 			# je sais pas comment faire je veux que le coffre soit mis à une position aleatoire sur la map....
-		if self._level >= 15:
-			randomValue = random.randint(1,4)
-			if randomValue == 1:
-				self._floor.put(self._floor.getRooms()[random.randint(1,len(okcoord)-1)].center(), Chest.Chest(size = "big"))
+		#if self._level >= 15:
+			#randomValue = random.randint(1,4)
+			#if randomValue == 1:
+				#self._floor.put(self._floor.getRooms()[random.randint(1,len(okcoord)-1)].center(), Chest.Chest(size = "big"))
 			
 		self.special_id = random.randint(0,len(self.Allmonsters))
 
@@ -317,5 +318,6 @@ def setSeed():
 		La graine aléatoire
 	"""
 	r = random.randint(0, 1000000000)
+	#r = 102781142
 	random.seed(r)
 	return r
