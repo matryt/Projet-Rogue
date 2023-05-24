@@ -52,7 +52,7 @@ class Game(object):
 				  4: [Wearable.Wearable("chaimail", place='torso', effect={'armor': 2})]}
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
 				1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
-	            3: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
+	            #3: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
 				#5: [Creature.Creature("Dragon", 20, strength=3)]
 	            }
 
@@ -96,9 +96,16 @@ class Game(object):
 		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
-		self._floor.put(self._floor.getRooms()[-2].center(), Chest.Chest())
+		if Map.Map().nbRooms >= 2 and self._level >= 5 and self._level <= 15:
+			okcoord = Map.Map()._rooms
+			self._floor.put(self._floor.getRooms()[random.randint(1,len(okcoord)-1)].center(), Chest.Chest())
+			# je sais pas comment faire je veux que le coffre soit mis à une position aleatoire sur la map....
+		if self._level >= 15:
+			randomValue = random.randint(1,4)
+			if randomValue == 1:
+				self._floor.put(self._floor.getRooms()[random.randint(1,len(okcoord)-1)].center(), Chest.Chest(size = "big"))
+			
 		self.special_id = random.randint(0,len(self.Allmonsters))
-		#Chest.Chest().chestopened = False
 
 
 	def getHero(self):
