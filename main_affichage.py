@@ -2,7 +2,6 @@ import pygame
 import math
 from pygame.locals import *
 pygame.init()
-
 running = True
 game = False
 flags= pygame.FULLSCREEN | pygame.RESIZABLE
@@ -14,13 +13,6 @@ screen2 = pygame.display.set_mode((0, 0),flags)
 background=pygame.transform.scale(pygame.image.load('assets/background lancement.png').convert(),(scrrec.right,scrrec.bottom))
 screen.blit(background,(0,0))
 while running:
-    
-    varText = "Press ESCAPE to quit"
-    font = pygame.font.Font('freesansbold.ttf', 40)
-    text = font.render(varText, True, 'black')
-    textRect = text.get_rect()
-    textRect.center = (210,screen.get_size()[1]-25)
-    screen.blit(text, textRect)
     play_button = pygame.image.load('assets/LOGO-PLAY.png')
     play_button_rect = play_button.get_rect()
     play_button_rect.center=screen.get_rect().center
@@ -41,8 +33,10 @@ while running:
                 
     
     while game :
-        screen2.fill([0,0,128])
-        varText = ""
+        screen2.fill('white')
+        varText = "Press ESCAPE to quit"
+        font = pygame.font.Font('freesansbold.ttf', 40)
+        text = font.render(varText, True, 'black')
         textRect = text.get_rect()
         textRect.center = (210,screen2.get_size()[1]-25)
         screen2.blit(text, textRect)
