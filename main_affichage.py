@@ -5,23 +5,24 @@ pygame.init()
 running = True
 game = False
 aide = False
-flags= pygame.FULLSCREEN
+flags= pygame.FULLSCREEN | pygame.RESIZABLE
+
 clock = pygame.time.Clock()
 pygame.display.set_caption("DONGEON MASTER")
 screen= pygame.display.set_mode((1820,980),pygame.RESIZABLE)
-scrrec=screen.get_rect()
+
 
 
 
 
 while running:
+    scrrec=screen.get_rect()
     background=pygame.transform.scale(pygame.image.load('assets/background lancement.png').convert(),(scrrec.right,scrrec.bottom))
     screen.blit(background,(0,0))
     play_button = pygame.image.load('assets/LOGO-PLAY.png')
     play_button_rect = play_button.get_rect()
     play_button_rect.center=screen.get_rect().center
     screen.blit(play_button,play_button_rect)
-    pygame.display.flip()
     pygame.display.update()
     for event in pygame.event.get():
         if event.type ==pygame.QUIT :
@@ -36,7 +37,7 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if play_button_rect.collidepoint(event.pos) :
                 running=False
-                screen2 = pygame.display.set_mode((0, 0),FULLSCREEN)
+                screen2 = pygame.display.set_mode((0,0),flags)
                 game = True
 
     while aide :
@@ -47,6 +48,7 @@ while running:
             if event.type == KEYDOWN and event.key == K_ESCAPE:
                 aide=False
                 screen= pygame.display.set_mode((1820,980),pygame.RESIZABLE)
+                running=True
 
     while game :
         screen2.fill('white')
@@ -58,10 +60,11 @@ while running:
         screen2.blit(text, textRect)
         pygame.display.update()
         for event in pygame.event.get():
-            if event.type == KEYDOWN and event.key == K_ESCAPE:
+            if event.type == KEYDOWN and event.key == K_k:
                 game=False
-                pygame.quit()
+                pygame.display.set_mode((1820,980),pygame.RESIZABLE)
+                running=True
+            if event.type == KEYDOWN and event.key == K_ESCAPE :
+                game=False
                 running = False
-            elif event.type == KEYDOWN and event.key == K_k:
-                game=False
-                screen= pygame.display.set_mode((1820,980),pygame.RESIZABLE)
+            
