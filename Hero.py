@@ -25,7 +25,7 @@ class Hero(Creature.Creature):
 
 	""" 
 
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, invisible=False):
 		"""
 
 		Parameters
@@ -46,8 +46,10 @@ class Hero(Creature.Creature):
 			Le nombre de pièces d'or du héros
 		level : int, optional
 			Le niveau du héros
-		poisonned : bool, optional
+		poisoned : bool, optional
 			Indique si le héros est empoisonné
+		invisible : bool, optional
+			Indique si le héros est invisible
 		"""
 
 		if inventory is None:
@@ -62,6 +64,7 @@ class Hero(Creature.Creature):
 		self.hpMax = 10
 		self.strengthMax = 2
 		self._poisoned = poisoned
+		self._invisible = invisible
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
@@ -99,10 +102,13 @@ class Hero(Creature.Creature):
 		creature : Creature.Creature
 			La créature qui est rencontrée
 		"""
-		self._hp -= creature.getStrength()
-		if creature.isPoisoning and not self._poisoned:
-			self.poison()
-		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.conciseDescription()}")
+		if not self._invisible:
+			self._hp -= creature.getStrength()
+			if creature.isPoisoning and not self._poisoned:
+				self.poison()
+			theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.conciseDescription()}")
+		else:
+			theGame.theGame().addMessage(f"The {self.conciseDescription()} is invisible, the {creature.getName()} can't see him")
 
 	def conciseDescription(self):
 		return f"{super().description()}{self._inventory}"
@@ -174,6 +180,10 @@ class Hero(Creature.Creature):
 
 		if u:
 			self._inventory.remove(item)
+
+	def becomeInvisible(self):
+		"""Rend le héros invisible"""
+		self._invisible = True
 	
 	def opendescription(self,item, map):
 		choice = getch()

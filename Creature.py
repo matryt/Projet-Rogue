@@ -97,7 +97,7 @@ class Creature(Element.Element):
 
 		Parameters
 		----------
-		creature : Creature.Creature
+		creature : self
 			L'autre créature
 
 		Returns
@@ -107,6 +107,7 @@ class Creature(Element.Element):
 		"""
 		self._hp -= creature.getStrength()
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
+		creature._invisible = False
 		if self._hp <= 0:
 			creature.xp += random.randint(1*self._strength,20*self._strength)
 			if creature.xp >= 20*creature._level:
