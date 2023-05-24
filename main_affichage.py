@@ -4,15 +4,19 @@ from pygame.locals import *
 pygame.init()
 running = True
 game = False
-flags= pygame.FULLSCREEN | pygame.RESIZABLE
+aide = False
+flags= pygame.FULLSCREEN
 clock = pygame.time.Clock()
 pygame.display.set_caption("DONGEON MASTER")
-screen= pygame.display.set_mode((0, 0),flags)
+screen= pygame.display.set_mode((1820,980),pygame.RESIZABLE)
 scrrec=screen.get_rect()
-screen2 = pygame.display.set_mode((0, 0),flags)
-background=pygame.transform.scale(pygame.image.load('assets/background lancement.png').convert(),(scrrec.right,scrrec.bottom))
-screen.blit(background,(0,0))
+
+
+
+
 while running:
+    background=pygame.transform.scale(pygame.image.load('assets/background lancement.png').convert(),(scrrec.right,scrrec.bottom))
+    screen.blit(background,(0,0))
     play_button = pygame.image.load('assets/LOGO-PLAY.png')
     play_button_rect = play_button.get_rect()
     play_button_rect.center=screen.get_rect().center
@@ -23,15 +27,27 @@ while running:
         if event.type ==pygame.QUIT :
             running= False
             pygame.quit()
-        if event.type == KEYDOWN and event.key == K_ESCAPE:
+        elif event.type == KEYDOWN and event.key == K_ESCAPE:
             pygame.quit()
             running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN :
+        elif event.type == KEYDOWN and event.key == K_h :
+            screen_aide=pygame.display.set_mode((720,480),)
+            aide=True
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             if play_button_rect.collidepoint(event.pos) :
                 running=False
+                screen2 = pygame.display.set_mode((0, 0),FULLSCREEN)
                 game = True
-                
-    
+
+    while aide :
+        screen_aide.fill('red')
+        pygame.display.flip()
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == KEYDOWN and event.key == K_ESCAPE:
+                aide=False
+                screen= pygame.display.set_mode((1820,980),pygame.RESIZABLE)
+
     while game :
         screen2.fill('white')
         varText = "Press ESCAPE to quit"
@@ -40,19 +56,12 @@ while running:
         textRect = text.get_rect()
         textRect.center = (210,screen2.get_size()[1]-25)
         screen2.blit(text, textRect)
-        pygame.display.flip()
         pygame.display.update()
         for event in pygame.event.get():
-            if event.type ==pygame.QUIT :
-                running= False
-                game = False
-                pygame.quit()
             if event.type == KEYDOWN and event.key == K_ESCAPE:
                 game=False
                 pygame.quit()
                 running = False
-            
-            
-
-
-
+            elif event.type == KEYDOWN and event.key == K_k:
+                game=False
+                screen= pygame.display.set_mode((1820,980),pygame.RESIZABLE)
