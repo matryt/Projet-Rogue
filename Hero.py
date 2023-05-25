@@ -184,6 +184,7 @@ class Hero(Creature.Creature):
 	def becomeInvisible(self):
 		"""Rend le héros invisible"""
 		self._invisible = True
+		return False
 	
 	def opendescription(self,item, map):
 		choice = getch()
