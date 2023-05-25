@@ -69,7 +69,6 @@ class Game(object):
 				"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory)),
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
 				}
-	Allmonsters = []
 
 	def __init__(self, hero=None, level=1, floor=None, messages=None,equiped_outfits = []):
 		"""
@@ -93,9 +92,11 @@ class Game(object):
 		self._idMonsters = 0
 		self.seed = None
 		self.equiped_outfits = equiped_outfits
+		self.allMonsters = []
 
 	def buildFloor(self, s=False):
 		"""Construit la carte"""
+		self.allMonsters = []
 		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
@@ -108,8 +109,7 @@ class Game(object):
 			if randomValue == 1:
 				self._floor.put(self._floor.getRooms()[random.randint(0,nbRooms-1)].randEmptyCoord(self._floor), Chest.Chest(size = "big"))
 			
-		self.special_id = random.randint(0,len(self.Allmonsters))
-		print(len(self.Allmonsters))
+		self.special_id = random.choice(self.allMonsters).getID()
 
 
 	def getHero(self):
@@ -197,7 +197,7 @@ class Game(object):
 		s = self.randElement(Game.monsters)
 		s.setID(self._idMonsters)
 		self._idMonsters += 1
-		self.Allmonsters.append(s)
+		self.allMonsters.append(s)
 		return s
 
 	@staticmethod

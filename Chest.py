@@ -22,21 +22,30 @@ class Chest(Element.Element):
 		self.chestopened = chestopened
 		self.size = size 
 	def meet(self,hero):
-		"""Permet d'ouvrir le coffre à condition d'avoir une clé'""" 
+		"""Permet d'ouvrir le coffre à condition d'avoir une clé'"""
+		if self.chestopened:
+			theGame.theGame().addMessage(f"the chest has already been opened")
+			return
 		if self.size == "normal":
-			for object in hero._inventory:
+			i = 0
+			keyFound = False
+			while i < len(hero._inventory) and not keyFound:
+				object = hero._inventory[i]
 				if  object._name == "key":
 					self.chestopened = True
 					Totalequipments = theGame.theGame().equipments 
 					theGame.theGame().addMessage(f"you open the chest with the key")
 					theGame.theGame().addMessage(f"wowie, you just gained gold and stuff : ")
 					hero.GoldCount += random.randint(5*theGame.theGame()._level,25*theGame.theGame()._level)
-					for rareté in Totalequipments:
-						if rareté == 2*theGame.theGame()._level or True:
-							hero.take(Totalequipments[rareté][random.randint(0,len(Totalequipments[rareté])-1)]) 
+					for rarete in Totalequipments:
+						if rarete == 2*theGame.theGame()._level or True and len(hero.getInventory()) <= 10:
+							hero.take(Totalequipments[rarete][random.randint(0,len(Totalequipments[rarete])-1)])
 							print()
 					
 					hero._inventory.remove(object)
+					keyFound = True
+				i+=1
+
 
 			if self.chestopened:
 				theGame.theGame().addMessage(f"the chest has been opened")
