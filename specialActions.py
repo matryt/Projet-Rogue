@@ -80,7 +80,9 @@ def equip(creature,outfit):
 			#if creature.strengthMax != creature._strength + outfit.effect[key]:
 			#	theGame.theGame().equiped_outfits.append(outfit)
 			#	return True 
-			#JE SAIS PAS PUTAIN 		
+			#JE SAIS PAS PUTAIN
+			creature._strength += outfit.effect.get('strength', 0)
+ 		
 			if outfit.durability > 0:
 					while outfit.durability > 0:
 						creature.strengthMax += outfit.effect[key]
