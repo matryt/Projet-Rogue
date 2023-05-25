@@ -46,7 +46,7 @@ class Game(object):
 					  Wearable.Wearable("trident", place='right hand', effect={'strength': 3},usage=lambda self, hero: equip(hero, self)),
 					  Wearable.Wearable("double_epee", place='right hand', effect={'strength': 2},usage=lambda self, hero: equip(hero, self)),
 					  Equipment.Equipment("gold", "o")],
-				  1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
+				  1: [Equipment.Equipment("potion de tp", "!", usage=lambda self, hero: teleport(hero, True))],
 				  2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 2},usage=lambda self, hero: equip(hero, self)),
 					  Equipment.Equipment("bow"),
 					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1}),
