@@ -31,7 +31,7 @@ while running:
             pygame.quit()
             running = False
         elif event.type == KEYDOWN and event.key == K_h :
-            screen_aide=pygame.display.set_mode((720,480),)
+            screen_aide=pygame.display.set_mode((res[0]*(9/10),res[1]*(9/10)))
             aide=True
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if play_button_rect.collidepoint(event.pos) :
@@ -60,7 +60,8 @@ while running:
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == KEYDOWN and event.key == K_k:
-                screen=pygame.display.set_mode(res,pygame.RESIZABLE)
+                pygame.display.set_mode(res,pygame.RESIZABLE)
+                pygame.display.set_mode(res,pygame.RESIZABLE)
                 game=False
                 running=True
             if event.type == KEYDOWN and event.key == K_ESCAPE :
