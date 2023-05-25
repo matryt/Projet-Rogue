@@ -99,14 +99,14 @@ class Game(object):
 		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
-		if self._level >= 5 and self._level <= 15:
-			okcoord = self._floor
-			self._floor.put(self._floor.getRooms()[-2].center(), Chest.Chest())
-		# je sais pas comment faire je veux que le coffre soit mis à une position aleatoire sur la map....
+		nbRooms = len(self._floor.getRooms())
+		if nbRooms >= 2 and self._level >= 5 and self._level <= 15:
+			print(nbRooms)
+			self._floor.put(self._floor.getRooms()[random.randint(0,nbRooms-1)].randEmptyCoord(self._floor), Chest.Chest())
 		if self._level >= 15:
 			randomValue = random.randint(1,4)
 			if randomValue == 1:
-				self._floor.put(self._floor.getRooms()[-2].center(), Chest.Chest(size = "big"))
+				self._floor.put(self._floor.getRooms()[random.randint(0,nbRooms-1)].randEmptyCoord(self._floor), Chest.Chest(size = "big"))
 			
 		self.special_id = random.randint(0,len(self.Allmonsters))
 
