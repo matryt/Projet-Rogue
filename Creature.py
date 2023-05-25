@@ -60,6 +60,15 @@ class Creature(Element.Element):
 		"""
 		return f"{super().description()}({self._hp})"
 
+	def getID(self):
+		"""
+		Returns
+		-------
+		int
+			L'identifiant de la créature
+		"""
+		return self._idCreature
+
 	def heal(self):
 		"""Permet de soigner la créature"""
 		self._hp += 3
