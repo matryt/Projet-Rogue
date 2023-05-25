@@ -60,8 +60,8 @@ while running:
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == KEYDOWN and event.key == K_k:
-                game=False
                 screen=pygame.display.set_mode(res,pygame.RESIZABLE)
+                game=False
                 running=True
             if event.type == KEYDOWN and event.key == K_ESCAPE :
                 game=False
