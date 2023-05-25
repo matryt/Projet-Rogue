@@ -116,6 +116,13 @@ class Creature(Element.Element):
 		"""
 		self._hp -= creature.getStrength()
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
+		if creature._arme_equipee != None:
+			creature._arme_equipee.durability -= 1
+			if creature._arme_equipee.durability == 0:
+				theGame.theGame().addMessage("Your "+str(creature._arme_equipee._name)+" just broke")
+				creature._inventory.remove(creature._arme_equipee)
+				creature.strengthMax -= creature._arme_equipee.effect.get('strength', 0)
+
 		if self._hp <= 0:
 			creature.xp += random.randint(1*self._strength,20*self._strength)
 			if self._idCreature == theGame.theGame().special_id:
