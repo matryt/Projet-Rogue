@@ -109,6 +109,7 @@ class Game(object):
 				self._floor.put(self._floor.getRooms()[random.randint(0,nbRooms-1)].randEmptyCoord(self._floor), Chest.Chest(size = "big"))
 			
 		self.special_id = random.randint(0,len(self.Allmonsters))
+		print(len(self.Allmonsters))
 
 
 	def getHero(self):

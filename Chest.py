@@ -57,6 +57,7 @@ class Chest(Element.Element):
 						if rareté == 2*theGame.theGame()._level or True:
 							hero.take(Totalequipments[rareté][random.randint(3,len(Totalequipments[rareté])-1)]) 
 							print()
+					# if creature._inventory == 10:
 					
 					hero._inventory.remove(object)
 
