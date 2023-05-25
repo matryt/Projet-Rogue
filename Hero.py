@@ -23,7 +23,7 @@ class Hero(Creature.Creature):
 
 	""" 
 
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, arme_equipee = None):
 		"""
 
 		Parameters
@@ -46,6 +46,8 @@ class Hero(Creature.Creature):
 			Le niveau du héros
 		poisonned : bool, optional
 			Indique si le héros est empoisonné
+		arme_equipee : variable
+			Indique si une arme est équipée par le héro 
 		"""
 
 		if inventory is None:
@@ -60,6 +62,7 @@ class Hero(Creature.Creature):
 		self.hpMax = 10
 		self.strengthMax = 2
 		self._poisoned = poisoned
+		self._arme_equipee = arme_equipee 
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):

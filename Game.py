@@ -3,6 +3,7 @@ import time
 import random
 
 import Stairs
+import Chest
 import Wearable
 from utils import getch
 from specialActions import heal, teleport, equip, recover
@@ -41,8 +42,11 @@ class Game(object):
 	"""
 
 	equipments = {0: [Equipment.Equipment("potion", "!", usage=lambda self, hero: heal(hero)),
+		   			  Wearable.Wearable("broken sword", place='right hand', effect={'strength': 1},usage=lambda self, hero: equip(hero, self)),
+					  Wearable.Wearable("trident", place='right hand', effect={'strength': 3},usage=lambda self, hero: equip(hero, self)),
+					  Wearable.Wearable("double_epee", place='right hand', effect={'strength': 2},usage=lambda self, hero: equip(hero, self)),
 					  Equipment.Equipment("gold", "o")],
-				  1: [Equipment.Equipment("potion", "!", usage=lambda self, hero: teleport(hero, True))],
+				  1: [Equipment.Equipment("potion de tp", "!", usage=lambda self, hero: teleport(hero, True))],
 				  2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 2},usage=lambda self, hero: equip(hero, self)),
 					  Equipment.Equipment("bow"),
 					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1}),
@@ -51,7 +55,7 @@ class Game(object):
 				  4: [Wearable.Wearable("chaimail", place='torso', effect={'armor': 2})]}
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
 				1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
-	            3: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
+	            #3: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
 				#5: [Creature.Creature("Dragon", 20, strength=3)]
 	            }
 
@@ -88,12 +92,25 @@ class Game(object):
 		self._idMonsters = 0
 		self.seed = None
 		self.equiped_outfits = equiped_outfits
+		self.allMonsters = []
 
 	def buildFloor(self, s=False):
 		"""Construit la carte"""
+		self.allMonsters = []
 		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
+		nbRooms = len(self._floor.getRooms())
+		if nbRooms >= 2 and self._level >= 5 and self._level <= 15:
+			print(nbRooms)
+			self._floor.put(self._floor.getRooms()[random.randint(0,nbRooms-1)].randEmptyCoord(self._floor), Chest.Chest())
+		if self._level >= 15:
+			randomValue = random.randint(1,4)
+			if randomValue == 1:
+				self._floor.put(self._floor.getRooms()[random.randint(0,nbRooms-1)].randEmptyCoord(self._floor), Chest.Chest(size = "big"))
+			
+		self.special_id = random.choice(self.allMonsters).getID()
+
 
 	def getHero(self):
 		"""
@@ -170,7 +187,7 @@ class Game(object):
 
 	def randMonster(self):
 		"""
-		Renvoie un monstre au hasard
+		Renvoie un monstre au hasard et incrémente une liste de tout les monstres 
 
 		Returns
 		-------
@@ -180,6 +197,7 @@ class Game(object):
 		s = self.randElement(Game.monsters)
 		s.setID(self._idMonsters)
 		self._idMonsters += 1
+		self.allMonsters.append(s)
 		return s
 
 	@staticmethod
@@ -303,5 +321,6 @@ def setSeed():
 		La graine aléatoire
 	"""
 	r = random.randint(0, 1000000000)
+	#r = 102781142
 	random.seed(r)
 	return r
