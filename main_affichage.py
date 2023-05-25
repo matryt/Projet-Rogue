@@ -1,4 +1,5 @@
 import pygame
+import os
 import math
 from pygame.locals import *
 pygame.init()
@@ -6,15 +7,13 @@ running = True
 game = False
 aide = False
 flags= pygame.FULLSCREEN | pygame.RESIZABLE
-
 clock = pygame.time.Clock()
 pygame.display.set_caption("DONGEON MASTER")
-screen= pygame.display.set_mode((1820,980),pygame.RESIZABLE)
-
-
-
-
-
+if os.name=="posix":
+    res=(1820,980)
+elif os.name=='nt':
+    res=(1440,810)
+screen=pygame.display.set_mode(res,pygame.RESIZABLE)
 while running:
     scrrec=screen.get_rect()
     background=pygame.transform.scale(pygame.image.load('assets/background lancement.png').convert(),(scrrec.right,scrrec.bottom))
@@ -47,7 +46,7 @@ while running:
         for event in pygame.event.get():
             if event.type == KEYDOWN and event.key == K_ESCAPE:
                 aide=False
-                screen= pygame.display.set_mode((1820,980),pygame.RESIZABLE)
+                screen=pygame.display.set_mode(res,pygame.RESIZABLE)
                 running=True
 
     while game :
@@ -62,7 +61,7 @@ while running:
         for event in pygame.event.get():
             if event.type == KEYDOWN and event.key == K_k:
                 game=False
-                pygame.display.set_mode((1820,980),pygame.RESIZABLE)
+                screen=pygame.display.set_mode(res,pygame.RESIZABLE)
                 running=True
             if event.type == KEYDOWN and event.key == K_ESCAPE :
                 game=False
