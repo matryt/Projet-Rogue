@@ -237,6 +237,8 @@ class Map(object):
 			raise KeyError("Already placed")
 
 		self._mat[c.y][c.x] = e
+		self._visibleMap = self._mat
+		self.setVisible(self.rangeElement(self._hero))
 		if e != Map.ground:
 			self._elem[e] = c
 

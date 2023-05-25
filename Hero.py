@@ -190,7 +190,7 @@ class Hero(Creature.Creature):
 		choice = getch()
 		try:
 			c = int(choice)
-			if c < 0 or c > 2:
+			if c < 0 or c > 3:
 				print("arreteeeeeee")
 				return
 
