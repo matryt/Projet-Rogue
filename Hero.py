@@ -23,7 +23,7 @@ class Hero(Creature.Creature):
 
 	""" 
 
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, arme_equipee = None):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, arme_equipee = None, armor = 0):
 		"""
 
 		Parameters
@@ -62,7 +62,8 @@ class Hero(Creature.Creature):
 		self.hpMax = 10
 		self.strengthMax = 2
 		self._poisoned = poisoned
-		self._arme_equipee = arme_equipee 
+		self._arme_equipee = arme_equipee
+		self.armor = armor
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
@@ -100,7 +101,8 @@ class Hero(Creature.Creature):
 		creature : Creature.Creature
 			La créature qui est rencontrée
 		"""
-		self._hp -= creature.getStrength()
+		degats = max(creature.getStrength() - 2 * math.log(self.armor+1), 1)
+		self._hp -= degats
 		if creature.isPoisoning and not self._poisoned:
 			self.poison()
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")

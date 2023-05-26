@@ -88,13 +88,11 @@ def equip(creature,outfit):
 			else:
 		
 				return True
-
-		return False
 			
 		if key == 'armor':
-			creature._hp += outfit.effect[key]
-			theGame.theGame().equiped_outfits.append(outfit)
-			return True
+			creature.armor += outfit.effect[key]
+
+		return False
 
 def recover(creature, unique):
 	"""
@@ -112,4 +110,4 @@ def recover(creature, unique):
 
 	"""
 	creature.recover()
-	return True
+	return unique
