@@ -49,11 +49,11 @@ class Game(object):
 				  1: [Equipment.Equipment("potion de tp", "!", usage=lambda self, hero: teleport(hero, True))],
 				  2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 2},usage=lambda self, hero: equip(hero, self)),
 					  Equipment.Equipment("bow"),
-					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1}),
+					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1},usage=lambda self, hero: equip(hero, self)),
 				      Equipment.Equipment("antidotal", usage=lambda self, hero: recover(hero, True))],
 				  3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False)),
 					  Equipment.Equipment("invisibility potion", "i", usage=lambda self, hero: hero.becomeInvisible())],
-				  4: [Wearable.Wearable("chainmail", place='torso', effect={'armor': 2})]}
+				  4: [Wearable.Wearable("chainmail", place='torso', effect={'armor': 2},usage=lambda self, hero: equip(hero, self))]}
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
 				1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
 	            4: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],

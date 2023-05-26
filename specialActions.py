@@ -91,6 +91,7 @@ def equip(creature,outfit):
 			
 		if key == 'armor':
 			creature.armor += outfit.effect[key]
+			creature._inventory.remove(outfit)
 
 		return False
 

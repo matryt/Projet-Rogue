@@ -2,6 +2,7 @@ import Equipment
 import Creature
 import importlib
 import random
+import math
 
 import Map
 from utils import getch
@@ -106,11 +107,10 @@ class Hero(Creature.Creature):
 		creature : Creature.Creature
 			La créature qui est rencontrée
 		"""
-		degats = max(creature.getStrength() - 2 * math.log(self.armor+1), 1)
-		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
 		if not self._invisible:
-			self._hp -= degats
-			if creature.isPoisoning and not self._poisoned:
+			degats = int(max(creature.getStrength() - 2 * math.log(self.armor+1), 1))
+			self._hp = max(self._hp-degats, 0)
+			if creature.isPoisoning and not self._poisoned and self._hp > 0:
 				self.poison()
 			theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.conciseDescription()}")
 		else:
@@ -119,7 +119,7 @@ class Hero(Creature.Creature):
 	def conciseDescription(self):
 		return f"{super().description()}{self._inventory}"
 	def description(self):
-		return f"{super().description()} - Level {self._level} - {self.xp} XP \nYou have {len(self._inventory)} object(s) : {self._inventory} and {self.GoldCount} gold(s)"
+		return f"{super().description()} - Level {self._level} - {self.xp} XP - Armor {self.armor} \nYou have {len(self._inventory)} object(s) : {self._inventory} and {self.GoldCount} gold(s)"
 
 	def poison(self):
 		"""Empoisonne le héros"""
