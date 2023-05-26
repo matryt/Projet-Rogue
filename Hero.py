@@ -1,6 +1,8 @@
 import Equipment
 import Creature
 import importlib
+import random
+
 import Map
 from utils import getch
 
@@ -23,7 +25,7 @@ class Hero(Creature.Creature):
 
 	""" 
 
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, arme_equipee = None):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, invisible=False, arme_equipee = None):
 		"""
 
 		Parameters
@@ -44,8 +46,10 @@ class Hero(Creature.Creature):
 			Le nombre de pièces d'or du héros
 		level : int, optional
 			Le niveau du héros
-		poisonned : bool, optional
+		poisoned : bool, optional
 			Indique si le héros est empoisonné
+		invisible : bool, optional
+			Indique si le héros est invisible
 		arme_equipee : variable
 			Indique si une arme est équipée par le héro 
 		"""
@@ -62,6 +66,7 @@ class Hero(Creature.Creature):
 		self.hpMax = 10
 		self.strengthMax = 2
 		self._poisoned = poisoned
+		self._invisible = invisible
 		self._arme_equipee = arme_equipee 
 
 	def __eq__(self, other):
@@ -100,23 +105,28 @@ class Hero(Creature.Creature):
 		creature : Creature.Creature
 			La créature qui est rencontrée
 		"""
-		self._hp -= creature.getStrength()
-		if creature.isPoisoning and not self._poisoned:
-			self.poison()
-		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
+		if not self._invisible:
+			self._hp -= creature.getStrength()
+			if creature.isPoisoning and not self._poisoned:
+				self.poison()
+			theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.conciseDescription()}")
+		else:
+			theGame.theGame().addMessage(f"The {self.conciseDescription()} is invisible, the {creature.getName()} can't see him")
 
-	def description(self):
+	def conciseDescription(self):
 		return f"{super().description()}{self._inventory}"
+	def description(self):
+		return f"{super().description()} - Level {self._level} - {self.xp} XP \nYou have {len(self._inventory)} object(s) : {self._inventory} and {self.GoldCount} gold(s)"
 
 	def poison(self):
 		"""Empoisonne le héros"""
-		theGame.theGame().addMessage("The hero is poisoned !")
+		theGame.theGame().addMessage("The hero is poisoned")
 		self._poisoned = True
 
 	def checkPoison(self):
 		if self._poisoned:
 			self._hp -= 1
-			theGame.theGame().addMessage("The hero suffers from poison !")
+			theGame.theGame().addMessage("The hero suffers from poison")
 
 	def recover(self):
 		"""Soigne le héros"""
@@ -173,28 +183,42 @@ class Hero(Creature.Creature):
 
 		if u:
 			self._inventory.remove(item)
+
+	def becomeInvisible(self):
+		"""Rend le héros invisible"""
+		self._invisible = True
+		return False
 	
-	def opendescription(self,item):
+	def opendescription(self,item, map):
 		choice = getch()
 		try:
 			c = int(choice)
-			if c < 0 or c > 2:
+			if c < 0 or c > 3:
 				print("arreteeeeeee")
 				return
-			
+
 		except:
 			print("t con où ? faut rentrer un chiffre")
 			self.opendescription(item)
 
- 
 		## il y a parfois des problèmes de confusion entre les touches de l'inventaire et de cette methode:
 		#pour palier à ça on pourrait remplacer les numeros par d'autres input qui sont pas des chiffres
-		if int(choice) == 0:  
+		if c == 0:
 			self.use(item)
-		if int(choice) == 1:
+		if c == 1:
 			print(item.resume)
-		if int(choice) == 2:
+		if c == 3:
 			self._inventory.remove(item)
+		if c == 2:
+			voisins = map.pos(self).voisins(map)
+			for v in voisins:
+				if map.get(v) != Map.Map.empty:
+					voisins.remove(v)
+			if v:
+				map.put(random.choice(voisins), item)
+				self._inventory.remove(item)
+			else:
+				theGame.theGame().addMessage("There is no place to drop the item")
 
 		#itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
 		

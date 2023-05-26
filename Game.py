@@ -41,7 +41,7 @@ class Game(object):
 		Identifiant des monstres
 	"""
 
-	equipments = {0: [Equipment.Equipment("potion", "!", usage=lambda self, hero: heal(hero)),
+	equipments = {0: [Equipment.Equipment("potion", "p", usage=lambda self, hero: heal(hero)),
 		   			  Wearable.Wearable("broken sword", place='right hand', effect={'strength': 1},usage=lambda self, hero: equip(hero, self)),
 					  Wearable.Wearable("trident", place='right hand', effect={'strength': 3},usage=lambda self, hero: equip(hero, self)),
 					  Wearable.Wearable("double_epee", place='right hand', effect={'strength': 2},usage=lambda self, hero: equip(hero, self)),
@@ -51,12 +51,13 @@ class Game(object):
 					  Equipment.Equipment("bow"),
 					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1}),
 				      Equipment.Equipment("antidotal", usage=lambda self, hero: recover(hero, True))],
-				  3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False))],
-				  4: [Wearable.Wearable("chaimail", place='torso', effect={'armor': 2})]}
+				  3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False)),
+					  Equipment.Equipment("invisibility potion", "i", usage=lambda self, hero: hero.becomeInvisible())],
+				  4: [Wearable.Wearable("chainmail", place='torso', effect={'armor': 2})]}
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
 				1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
-	            #3: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
-				#5: [Creature.Creature("Dragon", 20, strength=3)]
+	            4: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
+				5: [Creature.Creature("Dragon", 20, strength=3)]
 	            }
 
 	_actions = {'z': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, -1)),
@@ -66,8 +67,9 @@ class Game(object):
 				"i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
 				"k": lambda hero: hero.__setattr__('_hp', 0),
 				" ": lambda hero: None,
-				"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory)),
+				"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
+	            "f": lambda hero: theGame.theGame().floorInfos(),
 				}
 
 	def __init__(self, hero=None, level=1, floor=None, messages=None,equiped_outfits = []):
@@ -96,6 +98,7 @@ class Game(object):
 
 	def buildFloor(self, s=False):
 		"""Construit la carte"""
+		self._hero._invisible = False
 		self.allMonsters = []
 		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
@@ -151,7 +154,7 @@ class Game(object):
 		"""
 		if not self._messages:
 			return ""
-		msg = ". ".join(self._messages)+"."
+		msg = ". \n".join(self._messages)+"."
 		self._messages = []
 		return msg
 
@@ -231,7 +234,7 @@ class Game(object):
 			c = f"{c[:-2]}]"
 			print(c)
 			n = getch()
-		itemdescription = "\t Choose action>  [0: 'use' , 1: 'description', 2: 'drop']"
+		itemdescription = "\t Choose action>  [0: 'use' , 1: 'description', 2: 'drop', 3: 'destroy']"
 		print(itemdescription)
 		return listeChoix[int(n)]
 
@@ -272,6 +275,17 @@ class Game(object):
 					return self.dir[s]
 		return random.choice(list(self.dir.values()))
 
+	def getLevel(self):
+		"""
+		Renvoie le niveau actuel
+
+		Returns
+		-------
+		int
+			Le niveau actuel
+		"""
+		return self._level
+
 	def playSimulation(self):
 		self.dir = {
 			Coord.Coord(0, -1) : 'z',
@@ -311,6 +325,11 @@ class Game(object):
 			self._floor.moveAllMonsters()
 		print("--- Game Over ---")
 
+	def floorInfos(self):
+		"""
+		Affiche l'étage actuel
+		"""
+		theGame.theGame().addMessage(f"You are at floor {self._level}")
 
 def setSeed():
 	"""
