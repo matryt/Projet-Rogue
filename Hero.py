@@ -25,7 +25,7 @@ class Hero(Creature.Creature):
 
 	""" 
 
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, invisible=False):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, invisible=False, arme_equipee = None):
 		"""
 
 		Parameters
@@ -50,6 +50,8 @@ class Hero(Creature.Creature):
 			Indique si le héros est empoisonné
 		invisible : bool, optional
 			Indique si le héros est invisible
+		arme_equipee : variable
+			Indique si une arme est équipée par le héro 
 		"""
 
 		if inventory is None:
@@ -65,6 +67,7 @@ class Hero(Creature.Creature):
 		self.strengthMax = 2
 		self._poisoned = poisoned
 		self._invisible = invisible
+		self._arme_equipee = arme_equipee 
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
