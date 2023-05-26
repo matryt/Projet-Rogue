@@ -25,4 +25,4 @@ class Stairs(Element.Element):
 			theGame.theGame().buildFloor(True)
 		else:
 			theGame.theGame().buildFloor()
-		theGame.theGame().addMessage(f"The {theGame.theGame().getHero().getName()} goes down")
+		theGame.theGame().addMessage(f"The {theGame.theGame().getHero().getName()} goes down to level {theGame.theGame().getLevel()-1}")

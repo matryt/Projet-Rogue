@@ -106,7 +106,7 @@ class Creature(Element.Element):
 
 		Parameters
 		----------
-		creature : Creature.Creature
+		creature : self
 			L'autre créature
 
 		Returns
@@ -116,6 +116,8 @@ class Creature(Element.Element):
 		"""
 		self._hp -= creature.getStrength()
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
+		creature._invisible = False
+
 		if creature._arme_equipee != None:
 			creature._arme_equipee.durability -= 1
 			if creature._arme_equipee.durability == 0:
@@ -131,7 +133,7 @@ class Creature(Element.Element):
 			if creature.xp >= 20*creature._level:
 				creature._level += 1
 				print(creature._level)
-				theGame.theGame().addMessage("vous avez gagné un niveau ! ")
+				theGame.theGame().addMessage(f"You just advanced to level {creature._level}")
 				creature.hpMax += random.randint(0, 2)
 				creature.strengthMax += random.randint(0, 1)
 				creature._hp = creature.hpMax
