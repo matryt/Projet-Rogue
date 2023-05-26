@@ -1,7 +1,7 @@
 import Element
 import importlib
 import random
-
+import Equipment
 theGame = importlib.import_module("theGame")
 
 
@@ -60,6 +60,15 @@ class Creature(Element.Element):
 		"""
 		return f"{super().description()}({self._hp})"
 
+	def getID(self):
+		"""
+		Returns
+		-------
+		int
+			L'identifiant de la créature
+		"""
+		return self._idCreature
+
 	def heal(self):
 		"""Permet de soigner la créature"""
 		self._hp += 3
@@ -97,7 +106,7 @@ class Creature(Element.Element):
 
 		Parameters
 		----------
-		creature : Creature.Creature
+		creature : self
 			L'autre créature
 
 		Returns
@@ -107,16 +116,22 @@ class Creature(Element.Element):
 		"""
 		self._hp -= creature.getStrength()
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
+		creature._invisible = False
 		if self._hp <= 0:
 			creature.xp += random.randint(1*self._strength,20*self._strength)
+			if self._idCreature == theGame.theGame().special_id:
+				creature._inventory.append(Equipment.Equipment("key","k"))
+				theGame.theGame().addMessage("vous avez trouvé un objet ! ")
 			if creature.xp >= 20*creature._level:
 				creature._level += 1
 				print(creature._level)
-				theGame.theGame().addMessage("vous avez gagné un niveau ! ")
+				theGame.theGame().addMessage(f"You just advanced to level {creature._level}")
 				creature.hpMax += random.randint(0, 2)
 				creature.strengthMax += random.randint(0, 1)
 				creature._hp = creature.hpMax
 				creature._strength = creature.strengthMax
+
+			
 				
 
 
