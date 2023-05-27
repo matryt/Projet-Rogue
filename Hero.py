@@ -257,11 +257,14 @@ class Hero(Creature.Creature):
 
 	def unlockSkills(self):
 		"""Débloque les compétences du héros"""
-		if self._level == 5:
-			if specialActions.fireballThrow not in self._skills:
-				self.addSkills(specialActions.fireballThrow)
-				theGame.theGame().addMessage("You gained a new skill : fireballThrow")
-				theGame.theGame().levelsUsed[0] = []
+		if self._level == 5 and specialActions.fireballThrow not in self._skills:
+			self.addSkills(specialActions.fireballThrow)
+			theGame.theGame().addMessage("You gained a new skill : fireballThrow")
+			theGame.theGame().levelsUsed[0] = []
+		if self._level == 10 and specialActions.supervision not in self._skills:
+			self.addSkills(specialActions.supervision)
+			theGame.theGame().addMessage("You gained a new skill : Super-Vision")
+			theGame.theGame().levelsUsed[1] = []
 
 	def addSkills(self, skill):
 		"""

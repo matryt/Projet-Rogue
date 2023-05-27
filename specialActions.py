@@ -156,4 +156,13 @@ def blind(hero):
 	if theGame.theGame().range == 2:
 		return
 	theGame.theGame().range = 2
-	theGame.theGame().addMessage(f"The {hero.conciseDescription()} is blind for this floor")
+	theGame.theGame().addMessage(f"The {hero.conciseDescription()} is blind")
+	theGame.theGame().turn = 1
+
+def supervision(*args):
+	if theGame.theGame().getLevel() in theGame.theGame().levelsUsed[1]:
+		theGame.theGame().addMessage("You can't use this power again on this level")
+		return
+	theGame.theGame().addMessage("You have now a super-vision for 10 turns")
+	theGame.theGame().range = 10
+	theGame.theGame().turn = 1

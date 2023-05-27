@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import time
 import random
 
@@ -72,6 +73,7 @@ class Game(object):
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
 	            "f": lambda hero: theGame.theGame().floorInfos(),
 	            "c": lambda hero: hero.useSkills(),
+	            "t": lambda hero: theGame.theGame().cheat(),
 				}
 
 	def __init__(self, hero=None, level=1, floor=None, messages=None,equiped_outfits = []):
@@ -99,12 +101,15 @@ class Game(object):
 		self.allMonsters = []
 		self.levelsUsed = {}
 		self.range = 5
+		self.turn = 1
+		self.authenticated = False
 
 	def buildFloor(self, s=False):
 		"""Construit la carte"""
 		self._hero._invisible = False
 		self.allMonsters = []
 		self.range = 5
+		self.turn = 1
 		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
@@ -259,7 +264,14 @@ class Game(object):
 			self._hero.checkPoison()
 			self._floor.moveAllMonsters()
 			self._hero.unlockSkills()
+			self.resetVision()
 		print("--- Game Over ---")
+
+	def resetVision(self):
+		"""Reset la vision du joueur"""
+		if self.turn%10==0 and self.range != 5:
+			self.range = 5
+			theGame.theGame().addMessage("Your vision is reset")
 
 	def getchSimulation(self):
 		"""
@@ -330,6 +342,7 @@ class Game(object):
 			self._hero.checkPoison()
 			self._floor.moveAllMonsters()
 			self._hero.unlockSkills()
+			self.resetVision()
 		print("--- Game Over ---")
 
 	def floorInfos(self):
@@ -337,6 +350,25 @@ class Game(object):
 		Affiche l'étage actuel
 		"""
 		theGame.theGame().addMessage(f"You are at floor {self._level}")
+
+	def cheat(self):
+		"""
+		Permet d'exécuter une commande entrée par input, tout en vérifiant que la commande utilise theGame
+		Returns
+		-------
+
+		"""
+		if not self.authenticated:
+			mdp = input("Mot de passe: ")
+			if hashlib.md5(mdp.encode()).hexdigest() != "44ac6119a7a7a60e65a3e2b852ebd6c0":
+				print("Wrong password !")
+				return
+			self.authenticated = True
+		c = input("Commande de test: ")
+		if "theGame" in c:
+			exec(c)
+		else:
+			print("You aren't allowed to do that !")
 
 def setSeed():
 	"""
