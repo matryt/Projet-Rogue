@@ -1,6 +1,8 @@
 import random
 import copy
 import importlib
+import Creature
+from utils import getch
 
 theGame = importlib.import_module("theGame")
 
@@ -94,12 +96,11 @@ def equip(creature,outfit):
 		
 				return True
 
-		return False
-			
 		if key == 'armor':
-			creature._hp += outfit.effect[key]
-			theGame.theGame().equiped_outfits.append(outfit)
-			return True
+			creature.armor += outfit.effect[key]
+			creature._inventory.remove(outfit)
+
+		return False
 
 def recover(creature, unique):
 	"""
@@ -117,4 +118,42 @@ def recover(creature, unique):
 
 	"""
 	creature.recover()
-	return True
+	return unique
+
+def fireballThrow(creature, map, levelsUsed = []):
+	"""
+	Lance une boule de feu dans une direction
+	Parameters
+	----------
+	creature : Creature.Creature
+		La créature qui lance la boule de feu
+	map : Map.Map
+		La carte sur laquelle la boule de feu est lancée
+	levelsUsed : list
+		La liste des niveaux auxquels la boule de feu a déjà été lancée
+	"""
+	if theGame.theGame().getLevel() in levelsUsed:
+		theGame.theGame().addMessage("You can't use this power again on this level")
+		return
+	print("In which direction do you want to throw the fireball ?")
+	d = getch()
+	while d not in ['z', 'q', 's', 'd']:
+		theGame.theGame().addMessage("Please enter a valid direction")
+		fireballThrow(creature, map)
+	direction = theGame.theGame().getFloor().dir[d]
+	pos = map.pos(creature)
+	casesConcernees = [(pos+direction*i, 10-2*i) for i in range(1, 5)]
+	for case in casesConcernees:
+		g = map.get(case[0])
+		if isinstance(g, Creature.Creature):
+			g._hp -= case[1]
+			theGame.theGame().addMessage(
+				f"The fireball hits the {g._name} and causes him {case[1]} damage"
+			)
+	return levelsUsed
+
+def blind(hero):
+	if theGame.theGame().range == 2:
+		return
+	theGame.theGame().range = 2
+	theGame.theGame().addMessage(f"The {hero.conciseDescription()} is blind for this floor")

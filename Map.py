@@ -6,6 +6,7 @@ import Element
 import Room
 import Creature
 import Hero
+import theGame
 
 
 class Map(object):
@@ -453,23 +454,23 @@ class Map(object):
 		for c in coords:
 			self._visibleMap[c.y][c.x] = self._mat[c.y][c.x]
 
-	def rangeElement(self, element, dist=5):
+	def rangeElement(self, element):
 		"""
 		Permet de renvoyer un ensemble de coordonnées à une distance donnée d'un élément
 		Parameters
 		----------
 		element : Element.Element
 			L'élément à partir duquel on veut calculer les coordonnées
-		dist : int
-			La distance à laquelle on veut trouver les cases
 
 		Returns
 		-------
 		list
+			Liste de coordonnées à une distance de l'élément
 
 		"""
 		coordDepart = self.pos(element)
 		listeCoordonnees = []
+		dist = theGame.theGame().range
 		for i in range(coordDepart.x-dist, coordDepart.x+dist+1):
 			for j in range(coordDepart.y-dist, coordDepart.y+dist+1):
 				if Coord.Coord(i, j) in self and coordDepart.distance(Coord.Coord(i, j)) <= dist:

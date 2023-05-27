@@ -2,6 +2,8 @@ import Equipment
 import Creature
 import importlib
 import random
+import math
+import specialActions
 
 import Map
 from utils import getch
@@ -25,7 +27,7 @@ class Hero(Creature.Creature):
 
 	""" 
 
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, invisible=False, arme_equipee = None):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, invisible=False, arme_equipee = None, armor = 0, skills = None):
 		"""
 
 		Parameters
@@ -51,7 +53,11 @@ class Hero(Creature.Creature):
 		invisible : bool, optional
 			Indique si le héros est invisible
 		arme_equipee : variable
-			Indique si une arme est équipée par le héro 
+			Indique si une arme est équipée par le héro
+		armor : int, optional
+			La protection du héros
+		skills : list, optional
+			Les compétences du héros
 		"""
 
 		if inventory is None:
@@ -67,7 +73,11 @@ class Hero(Creature.Creature):
 		self.strengthMax = 2
 		self._poisoned = poisoned
 		self._invisible = invisible
-		self._arme_equipee = arme_equipee 
+		self._arme_equipee = arme_equipee
+		self.armor = armor
+		if skills is None:
+			skills = []
+		self._skills = skills
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
@@ -106,9 +116,12 @@ class Hero(Creature.Creature):
 			La créature qui est rencontrée
 		"""
 		if not self._invisible:
-			self._hp -= creature.getStrength()
-			if creature.isPoisoning and not self._poisoned:
+			degats = int(max(creature.getStrength() - 2 * math.log(self.armor + 1), 1))
+			self._hp = max(self._hp - degats, 0)
+			if creature.isPoisoning and not self._poisoned and self._hp > 0:
 				self.poison()
+			if creature.isBlinding:
+				specialActions.blind(self)
 			theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.conciseDescription()}")
 		else:
 			theGame.theGame().addMessage(f"The {self.conciseDescription()} is invisible, the {creature.getName()} can't see him")
@@ -116,7 +129,7 @@ class Hero(Creature.Creature):
 	def conciseDescription(self):
 		return f"{super().description()}{self._inventory}"
 	def description(self):
-		return f"{super().description()} - Level {self._level} - {self.xp} XP \nYou have {len(self._inventory)} object(s) : {self._inventory} and {self.GoldCount} gold(s)"
+		return f"{super().description()} - Level {self._level} - {self.xp} XP - Armor {self.armor} \nYou have {len(self._inventory)} object(s) : {self._inventory} and {self.GoldCount} gold(s)"
 
 	def poison(self):
 		"""Empoisonne le héros"""
@@ -223,3 +236,38 @@ class Hero(Creature.Creature):
 		#itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
 		
 		#return itemdescription[int(choice)]
+
+	def useSkills(self):
+		if len(self._skills) == 0:
+			theGame.theGame().addMessage("You don't have any skills yet")
+			return
+		skills = [f"{i} : {skill.__name__}" for i, skill in enumerate(self._skills)]
+		print(f"Choose a skill to use > {skills}")
+		choice = getch()
+		try:
+			choice = int(choice)
+		except:
+			theGame.theGame().addMessage("You must enter a number")
+			self.useSkills()
+		if choice < 0 or choice >= len(self._skills):
+			theGame.theGame().addMessage("You must enter a number between 0 and {len(self._skills)}")
+			self.useSkills()
+		self._skills[choice](self, theGame.theGame().getFloor(), theGame.theGame().levelsUsed[choice])
+		theGame.theGame().levelsUsed[choice].append(theGame.theGame().getLevel())
+
+	def unlockSkills(self):
+		"""Débloque les compétences du héros"""
+		if self._level == 5:
+			if specialActions.fireballThrow not in self._skills:
+				self.addSkills(specialActions.fireballThrow)
+				theGame.theGame().addMessage("You gained a new skill : fireballThrow")
+				theGame.theGame().levelsUsed[0] = []
+
+	def addSkills(self, skill):
+		"""
+		Parameters
+		----------
+		skill : function
+			La compétence à ajouter
+		"""
+		self._skills.append(skill)

@@ -49,14 +49,15 @@ class Game(object):
 				  1: [Equipment.Equipment("potion de tp", "!", usage=lambda self, hero: teleport(hero, True))],
 				  2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 8},usage=lambda self, hero: equip(hero, self)),
 					  Equipment.Equipment("bow"),
-					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1}),
+					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1},
+					                    usage=lambda self, hero: equip(hero, self)),
 				      Equipment.Equipment("antidotal", usage=lambda self, hero: recover(hero, True))],
 				  3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False)),
 					  Equipment.Equipment("invisibility potion", "i", usage=lambda self, hero: hero.becomeInvisible())],
-				  4: [Wearable.Wearable("chainmail", place='torso', effect={'armor': 2})]}
+				  4: [Wearable.Wearable("chainmail", place='torso', effect={'armor': 2},usage=lambda self, hero: equip(hero, self))]}
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
 				1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
-	            4: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
+	            4: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2), Creature.Creature("Witch", 12, "X", isBlinding=True)],
 				5: [Creature.Creature("Dragon", 20, strength=3)]
 	            }
 
@@ -70,6 +71,7 @@ class Game(object):
 				"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
 	            "f": lambda hero: theGame.theGame().floorInfos(),
+	            "c": lambda hero: hero.useSkills(),
 				}
 
 	def __init__(self, hero=None, level=1, floor=None, messages=None,equiped_outfits = []):
@@ -95,11 +97,14 @@ class Game(object):
 		self.seed = None
 		self.equiped_outfits = equiped_outfits
 		self.allMonsters = []
+		self.levelsUsed = {}
+		self.range = 5
 
 	def buildFloor(self, s=False):
 		"""Construit la carte"""
 		self._hero._invisible = False
 		self.allMonsters = []
+		self.range = 5
 		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
 		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
@@ -253,6 +258,7 @@ class Game(object):
 				Game._actions[c](self._hero)
 			self._hero.checkPoison()
 			self._floor.moveAllMonsters()
+			self._hero.unlockSkills()
 		print("--- Game Over ---")
 
 	def getchSimulation(self):
@@ -323,6 +329,7 @@ class Game(object):
 				Game._actions[c](self._hero)
 			self._hero.checkPoison()
 			self._floor.moveAllMonsters()
+			self._hero.unlockSkills()
 		print("--- Game Over ---")
 
 	def floorInfos(self):
