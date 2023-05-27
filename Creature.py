@@ -114,7 +114,7 @@ class Creature(Element.Element):
 		bool
 			True si la créature a encore des points de vie, False sinon
 		"""
-		self._hp  = max(self._hp - creature.getStrength(), 0)
+		self._hp -= creature.getStrength()
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
 		creature._invisible = False
 		if self._hp <= 0:
