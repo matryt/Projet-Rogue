@@ -19,7 +19,7 @@ class Creature(Element.Element):
 	_idCreature
 	"""
 
-	def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False, isBlinding=False):
+	def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False):
 		"""
 
 		Parameters
@@ -42,7 +42,6 @@ class Creature(Element.Element):
 		self._strength = strength
 		self._idCreature = idCreature
 		self.isPoisoning = isPoisoning
-		self.isBlinding = isBlinding
 
 	def __eq__(self, other):
 		if isinstance(other, Creature):
@@ -115,7 +114,7 @@ class Creature(Element.Element):
 		bool
 			True si la créature a encore des points de vie, False sinon
 		"""
-		self._hp = max(self._hp - creature.getStrength(), 0)
+		self._hp  = max(self._hp - creature.getStrength(), 0)
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
 		creature._invisible = False
 		if self._hp <= 0:
