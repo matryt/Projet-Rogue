@@ -37,7 +37,7 @@ while running:
                 game = True
 
     while aide :
-        screen_aide.fill('red')
+        screen_aide.fill('white')
         pygame.display.flip()
         pygame.display.update()
         for event in pygame.event.get():
@@ -54,6 +54,10 @@ while running:
         textRect = text.get_rect()
         textRect.center = (210,screen2.get_size()[1]-25)
         screen2.blit(text, textRect)
+        for i in range(13):
+            for j in range(13):
+                sol=pygame.transform.scale(pygame.image.load('assets/sol.png').convert(),(70,70))
+                screen.blit(sol,(295+i*70,18+j*70))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == KEYDOWN and event.key == K_k:
