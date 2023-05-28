@@ -41,12 +41,11 @@ class Game(object):
 		Identifiant des monstres
 	"""
 
-	equipments = {0: [Equipment.Equipment("potion", "p", usage=lambda self, hero: heal(hero)),
-		   			  Equipment.Equipment("âme de gardien", "â", usage=lambda self, hero: revive(hero)),
+	equipments = {0: [Equipment.Equipment("potion", "p", usage=lambda self, hero: heal(hero),resum ="a mixture that seems to recover your health by its mysterious properties "),
 		   			  Wearable.Wearable("broken sword", place='right hand', effect={'strength': 1},usage=lambda self, hero: equip(hero, self)),
 					  Wearable.Wearable("trident", place='right hand', effect={'strength': 10},usage=lambda self, hero: equip(hero, self)),
 					  Wearable.Wearable("double_epee", place='right hand', effect={'strength': 4},usage=lambda self, hero: equip(hero, self)),
-					  Equipment.Equipment("gold", "o")],
+					  Equipment.Equipment("gold", "o",resum ="a gold coin who have a merchand value, helps to buy things in a dungeon")],
 				  1: [Equipment.Equipment("potion de tp", "!", usage=lambda self, hero: teleport(hero, True))],
 				  2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 8},usage=lambda self, hero: equip(hero, self)),
 					  Equipment.Equipment("bow"),
