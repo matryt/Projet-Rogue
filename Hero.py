@@ -25,7 +25,7 @@ class Hero(Creature.Creature):
 
 	""" 
 
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, invisible=False, arme_equipee = None):
+	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp = 0,GoldCount = 0,level = 1, poisoned=False, invisible=False, arme_equipee = None,revive = None):
 		"""
 
 		Parameters
@@ -68,6 +68,7 @@ class Hero(Creature.Creature):
 		self._poisoned = poisoned
 		self._invisible = invisible
 		self._arme_equipee = arme_equipee 
+		self.revive = revive 
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
@@ -107,6 +108,13 @@ class Hero(Creature.Creature):
 		"""
 		if not self._invisible:
 			self._hp -= creature.getStrength()
+			print(self.revive)
+			if self._hp == 0 and self.revive == True:
+				self._hp = self.hpMax
+				theGame.theGame().addMessage(f"the soul of guardian replace yours and save you from death")
+				self.revive = False 
+
+
 			if creature.isPoisoning and not self._poisoned:
 				self.poison()
 			theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.conciseDescription()}")

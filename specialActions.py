@@ -118,3 +118,21 @@ def recover(creature, unique):
 	"""
 	creature.recover()
 	return True
+
+def revive(creature):
+		"""
+	réanime le héro 
+
+	Parameters
+	----------
+	creature : Creature.Creature
+		La créature à revive 
+
+	Returns
+	-------
+	bool
+
+	"""
+	
+		creature.revive = True
+		return True 

@@ -6,7 +6,7 @@ import Stairs
 import Chest
 import Wearable
 from utils import getch
-from specialActions import heal, teleport, equip, recover
+from specialActions import heal, teleport, equip, recover , revive 
 import Equipment
 import Creature
 import Hero
@@ -42,6 +42,7 @@ class Game(object):
 	"""
 
 	equipments = {0: [Equipment.Equipment("potion", "p", usage=lambda self, hero: heal(hero)),
+		   			  Equipment.Equipment("âme de gardien", "â", usage=lambda self, hero: revive(hero)),
 		   			  Wearable.Wearable("broken sword", place='right hand', effect={'strength': 1},usage=lambda self, hero: equip(hero, self)),
 					  Wearable.Wearable("trident", place='right hand', effect={'strength': 10},usage=lambda self, hero: equip(hero, self)),
 					  Wearable.Wearable("double_epee", place='right hand', effect={'strength': 4},usage=lambda self, hero: equip(hero, self)),
@@ -50,15 +51,16 @@ class Game(object):
 				  2: [Wearable.Wearable("sword", place='right hand', effect={'strength': 8},usage=lambda self, hero: equip(hero, self)),
 					  Equipment.Equipment("bow"),
 					  Wearable.Wearable("leather vest", place='torso', effect={'armor': 1}),
-				      Equipment.Equipment("antidotal", usage=lambda self, hero: recover(hero, True))],
+					  Equipment.Equipment("antidotal", usage=lambda self, hero: recover(hero, True))],
 				  3: [Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False)),
 					  Equipment.Equipment("invisibility potion", "i", usage=lambda self, hero: hero.becomeInvisible())],
-				  4: [Wearable.Wearable("chainmail", place='torso', effect={'armor': 2})]}
+				  4: [Wearable.Wearable("chainmail", place='torso', effect={'armor': 2})],
+				  5: [Equipment.Equipment("âme de gardien", "â", usage=lambda self, hero: revive(hero))]}
 	monsters = {0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
-				1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
-	            4: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
-				5: [Creature.Creature("Dragon", 20, strength=3)]
-	            }
+				1: [Creature.Creature("Ork", 6, strength=2,level = 5), Creature.Creature("Blob", 10,level = 4) ],
+				4: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2, level = 10)],
+				5: [Creature.Creature("Dragon", 20, strength=3, level = 20)]
+				}
 
 	_actions = {'z': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, -1)),
 				's': lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, 1)),
@@ -69,7 +71,7 @@ class Game(object):
 				" ": lambda hero: None,
 				"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
 				"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
-	            "f": lambda hero: theGame.theGame().floorInfos(),
+				"f": lambda hero: theGame.theGame().floorInfos(),
 				}
 
 	def __init__(self, hero=None, level=1, floor=None, messages=None,equiped_outfits = []):
