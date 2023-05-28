@@ -1,4 +1,6 @@
 import pygame
+import random
+import theGame
 import tkinter as tk
 from pygame.locals import *
 from tkinter import simpledialog
@@ -23,6 +25,10 @@ clock = pygame.time.Clock()
 pygame.display.set_caption("DONGEON MASTER")
 res=(1440,810)
 screen=pygame.display.set_mode(res,pygame.RESIZABLE)
+sol=pygame.transform.scale(pygame.image.load('assets/sol.png').convert(),(70,70))
+mur1=pygame.transform.scale(pygame.image.load('assets/mur1.png').convert(),(70,70))
+mur2=pygame.transform.scale(pygame.image.load('assets/mur2.png').convert(),(70,70))
+
 while running:
     scrrec=screen.get_rect()
     background=pygame.transform.scale(pygame.image.load('assets/background lancement.png').convert(),(scrrec.right,scrrec.bottom))
@@ -44,10 +50,21 @@ while running:
             aide=True
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if play_button_rect.collidepoint(event.pos) :
-                running=False
                 screen2 = pygame.display.set_mode((0,0),flags)
+                screen2.fill('white')
+                theGame.theGame().buildFloor()
+                for i in range(13):
+                    for j in range(13):
+                        if theGame.theGame()._floor._mat[i][j]==theGame.theGame()._floor.ground or theGame.theGame()._floor._mat[i][j]!=theGame.theGame()._floor.empty:
+                            screen2.blit(sol,((screen2.get_width()-13*70)/2+i*70,(screen2.get_height()-13*70)/2+j*70))
+                        elif theGame.theGame()._floor._mat[i][j]==theGame.theGame()._floor.empty:
+                            if random.randint(0,1)==0:
+                                screen2.blit(mur1,((screen2.get_width()-13*70)/2+i*70,(screen2.get_height()-13*70)/2+j*70))
+                            else :
+                                screen2.blit(mur2,((screen2.get_width()-13*70)/2+i*70,(screen2.get_height()-13*70)/2+j*70))
+                running=False
                 game = True
-
+    
     while aide :
         screen_aide.fill('white')
         pygame.display.flip()
@@ -57,9 +74,8 @@ while running:
                 aide=False
                 screen=pygame.display.set_mode(res,pygame.RESIZABLE)
                 running=True
-
+    
     while game :
-        screen2.fill('white')
         varText = "Press ESCAPE to quit"
         font = pygame.font.Font('freesansbold.ttf', 40)
         text = font.render(varText, True, 'black')
@@ -68,8 +84,10 @@ while running:
         screen2.blit(text, textRect)
         for i in range(13):
             for j in range(13):
-                sol=pygame.transform.scale(pygame.image.load('assets/sol.png').convert(),(70,70))
-                screen.blit(sol,((screen2.get_width()-13*70)/2+i*70,(screen2.get_height()-13*70)/2+j*70))
+                if theGame.theGame()._floor._mat[i][j]==theGame.theGame()._floor.ground or theGame.theGame()._floor._mat[j][i]!=theGame.theGame()._floor.empty:
+                    screen2.blit(sol,((screen2.get_width()-13*70)/2+i*70,(screen2.get_height()-13*70)/2+j*70))
+                        
+
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == KEYDOWN and event.key == K_k:
