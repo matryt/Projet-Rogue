@@ -1,7 +1,19 @@
 import pygame
-import os
-import math
+import tkinter as tk
 from pygame.locals import *
+from tkinter import simpledialog
+
+def textInput(titre, message):
+    root = tk.Tk()
+    root.withdraw()  # Masquer la fenêtre principale
+
+    # Boîte de dialogue pour saisir du texte
+    user_input = simpledialog.askstring(titre, message)
+
+    # Afficher le texte saisi
+    if user_input:
+        return user_input
+
 pygame.init()
 running = True
 game = False
