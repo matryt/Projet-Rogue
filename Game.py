@@ -269,7 +269,7 @@ class Game(object):
 
 	def resetVision(self):
 		"""Reset la vision du joueur"""
-		if self.turn%10==0 and self.range != 5:
+		if self.turn%10==0 and self.range == 10:
 			self.range = 5
 			theGame.theGame().addMessage("Your vision is reset")
 
@@ -365,10 +365,7 @@ class Game(object):
 				return
 			self.authenticated = True
 		c = input("Commande de test: ")
-		if "theGame" in c:
-			exec(c)
-		else:
-			print("You aren't allowed to do that !")
+		exec(c)
 
 def setSeed():
 	"""

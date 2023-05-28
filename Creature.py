@@ -129,11 +129,11 @@ class Creature(Element.Element):
 				creature.strengthMax -= creature._arme_equipee.effect.get('strength', 0)
 
 		if self._hp <= 0:
-			creature.xp += random.randint(1*self._strength,20*self._strength)
+			creature.xp += random.randint(1*self._strength,10*self._strength)
 			if self._idCreature == theGame.theGame().special_id:
 				creature._inventory.append(Equipment.Equipment("key","k"))
 				theGame.theGame().addMessage("vous avez trouvé un objet ! ")
-			if creature.xp >= 20*creature._level:
+			if creature.xp >= 20 * (1.6 ** (creature._level-1)):
 				creature._level += 1
 				print(creature._level)
 				theGame.theGame().addMessage(f"You just advanced to level {creature._level}")
