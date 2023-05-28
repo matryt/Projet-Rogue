@@ -9,10 +9,7 @@ aide = False
 flags= pygame.FULLSCREEN | pygame.RESIZABLE
 clock = pygame.time.Clock()
 pygame.display.set_caption("DONGEON MASTER")
-if os.name=="posix":
-    res=(1820,980)
-elif os.name=='nt':
-    res=(1440,810)
+res=(1440,810)
 screen=pygame.display.set_mode(res,pygame.RESIZABLE)
 while running:
     scrrec=screen.get_rect()
