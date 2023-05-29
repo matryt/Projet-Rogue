@@ -42,7 +42,7 @@ class Map(object):
 		'q': Coord.Coord(-1, 0)
 	}
 
-	def __init__(self, size=20, hero=None, nbrooms=7, simulation=False):
+	def __init__(self, size=13, hero=None, nbrooms=7, simulation=False):
 		"""
 
 		Parameters

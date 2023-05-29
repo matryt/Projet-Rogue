@@ -59,7 +59,7 @@ while running:
                     for j in range(13):
                         if theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.empty:
                             if random.randint(0,1)==0:
-                                screen2.blit(mur1,((screen2.get_width()-13*70)/2+i*70,(screen2.get_height()-13*70)/2+i*70))
+                                screen2.blit(mur1,((screen2.get_width()-13*70)/2+i*70,(screen2.get_height()-13*70)/2+j*70))
                             else :
                                 screen2.blit(mur2,((screen2.get_width()-13*70)/2+i*70,(screen2.get_height()-13*70)/2+j*70))
                         else : 
