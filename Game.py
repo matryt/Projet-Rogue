@@ -102,10 +102,12 @@ class Game(object):
 		self.allMonsters = []
 		self._floor = Map.Map(hero=self._hero, simulation=s)
 		self._level += 1
-		self._floor.put(self._floor.getRooms()[-1].center(), Stairs.Stairs())
+		try:
+			self._floor.put(self._floor.getRooms()[-2].center(), Stairs.Stairs())
+		except:
+			pass
 		nbRooms = len(self._floor.getRooms())
 		if nbRooms >= 2 and self._level >= 5 and self._level <= 15:
-			print(nbRooms)
 			self._floor.put(self._floor.getRooms()[random.randint(0,nbRooms-1)].randEmptyCoord(self._floor), Chest.Chest())
 		if self._level >= 15:
 			randomValue = random.randint(1,4)
