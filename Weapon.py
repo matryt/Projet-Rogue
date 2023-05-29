@@ -53,5 +53,3 @@ class Weapon(Wearable.Wearable):
 			return self.usage(self, creature)
 		theGame.theGame().addMessage(f"The {self._name} is broken or you try to equip 2 weapons")
 		return False
-
-	

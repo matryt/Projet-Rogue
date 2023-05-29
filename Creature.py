@@ -130,11 +130,5 @@ class Creature(Element.Element):
 				creature.strengthMax += random.randint(0, 1)
 				creature._hp = creature.hpMax
 				creature._strength = creature.strengthMax
-
-			
-				
-
-
-
 			return True   
 		return False  

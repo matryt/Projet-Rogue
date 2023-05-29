@@ -41,7 +41,7 @@ class Chest(Element.Element):
 						if rarete == 2*theGame.theGame()._level or True and len(hero.getInventory()) <= 10:
 							hero.take(Totalequipments[rarete][random.randint(0,len(Totalequipments[rarete])-1)])
 							print()
-					
+
 					hero._inventory.remove(object)
 					keyFound = True
 				i+=1
@@ -67,12 +67,10 @@ class Chest(Element.Element):
 							hero.take(Totalequipments[rareté][random.randint(3,len(Totalequipments[rareté])-1)]) 
 							print()
 					# if creature._inventory == 10:
-					
+
 					hero._inventory.remove(object)
 
 			if self.chestopened:
 				theGame.theGame().addMessage(f"the luxurious chest has been opened")
 				return
 			theGame.theGame().addMessage(f"it seems that a key is needed to open this luxurious chest ! ")
-
-		

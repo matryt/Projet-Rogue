@@ -67,4 +67,3 @@ while running:
             if event.type == KEYDOWN and event.key == K_ESCAPE :
                 game=False
                 running = False
-            

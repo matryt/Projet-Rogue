@@ -222,5 +222,4 @@ class Hero(Creature.Creature):
 				theGame.theGame().addMessage("There is no place to drop the item")
 
 		#itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
-		
 		#return itemdescription[int(choice)]

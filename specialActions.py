@@ -86,7 +86,6 @@ def equip(creature,outfit):
 						creature.strengthMax += outfit.effect[key]
 						outfit.durability -= 1
 			else:
-		
 				return True
 
 		return False
@@ -112,4 +111,4 @@ def recover(creature, unique):
 
 	"""
 	creature.recover()
-	return True
+	return unique
