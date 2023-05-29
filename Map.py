@@ -398,7 +398,7 @@ class Map(object):
 	def moveAllMonsters(self):
 		"""Permet de déplacer tous les monstres de la carte"""
 		posHero = self._elem[self._hero]
-		if not self._hero._invisible:
+		if not self._hero.isInvisible():
 			for m in self._elem:
 				posMonster = self._elem[m]
 				if (
@@ -407,9 +407,19 @@ class Map(object):
 						and posHero.distance(posMonster) < 8
 				):
 					d = posMonster.direction(posHero, self)
-					if d:
-						if self.get(posMonster + d) in [Map.ground, self._hero]:
-							self.move(m, d)
+					if d and self.get(posMonster + d) in [Map.ground, self._hero]:
+						self.move(m, d)
+
+	def getRoomsVisited(self):
+		"""
+		Renvoie les salles visitées par le héros
+
+		Returns
+		-------
+		list
+			Liste des salles visitées
+		"""
+		return self._roomsVisited
 
 	def randRoom(self):
 		"""

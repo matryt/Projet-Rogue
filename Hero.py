@@ -21,7 +21,7 @@ class Hero(Creature.Creature):
 	_hp
 	_strength
 	_inventory
-	_xp 
+	xp
 
 	""" 
 
@@ -82,7 +82,7 @@ class Hero(Creature.Creature):
 
 		Parameters
 		----------
-		elem : Equipment
+		elem : Equipment.Equipment
 			L'équipement que doit prendre le héros
 
 		Raises
@@ -92,10 +92,14 @@ class Hero(Creature.Creature):
 		"""
 		if not isinstance(elem, Equipment.Equipment):
 			raise TypeError("L'élément à prendre doit être du type Equipment")
-		if elem._name == "gold":
+		if elem.getName() == "gold":
 			self.GoldCount += 1
 		else:
 			self._inventory.append(elem)
+
+	def setVisible(self):
+		"""Rend le héros visible"""
+		self._invisible = False
 
 	def meet(self, creature):
 		"""Est appelé lorsque le héros rencontre une créature
@@ -154,6 +158,33 @@ class Hero(Creature.Creature):
 		"""
 		return self._inventory
 
+	def addIntoInventory(self, item):
+		"""
+		Parameters
+		-------
+		item : Equipment.Equipment
+			L'item à ajouter à l'inventaire
+		"""
+		self._inventory.append(item)
+
+	def removeFromInventory(self, item):
+		"""
+		Parameters
+		-------
+		item : Equipment.Equipment
+			L'item à retirer de l'inventaire
+		"""
+		self._inventory.remove(item)
+
+	def isInvisible(self):
+		"""
+		Returns
+		-------
+		bool
+			True si le héros est invisible, False sinon
+		"""
+		return self._invisible
+
 	def getHP(self):
 		"""
 		Returns
@@ -190,7 +221,7 @@ class Hero(Creature.Creature):
 		self._invisible = True
 		return False
 
-	def opendescription(self,item, map):
+	def opendescription(self, item, m):
 		choice = getch()
 		try:
 			c = int(choice)
@@ -200,26 +231,27 @@ class Hero(Creature.Creature):
 
 		except:
 			print("t con où ? faut rentrer un chiffre")
-			self.opendescription(item)
+			self.opendescription(item, m)
 
 		## il y a parfois des problèmes de confusion entre les touches de l'inventaire et de cette methode:
 		#pour palier à ça on pourrait remplacer les numeros par d'autres input qui sont pas des chiffres
 		if c == 0:
 			self.use(item)
-		if c == 1:
+		elif c == 1:
 			print(item.resume)
-		if c == 3:
-			self._inventory.remove(item)
-		if c == 2:
-			voisins = map.pos(self).voisins(map)
+		elif c == 2:
+			voisins = m.pos(self).voisins(m)
 			for v in voisins:
-				if map.get(v) != Map.Map.empty:
+				if m.get(v) != Map.Map.empty:
 					voisins.remove(v)
-			if v:
-				map.put(random.choice(voisins), item)
+			if voisins:
+				m.put(random.choice(voisins), item)
 				self._inventory.remove(item)
 			else:
 				theGame.theGame().addMessage("There is no place to drop the item")
+
+		elif c == 3:
+			self._inventory.remove(item)
 
 		#itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
 		#return itemdescription[int(choice)]
