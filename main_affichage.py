@@ -46,7 +46,7 @@ while running:
             pygame.quit()
             running = False
         elif event.type == KEYDOWN and event.key == K_h :
-            screen_aide=pygame.display.set_mode((res[0]*(9/10),res[1]*(9/10)))
+            screen_aide=pygame.display.set_mode((scrrec.right,scrrec.bottom),pygame.FULLSCREEN)
             aide=True
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if play_button_rect.collidepoint(event.pos) :
@@ -69,7 +69,8 @@ while running:
                 game = True
     
     while aide :
-        screen_aide.fill('white')
+        backgroundAide=pygame.transform.scale(pygame.image.load('assets/help.png').convert(),(scrrec.right,scrrec.bottom))
+        screen_aide.blit(backgroundAide, (0, 0))
         pygame.display.flip()
         pygame.display.update()
         for event in pygame.event.get():
