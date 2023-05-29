@@ -69,7 +69,8 @@ while running:
                 game = True
     
     while aide :
-        backgroundAide=pygame.transform.scale(pygame.image.load('assets/help.png').convert(),(scrrec.right,scrrec.bottom))
+        scrrec_aide=screen_aide.get_rect()
+        backgroundAide=pygame.transform.scale(pygame.image.load('assets/help.png').convert(),(scrrec_aide.right,scrrec_aide.bottom))
         screen_aide.blit(backgroundAide, (0, 0))
         pygame.display.flip()
         pygame.display.update()
