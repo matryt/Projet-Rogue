@@ -13,6 +13,9 @@ class Wearable(Equipment.Equipment):
         self.effect = effect
         self.durability = durability
 
+    def __hash__(self):
+        return hash((self._name, self.place))
+
     def use(self, creature):
         """
         Permet d'utiliser l'objet

@@ -6,6 +6,7 @@ import Element
 import Room
 import Creature
 import Hero
+import Shop
 
 
 class Map(object):

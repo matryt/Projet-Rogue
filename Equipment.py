@@ -17,7 +17,7 @@ class Equipment(Element.Element):
     resum
     """
 
-    def __init__(self, name, abbrv="", usage=None, resum="a thing"):
+    def __init__(self, name, abbrv="", usage=None,resum = "a thing"):
         """
 
         Parameters
@@ -45,12 +45,13 @@ class Equipment(Element.Element):
         Returns
         -------
         bool
-                True
+            True
         """
         """inventaire limité: return False quand un equipment est rencontré par un element si l'inventaire du héro dépasse X valeur."""
         elem._invisible = False
-        if len(theGame.theGame().getHero().getInventory()) == 10:
-            theGame.theGame().addMessage(f"Your inventory is full {str(theGame.theGame().getHero().getName())}")
+        if len(theGame.theGame()._hero._inventory) == 10:
+
+            theGame.theGame().addMessage("Your inventory is full "+str(theGame.theGame()._hero._name))
             return False
 
         elem.take(self)
@@ -62,7 +63,7 @@ class Equipment(Element.Element):
         Returns
         -------
         str
-                Le nom de l'équipement
+            Le nom de l'équipement
         """
         return self._name
 
@@ -73,12 +74,12 @@ class Equipment(Element.Element):
         Parameters
         ----------
         creature : Creature.Creature
-                La créature qui utilise l'objet
+            La créature qui utilise l'objet
 
         Returns
         -------
         bool
-                True si l'objet a été utilisé, False sinon
+            True si l'objet a été utilisé, False sinon
         """
         if self.usage:
             theGame.theGame().addMessage(f"The {creature.getName()} uses the {self._name}")
