@@ -6,12 +6,13 @@ import Stairs
 import Chest
 import Wearable
 from utils import getch
-from specialActions import heal, teleport, equip, recover
+from specialActions import heal, teleport, equip, recover , revive 
 import Equipment
 import Creature
 import Hero
 import Map
 import Coord
+import Shop
 import importlib
 
 theGame = importlib.import_module("theGame")
@@ -110,16 +111,28 @@ class Game(object):
         self.equiped_outfits = equiped_outfits
         self.allMonsters = []
 
+    def getRarety(self, equipment, i=0):
+        if i > 4:
+            raise KeyError("Equipment not found")
+        for equip in Game.equipments[i]:
+            if equip.getName() == equipment.getName():
+                return i
+        return self.getRarety(equipment, i + 1)
+
     def buildFloor(self, s=False):
         """Construit la carte"""
         self._hero._invisible = False
         self.allMonsters = []
         self._floor = Map.Map(hero=self._hero, simulation=s)
         self._level += 1
-        try:
-            self._floor.put(self._floor.getRooms()[-2].center(), Stairs.Stairs())
-        except:
-            pass
+        escalierPlace = False
+        while not escalierPlace:
+            try:
+                self._floor.put(self._floor.randRoomfromRooms().randEmptyCoord(self._floor), Stairs.Stairs())
+            except:
+                pass
+            else:
+                escalierPlace = True
         nbRooms = len(self._floor.getRooms())
         if nbRooms >= 2 and self._level >= 5 and self._level <= 15:
             self._floor.put(
@@ -132,6 +145,7 @@ class Game(object):
                     self._floor.getRooms()[random.randint(0, nbRooms - 1)].randEmptyCoord(self._floor),
                     Chest.Chest(size="big"),
                 )
+        self.createShop()
 
         self.special_id = random.choice(self.allMonsters).getID()
 
@@ -174,7 +188,7 @@ class Game(object):
         """
         if not self._messages:
             return ""
-        msg = ". \n".join(self._messages) + "."
+        msg = "\n".join(self._messages)
         self._messages = []
         return msg
 
@@ -222,6 +236,26 @@ class Game(object):
         self._idMonsters += 1
         self.allMonsters.append(s)
         return s
+
+    def createShop(self):
+        s = Shop.Shop()
+        items = 0
+        while items < 5:
+            level = random.randint(0, 4)
+            item = random.choice(Game.equipments[level])
+            if s.checkItem(item):
+                continue
+            price = int(random.expovariate(1 / self._level)) + 1
+            number = int(random.expovariate(1 / self._level)) + 1
+            s.addItem(copy.copy(item), number, price)
+            items += 1
+        element = ""
+        coord = None
+        while element != Map.Map.ground:
+            r = self._floor.randRoomfromRooms()
+            coord = r.randEmptyCoord(self._floor)
+            element = self._floor.get(coord)
+        self._floor.put(coord, s)
 
     @staticmethod
     def select(listeChoix):
@@ -345,7 +379,6 @@ class Game(object):
         Affiche l'étage actuel
         """
         theGame.theGame().addMessage(f"You are at floor {self._level}")
-
 
 def setSeed():
     """

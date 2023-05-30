@@ -47,7 +47,7 @@ class Room(object):
 
         Returns
         -------
-        Coord
+        Coord.Coord
                 Point représentant le centre de la salle
         """
         return Coord.Coord((self.c2.x + self.c1.x) // 2, (self.c2.y + self.c1.y) // 2)
