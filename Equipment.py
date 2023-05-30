@@ -23,15 +23,15 @@ class Equipment(Element.Element):
         Parameters
         ----------
         name : str
-            Le nom de l'équipement
+                Le nom de l'équipement
         abbrv : str, optional
-            L'abréviation représentant l'équipement
+                L'abréviation représentant l'équipement
         usage : function, optional
-            La fonction à appeler quand l'équipement est utilisé
+                La fonction à appeler quand l'équipement est utilisé
         resum : str, optional
-            Un resumé sur l'equipment
+                Un resumé sur l'equipment
         """
-        super().__init__(name, abbrv,resum)
+        super().__init__(name, abbrv, resum)
         self.usage = usage
 
     def meet(self, elem):

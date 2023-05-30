@@ -91,7 +91,7 @@ class Game(object):
         "f": lambda hero: theGame.theGame().floorInfos(),
     }
 
-    def __init__(self, hero=None, level=1, floor=None, messages=None, equiped_outfits=[]):
+    def __init__(self, hero=None, level=1, floor=None, messages=None, equiped_outfits=None):
         """
         Parameters
         ----------
@@ -104,6 +104,8 @@ class Game(object):
         messages : list | None
                 La liste des messages à afficher au joueur
         """
+        if equiped_outfits is None:
+            equiped_outfits = []
         self._hero = hero or Hero.Hero()
         if not messages:
             messages = []
@@ -150,7 +152,6 @@ class Game(object):
                     Chest.Chest(size="big"),
                 )
         self.createShop()
-
         self.special_id = random.choice(self.allMonsters).getID()
 
     def getHero(self):
@@ -328,7 +329,7 @@ class Game(object):
             self._floor.setVisitedRooms([])
             self._floor.shuffleRooms()
         for m in self._floor.getRooms():
-            if m not in self._floor._roomsVisited:
+            if m not in self._floor.getRoomsVisited():
                 s = self._floor.getElem()[self._hero].direction(m.center(), self._floor)
                 if s:
                     return self.dir[s]
@@ -384,6 +385,7 @@ class Game(object):
         Affiche l'étage actuel
         """
         theGame.theGame().addMessage(f"You are at floor {self._level}")
+
 
 def setSeed():
     """

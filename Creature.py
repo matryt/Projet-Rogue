@@ -2,6 +2,7 @@ import Element
 import importlib
 import random
 import Equipment
+
 theGame = importlib.import_module("theGame")
 
 
@@ -143,11 +144,6 @@ class Creature(Element.Element):
 				creature._hp = creature.hpMax
 				creature._strength = creature.strengthMax
 				creature.xp = 0
-
-			
-				
-
-
 
 			return True   
 		return False  

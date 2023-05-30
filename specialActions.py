@@ -8,22 +8,22 @@ theGame = importlib.import_module("theGame")
 
 
 def heal(creature):
-	"""
-	Soigne une créature
+    """
+    Soigne une créature
 
-	Parameters
-	----------
-	creature : Creature.Creature
-		La créature à soigner
+    Parameters
+    ----------
+    creature : Creature.Creature
+            La créature à soigner
 
-	Returns
-	-------
-	bool
-		True
+    Returns
+    -------
+    bool
+            True
 
-	"""
-	creature.heal()
-	return True
+    """
+    creature.heal()
+    return True
 
 
 def teleport(creature, unique):

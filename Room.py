@@ -8,172 +8,162 @@ theGame = importlib.import_module("theGame")
 
 
 class Room(object):
-    """
-    Salle de la carte
+	"""
+	Salle de la carte
 
-    ...
-    Attributes
-    ----------
-    c1
-    c2
-    """
+	...
+	Attributes
+	----------
+	c1
+	c2
+	"""
 
-    def __init__(self, c1, c2):
-        """
+	def __init__(self, c1, c2):
+		"""
 
-        Parameters
-        ----------
-        c1 : Coord.Coord
-                Coin en haut à gauche de la salle
-        c2 : Coord.Coord
-                Coin en bas à droite de la salle
-        """
-        self.c1 = c1
-        self.c2 = c2
+		Parameters
+		----------
+		c1 : Coord.Coord
+			Coin en haut à gauche de la salle
+		c2 : Coord.Coord
+			Coin en bas à droite de la salle
+		"""
+		self.c1 = c1
+		self.c2 = c2
 
-    def __repr__(self):
-        return f"[{self.c1}, {self.c2}]"
+	def __repr__(self):
+		return f"[{self.c1}, {self.c2}]"
 
-    def __eq__(self, other):
-        if type(self) is type(other):
-            return self.c1 == other.c1 and self.c2 == other.c2
-        raise NotImplementedError
+	def __eq__(self, other):
+		if type(self) is type(other):
+			return self.c1 == other.c1 and self.c2 == other.c2
+		raise NotImplemented
 
-    def __contains__(self, other):
-        return self.c1.x <= other.x <= self.c2.x and self.c1.y <= other.y <= self.c2.y
+	def __hash__(self):
+		return hash((self.c1, self.c2))
 
-    def center(self):
-        """
+	def __contains__(self, other):
+		return self.c1.x <= other.x <= self.c2.x and self.c1.y <= other.y <= self.c2.y
 
-        Returns
-        -------
-        Coord.Coord
-                Point représentant le centre de la salle
-        """
-        return Coord.Coord((self.c2.x + self.c1.x) // 2, (self.c2.y + self.c1.y) // 2)
+	def center(self):
+		"""
 
-    def intersect(self, other):
-        """
+		Returns
+		-------
+		Coord
+			Point représentant le centre de la salle
+		"""
+		return Coord.Coord((self.c2.x + self.c1.x) // 2, (self.c2.y + self.c1.y) // 2)
 
-        Parameters
-        ----------
-        other : Room
-                L'autre salle avec laquelle on doit vérifier l'intersection
+	def intersect(self, other):
+		"""
 
-        Returns
-        -------
-        bool
-                True si les deux salles possèdent une intersection, False sinon
-        """
-        coinsSelf = [self.c1, Coord.Coord(self.c2.x, self.c1.y), Coord.Coord(self.c1.x, self.c2.y), self.c2]
-        coinsOther = [other.c1, Coord.Coord(other.c2.x, other.c1.y), Coord.Coord(other.c1.x, other.c2.y), other.c2]
+		Parameters
+		----------
+		other : Room
+			L'autre salle avec laquelle on doit vérifier l'intersection
 
-        if (
-            any(x in other for x in coinsSelf)
-            or any(x in self for x in coinsOther)
-            or (other.c1 in self and other.c2 not in self)
-            or (other.c2 in self and other.c1 not in self)
-        ):
-            return True
+		Returns
+		-------
+		bool
+			True si les deux salles possèdent une intersection, False sinon
+		"""
+		coinsSelf = [self.c1, Coord.Coord(self.c2.x, self.c1.y), Coord.Coord(self.c1.x, self.c2.y), self.c2]
+		coinsOther = [other.c1, Coord.Coord(other.c2.x, other.c1.y), Coord.Coord(other.c1.x, other.c2.y), other.c2]
 
-        cote1 = False
-        cote2 = False
+		if any(x in other for x in coinsSelf) or any(x in self for x in coinsOther) or (other.c1 in self and other.c2 not in self) or (other.c2 in self and other.c1 not in self):
+			return True
 
-        i = 0
-        while i < 2 and not cote1:
-            if (
-                min(coinsOther[i].x, coinsOther[i + 2].x) <= coinsSelf[i].x <= max(coinsOther[i + 2].x, coinsOther[i].x)
-            ) and (
-                min(coinsSelf[i].y, coinsSelf[i + 2].y) <= coinsOther[i].y <= max(coinsSelf[i].y, coinsSelf[i + 2].y)
-            ):
-                cote1 = True
-            i += 1
+		cote1 = False
+		cote2 = False
 
-        if cote1:
-            return True
+		i = 0
+		while i < 2 and not cote1:
+			if (min(coinsOther[i].x, coinsOther[i+2].x) <= coinsSelf[i].x <= max(coinsOther[i+2].x, coinsOther[i].x)) and (min(coinsSelf[i].y, coinsSelf[i+2].y) <= coinsOther[i].y <= max(coinsSelf[i].y, coinsSelf[i+2].y)):
+				cote1 = True
+			i += 1
 
-        i = 0
-        while i < 2 and not cote2:
-            if (
-                min(coinsSelf[i].x, coinsSelf[i + 2].x) <= coinsOther[i].x <= max(coinsSelf[i].x, coinsSelf[i + 2].x)
-            ) and (
-                min(coinsOther[i].y, coinsOther[i + 2].y) <= coinsSelf[i].y <= max(coinsOther[i].y, coinsOther[i + 2].y)
-            ):
-                cote2 = True
-            i += 1
+		if cote1:
+			return True
 
-        return cote2
+		i = 0
+		while i < 2 and not cote2:
+			if (min(coinsSelf[i].x, coinsSelf[i+2].x) <= coinsOther[i].x <= max(coinsSelf[i].x, coinsSelf[i+2].x)) and (min(coinsOther[i].y, coinsOther[i+2].y) <= coinsSelf[i].y <= max(coinsOther[i].y, coinsOther[i+2].y)):
+				cote2 = True
+			i += 1
 
-    def coordsInRoom(self):
-        """Returns a list of all the coordinates in the room"""
-        coords = []
-        for x in range(self.c1.x, self.c2.x + 1):
-            for y in range(self.c1.y, self.c2.y + 1):
-                coords.append(Coord.Coord(x, y))
-        return coords
+		return cote2
 
-    def randCoord(self):
-        """
+	def coordsInRoom(self):
+		"""Returns a list of all the coordinates in the room"""
+		coords = []
+		for x in range(self.c1.x, self.c2.x+1):
+			for y in range(self.c1.y, self.c2.y+1):
+				coords.append(Coord.Coord(x, y))
+		return coords
 
-        Returns
-        -------
-        Coord.Coord
-                Un point de la salle au hasard
-        """
-        return Coord.Coord(random.randint(self.c1.x, self.c2.x), random.randint(self.c1.y, self.c2.y))
+	def randCoord(self):
+		"""
 
-    def existsGround(self, m):
-        """
-        Parameters
-        ----------
-        m : Map.Map
-                La carte dans laquelle prendre une coordonnée
+		Returns
+		-------
+		Coord.Coord
+			Un point de la salle au hasard
+		"""
+		return Coord.Coord(random.randint(self.c1.x, self.c2.x), random.randint(self.c1.y, self.c2.y))
 
-        Returns
-        -------
-        bool
-                True s'il existe au moins une case dont la valeur est Map.ground dans la salle,
-                False sinon
-        """
-        for x in range(self.c1.x, self.c2.x + 1):
-            for y in range(self.c1.y, self.c2.y + 1):
-                if m.get(Coord.Coord(x, y)) == Map.Map.ground:
-                    return True
-        return False
+	def existsGround(self, m):
+		"""
+		Parameters
+		----------
+		m : Map.Map
+			La carte dans laquelle prendre une coordonnée
 
-    def randEmptyCoord(self, m):
-        """
+		Returns
+		-------
+		bool
+			True s'il existe au moins une case dont la valeur est Map.ground dans la salle,
+			False sinon
+		"""
+		for x in range(self.c1.x, self.c2.x+1):
+			for y in range(self.c1.y, self.c2.y+1):
+				if m.get(Coord.Coord(x, y)) == Map.Map.ground:
+					return True
+		return False
 
-        Parameters
-        ----------
-        m : Map.Map
-                La carte dans laquelle prendre une coordonnée
+	def randEmptyCoord(self, m):
+		"""
 
-        Returns
-        -------
-        r : Coord.Coord
-                Un point de la salle au hasard qui n'est pas déjà rempli
+		Parameters
+		----------
+		m : Map.Map
+			La carte dans laquelle prendre une coordonnée
 
-        """
-        if not isinstance(m, Map.Map):
-            raise TypeError("map doit être de type Map() !")
-        if not self.existsGround(m):
-            raise ValueError("Il n'existe aucune case de la salle qui ne soit remplie !")
-        r = self.randCoord()
-        e = m.get(r)
-        while e is not Map.Map.ground or r == self.center():
-            r = self.randCoord()
-            e = m.get(r)
-        return r
+		Returns
+		-------
+		r : Coord.Coord
+			Un point de la salle au hasard qui n'est pas déjà rempli
 
-    def decorate(self, m):
-        """
+		"""
+		if not isinstance(m, Map.Map):
+			raise TypeError("map doit être de type Map() !")
+		if not self.existsGround(m):
+			raise ValueError("Il n'existe aucune case de la salle qui ne soit remplie !")
+		r = self.randCoord()
+		e = m.get(r)
+		while e is not Map.Map.ground or r == self.center():
+			r = self.randCoord()
+			e = m.get(r)
+		return r
 
-        Parameters
-        ----------
-        m : Map.Map
-                La carte dans laquelle prendre une coordonnée
+	def decorate(self, m):
+		"""
 
-        """
-        m.put(self.randEmptyCoord(m), theGame.theGame().randEquipment())
-        m.put(self.randEmptyCoord(m), theGame.theGame().randMonster())
+		Parameters
+		----------
+		m : Map.Map
+			La carte dans laquelle prendre une coordonnée
+
+		"""
+		m.put(self.randEmptyCoord(m), theGame.theGame().randEquipment())
+		m.put(self.randEmptyCoord(m), theGame.theGame().randMonster())
