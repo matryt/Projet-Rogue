@@ -12,6 +12,9 @@ class Shop(Element.Element):
 
 	def checkItem(self, item):
 		return any(item.getName() == i.getName() for i in self._items)
+	
+	def __repr__(self):
+		return self._abbrv
 
 	def addQuantity(self, item, qty):
 		if not self.checkItem(item):
