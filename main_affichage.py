@@ -119,21 +119,21 @@ dict_sol ={
 		}
 
 dict_item ={
-        "p":pygame.transform.scale(pygame.image.load("assets/potion_hp.png").convert(), (55, 55)),
-        "n":pygame.transform.scale(pygame.image.load("assets/brokensword.png").convert(), (55, 55)),
-        "t":pygame.transform.scale(pygame.image.load("assets/trident.png").convert(), (55, 55)),
-        "d":pygame.transform.scale(pygame.image.load("assets/double_epee.png").convert(), (55, 55)),
-        "o":pygame.transform.scale(pygame.image.load("assets/gold.png").convert(), (55, 55)),
-        "!":pygame.transform.scale(pygame.image.load("assets/teleport_potion.png").convert(), (55, 55)),
-        "s":pygame.transform.scale(pygame.image.load("assets/epee.png").convert(), (55, 55)),
-        "b":pygame.transform.scale(pygame.image.load("assets/arc.png").convert(), (55, 55)),
-        "l":pygame.transform.scale(pygame.image.load("assets/leathervest.png").convert(), (55, 55)),
-        "a":pygame.transform.scale(pygame.image.load("assets/antidote.png").convert(), (55, 55)),
-        "w":pygame.transform.scale(pygame.image.load("assets/portoloin.png").convert(), (55, 55)),
-        "i":pygame.transform.scale(pygame.image.load("assets/invisible_potion.png").convert(), (55, 55)),
-        "c":pygame.transform.scale(pygame.image.load("assets/chainmailqq.png").convert(), (55, 55)),
-        "M":pygame.transform.scale(pygame.image.load("assets/coffre_ferme.png").convert(), (55, 55)),
-        "Mo":pygame.transform.scale(pygame.image.load("assets/coffre_ouvert.png").convert(), (55, 55))
+        "p":pygame.transform.scale(pygame.image.load("assets/potion_hp.png").convert_alpha(), (55, 55)),
+        "n":pygame.transform.scale(pygame.image.load("assets/brokensword.png").convert_alpha(), (55, 55)),
+        "t":pygame.transform.scale(pygame.image.load("assets/trident.png").convert_alpha(), (55, 55)),
+        "d":pygame.transform.scale(pygame.image.load("assets/double_epee.png").convert_alpha(), (55, 55)),
+        "o":pygame.transform.scale(pygame.image.load("assets/gold.png").convert_alpha(), (55, 55)),
+        "!":pygame.transform.scale(pygame.image.load("assets/teleport_potion.png").convert_alpha(), (55, 55)),
+        "s":pygame.transform.scale(pygame.image.load("assets/epee.png").ddconvert_alpha(), (55, 55)),
+        "b":pygame.transform.scale(pygame.image.load("assets/arc.png").convert_alpha(), (55, 55)),
+        "l":pygame.transform.scale(pygame.image.load("assets/leathervest.png").convert_alpha(), (55, 55)),
+        "a":pygame.transform.scale(pygame.image.load("assets/antidote.png").convert_alpha(), (55, 55)),
+        "w":pygame.transform.scale(pygame.image.load("assets/portoloin.png").convert_alpha(), (55, 55)),
+        "i":pygame.transform.scale(pygame.image.load("assets/invisible_potion.png").convert_alpha(), (55, 55)),
+        "c":pygame.transform.scale(pygame.image.load("assets/chainmail.png").convert_alpha(), (55, 55)),
+        "M":pygame.transform.scale(pygame.image.load("assets/coffre_ferme.png").convert_alpha(), (55, 55)),
+        "Mo":pygame.transform.scale(pygame.image.load("assets/coffre_ouvert.png").convert_alpha(), (55, 55))
         }
 
 while running:
