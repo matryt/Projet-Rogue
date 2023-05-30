@@ -30,7 +30,7 @@ screen = pygame.display.set_mode(res, pygame.RESIZABLE)
 sol = pygame.transform.scale(pygame.image.load("assets/sol.png").convert(), (66, 66))
 mur1 = pygame.transform.scale(pygame.image.load("assets/mur1.png").convert(), (66, 66))
 mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (66, 66))
-screen_aide = pygame.display.set_mode(res, pygame.RESIZABLE)
+
 
 while running:
     scrrec = screen.get_rect()
@@ -51,6 +51,7 @@ while running:
             pygame.quit()
             running = False
         elif event.type == KEYDOWN and event.key == K_h:
+            screen_aide = pygame.display.set_mode((0,0), flags)
             aide = True
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if play_button_rect.collidepoint(event.pos):
@@ -63,41 +64,21 @@ while running:
                     for j in range(13):
                         if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
                             if random.randint(0, 1) == 0:
-                                screen2.blit(
-                                    mur1,
-                                    (
-                                        (screen2.get_width() - 13 * 66) / 2 + i * 66,
-                                        (screen2.get_height() - 13 * 66) / 2 + j * 66,
-                                    ),
-                                )
+                                screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
                             else:
-                                screen2.blit(
-                                    mur2,
-                                    (
-                                        (screen2.get_width() - 13 * 66) / 2 + i * 66,
-                                        (screen2.get_height() - 13 * 66) / 2 + j * 66,
-                                    ),
-                                )
+                                screen2.blit(mur2,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
                         else:
                             text = "#theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.ground or a ==1 :"
-                            screen2.blit(
-                                sol,
-                                (
-                                    (screen2.get_width() - 13 * 66) / 2 + i * 66,
-                                    (screen2.get_height() - 13 * 66) / 2 + j * 66,
-                                ),
-                            )
+                            screen2.blit(sol,
+                                ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
                 running = False
                 game = True
 
     while aide:
         scrrec_aide = screen_aide.get_rect()
         screen_aide.fill([255, 255, 255])
-        background = pygame.transform.scale(
-            pygame.image.load("assets/help.png").convert(), (scrrec_aide.right, scrrec_aide.bottom)
-        )
+        background = pygame.transform.scale(pygame.image.load("assets/help.png").convert(), (scrrec_aide.right, scrrec_aide.bottom))
         screen_aide.blit(background, (0, 0))
-
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -116,10 +97,7 @@ while running:
         for i in range(13):
             for j in range(13):
                 if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.ground:
-                    screen2.blit(
-                        sol,
-                        ((screen2.get_width() - 13 * 66) / 2 + i * 66, (screen2.get_height() - 13 * 66) / 2 + j * 66),
-                    )
+                    screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66, (screen2.get_height() - 13 * 66) / 2 + j * 66),)
 
         pygame.display.update()
         for event in pygame.event.get():
