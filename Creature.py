@@ -19,7 +19,7 @@ class Creature(Element.Element):
 	_idCreature
 	"""
 
-	def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False, level = 1):
+	def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False, isBlinding=False):
 		"""
 
 		Parameters
@@ -36,13 +36,16 @@ class Creature(Element.Element):
 			L'identifiant de la créature
 		isPoisoning : bool, optional
 			Indique si la créature empoisonne le héros
+		isBlinding : bool, optional
+			Indique si la créature aveugle le héros
 		"""
 		super().__init__(name, abbrv)
 		self._hp = hp
 		self._strength = strength
 		self._idCreature = idCreature
 		self.isPoisoning = isPoisoning
-		self.level = level 
+		self.isBlinding = isBlinding
+		self.level = level
 
 	def __eq__(self, other):
 		if isinstance(other, Creature):
@@ -115,7 +118,7 @@ class Creature(Element.Element):
 		bool
 			True si la créature a encore des points de vie, False sinon
 		"""
-		self._hp -= creature.getStrength()
+		self._hp  = max(self._hp - creature.getStrength(), 0)
 		theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
 		creature._invisible = False
 
@@ -127,12 +130,11 @@ class Creature(Element.Element):
 				creature.strengthMax -= creature._arme_equipee.effect.get('strength', 0)
 
 		if self._hp <= 0:
-			creature.xp += random.randint(1*self._strength,20*self._strength)
-			print((((creature.xp*self.level)/5)*(((2*self.level + 10)/(10 + creature._level + self.level))**0.5)))
+			creature.xp += random.randint(1*self._strength,10*self._strength)
 			if self._idCreature == theGame.theGame().special_id:
 				creature._inventory.append(Equipment.Equipment("key","k"))
 				theGame.theGame().addMessage("vous avez trouvé un objet ! ")
-			if creature.xp >= (((creature.xp*self.level)/5)*(((2*self.level + 10)/(10 + creature._level + self.level))**10.5)):
+			if creature.xp >= 20 * (((creature.xp*self.level)/5)*(((2*self.level + 10)/(10 + creature._level + self.level))**10.5)):
 				creature._level += 1
 				print(creature._level)
 				theGame.theGame().addMessage(f"You just advanced to level {creature._level}")
