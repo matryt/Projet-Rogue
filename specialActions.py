@@ -166,3 +166,22 @@ def supervision(*args):
 	theGame.theGame().addMessage("You have now a super-vision for 10 turns")
 	theGame.theGame().range = 10
 	theGame.theGame().turn = 1
+	return True
+
+def revive(creature):
+		"""
+	réanime le héro 
+
+	Parameters
+	----------
+	creature : Creature.Creature
+		La créature à revive 
+
+	Returns
+	-------
+	bool
+
+	"""
+	
+		creature.revive = True
+		return True 

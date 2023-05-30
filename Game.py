@@ -6,7 +6,7 @@ import Stairs
 import Chest
 import Wearable
 from utils import getch
-from specialActions import heal, teleport, equip, recover
+from specialActions import heal, teleport, equip, recover , revive 
 import Equipment
 import Creature
 import Hero
@@ -384,7 +384,6 @@ class Game(object):
         Affiche l'étage actuel
         """
         theGame.theGame().addMessage(f"You are at floor {self._level}")
-
 
 def setSeed():
     """
