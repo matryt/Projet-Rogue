@@ -20,7 +20,7 @@ class Creature(Element.Element):
 	_idCreature
 	"""
 
-	def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False, isBlinding=False):
+	def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False, isBlinding=False, level=1):
 		"""
 
 		Parameters

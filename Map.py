@@ -486,3 +486,6 @@ class Map(object):
 				if Coord.Coord(i, j) in self and coordDepart.distance(Coord.Coord(i, j)) <= dist:
 					listeCoordonnees.append(Coord.Coord(i, j))
 		return listeCoordonnees
+
+	def randRoomfromRooms(self, floor):
+		return random.choice(floor.getRooms())

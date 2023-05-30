@@ -134,7 +134,7 @@ class Game(object):
         escalierPlace = False
         while not escalierPlace:
             try:
-                self._floor.put(self._floor.randRoomfromRooms().randEmptyCoord(self._floor), Stairs.Stairs())
+                self._floor.put(self._floor.randRoomfromRooms(self._floor).randEmptyCoord(self._floor), Stairs.Stairs())
             except:
                 pass
             else:
@@ -257,7 +257,7 @@ class Game(object):
         element = ""
         coord = None
         while element != Map.Map.ground:
-            r = self._floor.randRoomfromRooms()
+            r = self._floor.randRoomfromRooms(self._floor)
             coord = r.randEmptyCoord(self._floor)
             element = self._floor.get(coord)
         self._floor.put(coord, s)

@@ -255,3 +255,12 @@ class Hero(Creature.Creature):
 
 		#itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
 		#return itemdescription[int(choice)]
+
+	def getGoldCount(self):
+		"""
+		Returns
+		-------
+		int
+			Le nombre de pièces d'or que possède le héros
+		"""
+		return self.GoldCount
