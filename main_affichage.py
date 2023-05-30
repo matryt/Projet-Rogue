@@ -1,6 +1,10 @@
 import pygame
 import random
 import theGame
+import Equipment
+import Wearable
+import Creature
+import specialActions
 import tkinter as tk
 from pygame.locals import *
 from tkinter import simpledialog
@@ -30,7 +34,56 @@ screen = pygame.display.set_mode(res, pygame.RESIZABLE)
 sol = pygame.transform.scale(pygame.image.load("assets/sol.png").convert(), (66, 66))
 mur1 = pygame.transform.scale(pygame.image.load("assets/mur1.png").convert(), (66, 66))
 mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (66, 66))
+equipments = {
+        0: [
+            Equipment.Equipment("potion", "p", usage=lambda self, hero: specialActions.heal(hero)),
+            Wearable.Wearable(
+                "broken sword", place="right hand", effect={"strength": 1}, usage=lambda self, hero: specialActions.equip(hero, self)
+            ),
+            Wearable.Wearable(
+                "trident", place="right hand", effect={"strength": 3}, usage=lambda self, hero: specialActions.equip(hero, self)
+            ),
+            Wearable.Wearable(
+                "double_epee", place="right hand", effect={"strength": 2}, usage=lambda self, hero: specialActions.equip(hero, self)
+            ),
+            Equipment.Equipment("gold", "o"),
+        ],
+        1: [Equipment.Equipment("potion de tp", "!", usage=lambda self, hero: specialActions.teleport(hero, True))],
+        2: [
+            Wearable.Wearable(
+                "sword", place="right hand", effect={"strength": 2}, usage=lambda self, hero: specialActions.equip(hero, self)
+            ),
+            Equipment.Equipment("bow"),
+            Wearable.Wearable("leather vest", place="torso", effect={"armor": 1}),
+            Equipment.Equipment("antidotal", usage=lambda self, hero: specialActions.recover(hero, True)),
+        ],
+        3: [
+            Equipment.Equipment("portoloin", "w", usage=lambda self, hero: specialActions.teleport(hero, False)),
+            Equipment.Equipment("invisibility potion", "i", usage=lambda self, hero: hero.becomeInvisible()),
+        ],
+        4: [Wearable.Wearable("chainmail", place="torso", effect={"armor": 2})],
+    }
 
+dict_sol ={
+        "G": pygame.transform.scale(pygame.image.load("assets/sol/goblinsol.png").convert(), (66, 66)),
+        "W":pygame.transform.scale(pygame.image.load("assets/sol/bat_sol.png").convert(), (66, 66)),
+        "O": pygame.transform.scale(pygame.image.load("assets/sol/orksol.png").convert(), (66, 66)),
+        "B":pygame.transform.scale(pygame.image.load("assets/sol/blobsol.png").convert(), (66, 66)),
+        "S":pygame.transform.scale(pygame.image.load("assets/sol/spider_sol.png").convert(), (66, 66)),
+        "D":pygame.transform.scale(pygame.image.load("assets/sol/dragonsol.png").convert(), (66, 66)),
+        "p":pygame.transform.scale(pygame.image.load("assets/sol/potion_hp_sol.png").convert(), (66, 66)),
+        "n":pygame.transform.scale(pygame.image.load("assets/sol/brokensword_sol.png").convert(), (66, 66)),
+        "t":pygame.transform.scale(pygame.image.load("assets/sol/trident_sol.png").convert(), (66, 66)),
+        "d":pygame.transform.scale(pygame.image.load("assets/sol/double_epee_sol.png").convert(), (66, 66)),
+        "o":pygame.transform.scale(pygame.image.load("assets/sol/gold_sol.png").convert(), (66, 66)),
+        "!":pygame.transform.scale(pygame.image.load("assets/sol/teleport_potion_sol.png").convert(), (66, 66)),
+        "s":pygame.transform.scale(pygame.image.load("assets/sol/epeesol.png").convert(), (66, 66)),
+        "b":pygame.transform.scale(pygame.image.load("assets/sol/arcsol.png").convert(), (66, 66)),
+        "l":pygame.transform.scale(pygame.image.load("assets/sol/leathervestsol.png").convert(), (66, 66)),
+        "a":pygame.transform.scale(pygame.image.load("assets/sol/antidote_sol.png").convert(), (66, 66)),
+        "w":pygame.transform.scale(pygame.image.load("assets/sol/portoloin_sol.png").convert(), (66, 66)),
+        "i":pygame.transform.scale(pygame.image.load("assets/sol/invisibility_potion_sol.png").convert(), (66, 66)),
+        "c":pygame.transform.scale(pygame.image.load("assets/sol/chainmail_sol.png").convert(), (66, 66))}
 
 while running:
     scrrec = screen.get_rect()
@@ -65,10 +118,12 @@ while running:
                                 screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
                             else:
                                 screen2.blit(mur2,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-                        else:
+                        elif theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.ground:
                             text = "#theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.ground or a ==1 :"
-                            screen2.blit(sol,
-                                ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+                            screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+                        else :
+                            screen2.blit(dict_sol[theGame.theGame()._floor._mat[j][i]],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+
                 running = False
                 game = True
 
