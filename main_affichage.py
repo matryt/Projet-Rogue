@@ -199,4 +199,5 @@ while running:
                                 elem=elem.get_abbrv()
                             screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
         pygame.display.update()
+    print('Game OVER')
 
