@@ -104,7 +104,8 @@ dict_sol ={
         "c":pygame.transform.scale(pygame.image.load("assets/sol/chainmail_sol.png").convert(), (66, 66)),
         "@":pygame.transform.scale(pygame.image.load("assets/sol/herosol.png").convert(), (66, 66)),
         "e":pygame.transform.scale(pygame.image.load("assets/sol/shopsol.png").convert(), (66, 66)),
-        #"M":pygame.transform.scale(pygame.image.load("assets/sol/coffresol.png").convert(), (66, 66))
+        "M":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ferme_sol.png").convert(), (66, 66)),
+        "Mo":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ouvert_sol.png").convert(), (66, 66))
         }
 
 while running:

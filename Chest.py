@@ -47,6 +47,7 @@ class Chest(Element.Element):
                 i += 1
 
             if self.chestopened:
+                self._abbrv="Mo"
                 theGame.theGame().addMessage(f"the chest has been opened")
                 return
             theGame.theGame().addMessage(f"it seems that a key is needed to open this chest")
