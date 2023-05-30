@@ -34,9 +34,7 @@ mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (6
 
 while running:
     scrrec = screen.get_rect()
-    background = pygame.transform.scale(
-        pygame.image.load("assets/background lancement.png").convert(), (scrrec.right, scrrec.bottom)
-    )
+    background = pygame.transform.scale(pygame.image.load("assets/background lancement.png").convert(), (scrrec.right, scrrec.bottom))
     screen.blit(background, (0, 0))
     play_button = pygame.image.load("assets/LOGO-PLAY.png")
     play_button_rect = play_button.get_rect()
@@ -85,6 +83,8 @@ while running:
             if event.type == KEYDOWN and event.key == K_ESCAPE:
                 aide = False
                 screen = pygame.display.set_mode(res, pygame.RESIZABLE)
+                background = pygame.transform.scale(pygame.image.load("assets/background lancement.png").convert(), (scrrec.right, scrrec.bottom))
+                screen.blit(background, (0, 0))
                 running = True
 
     while game:
