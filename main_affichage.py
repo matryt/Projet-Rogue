@@ -83,7 +83,9 @@ dict_sol ={
         "a":pygame.transform.scale(pygame.image.load("assets/sol/antidote_sol.png").convert(), (66, 66)),
         "w":pygame.transform.scale(pygame.image.load("assets/sol/portoloin_sol.png").convert(), (66, 66)),
         "i":pygame.transform.scale(pygame.image.load("assets/sol/invisibility_potion_sol.png").convert(), (66, 66)),
-        "c":pygame.transform.scale(pygame.image.load("assets/sol/chainmail_sol.png").convert(), (66, 66))}
+        "c":pygame.transform.scale(pygame.image.load("assets/sol/chainmail_sol.png").convert(), (66, 66)),
+        "@":pygame.transform.scale(pygame.image.load("assets/sol/herosol.png").convert(), (66, 66))
+        }
 
 while running:
     scrrec = screen.get_rect()
