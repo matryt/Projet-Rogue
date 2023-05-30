@@ -83,6 +83,7 @@ while running:
             if event.type == KEYDOWN and event.key == K_ESCAPE:
                 aide = False
                 screen = pygame.display.set_mode(res, pygame.RESIZABLE)
+                screen = pygame.display.set_mode(res, pygame.RESIZABLE)
                 background = pygame.transform.scale(pygame.image.load("assets/background lancement.png").convert(), (scrrec.right, scrrec.bottom))
                 screen.blit(background, (0, 0))
                 running = True
