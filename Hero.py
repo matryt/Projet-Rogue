@@ -264,3 +264,31 @@ class Hero(Creature.Creature):
 			Le nombre de pièces d'or que possède le héros
 		"""
 		return self.GoldCount
+
+	def addGold(self, n):
+		"""
+		Parameters
+		-------
+		n : int
+			Le nombre de pièces d'or à ajouter au héros
+		"""
+		self.GoldCount += n
+
+	def removeItem(self, item):
+		"""
+		Parameters
+		-------
+		item : Equipment.Equipment
+			L'item à retirer de l'inventaire
+		"""
+		self._inventory.remove(item)
+
+	def addItem(self, item):
+		"""
+		Parameters
+		-------
+		item : Equipment.Equipment
+			L'item à ajouter à l'inventaire
+		"""
+		self._inventory.append(item)
+
