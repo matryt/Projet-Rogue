@@ -14,6 +14,8 @@ import Map
 import Coord
 import Shop
 import importlib
+import pygame
+from pygame.locals import *
 
 theGame = importlib.import_module("theGame")
 
@@ -308,6 +310,8 @@ class Game(object):
             self._hero.checkPoison()
             self._floor.moveAllMonsters()
         print("--- Game Over ---")
+    
+    
 
     def getchSimulation(self):
         """
