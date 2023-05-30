@@ -31,8 +31,13 @@ def textInput(titre, message):
     # Afficher le texte saisi
     if user_input:
         return user_input
-
-
+def update_health(surface):
+    percent = 230 * (theGame.theGame().getHero().getHP() / theGame.theGame().getHero().hpMax)
+    bar_position=[surface.get_width()-290,15,percent,60]
+    back_bar_position=[surface.get_width()-290,15,230,60]
+    pygame.draw.rect(surface,(80, 88, 94),back_bar_position)
+    pygame.draw.rect(surface,("green"),bar_position)
+    
 pygame.init()
 running = True
 game = False
@@ -45,6 +50,7 @@ screen = pygame.display.set_mode(res, pygame.RESIZABLE)
 sol = pygame.transform.scale(pygame.image.load("assets/sol.png").convert(), (66, 66))
 mur1 = pygame.transform.scale(pygame.image.load("assets/mur1.png").convert(), (66, 66))
 mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (66, 66))
+
 equipments = {
         0: [
             Equipment.Equipment("potion", "p", usage=lambda self, hero: specialActions.heal(hero)),
@@ -97,7 +103,9 @@ dict_sol ={
         "i":pygame.transform.scale(pygame.image.load("assets/sol/invisibility_potion_sol.png").convert(), (66, 66)),
         "c":pygame.transform.scale(pygame.image.load("assets/sol/chainmail_sol.png").convert(), (66, 66)),
         "@":pygame.transform.scale(pygame.image.load("assets/sol/herosol.png").convert(), (66, 66)),
-        "e":pygame.transform.scale(pygame.image.load("assets/sol/shopsol.png").convert(), (66, 66))}
+        "e":pygame.transform.scale(pygame.image.load("assets/sol/shopsol.png").convert(), (66, 66)),
+        #"M":pygame.transform.scale(pygame.image.load("assets/sol/coffresol.png").convert(), (66, 66))
+        }
 
 while running:
     scrrec = screen.get_rect()
@@ -158,13 +166,14 @@ while running:
                 screen.blit(background, (0, 0))
                 running = True
 
-    while game:
+    while game and theGame.theGame().getHero().getHP() > 0:
         varText = "Press ESCAPE to quit"
         font = pygame.font.Font("freesansbold.ttf", 40)
         text = font.render(varText, True, "black")
         textRect = text.get_rect()
         textRect.center = (210, screen2.get_size()[1] - 25)
         screen2.blit(text, textRect)
+        update_health(screen2)
         for event in pygame.event.get():
             if event.type !=KEYDOWN :
                 continue 
