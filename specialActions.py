@@ -26,7 +26,7 @@ def heal(creature):
     return True
 
 
-  def teleport(creature, unique):
+def teleport(creature, unique):
 	"""
 	Téléporte une créature dans une salle vide
 

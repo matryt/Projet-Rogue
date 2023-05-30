@@ -34,6 +34,7 @@ screen = pygame.display.set_mode(res, pygame.RESIZABLE)
 sol = pygame.transform.scale(pygame.image.load("assets/sol.png").convert(), (66, 66))
 mur1 = pygame.transform.scale(pygame.image.load("assets/mur1.png").convert(), (66, 66))
 mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (66, 66))
+barreVide = pygame.transform.scale(pygame.image.load("assets/barre_vide_2.png").convert(), (190, 107))
 equipments = {
         0: [
             Equipment.Equipment("potion", "p", usage=lambda self, hero: specialActions.heal(hero)),
@@ -82,9 +83,11 @@ dict_sol ={
         "l":pygame.transform.scale(pygame.image.load("assets/sol/leathervestsol.png").convert(), (66, 66)),
         "a":pygame.transform.scale(pygame.image.load("assets/sol/antidote_sol.png").convert(), (66, 66)),
         "w":pygame.transform.scale(pygame.image.load("assets/sol/portoloin_sol.png").convert(), (66, 66)),
-        "i":pygame.transform.scale(pygame.image.load("assets/sol/invisibility_potion_sol.png").convert(), (66, 66)),
+        "i":pygame.transform.scale(pygame.image.load("assets/sol/antidote_sol.png").convert(), (66, 66)), ## TODO : Rajouter le bon asset
         "c":pygame.transform.scale(pygame.image.load("assets/sol/chainmail_sol.png").convert(), (66, 66)),
-        "@":pygame.transform.scale(pygame.image.load("assets/sol/herosol.png").convert(), (66, 66))
+        "@":pygame.transform.scale(pygame.image.load("assets/sol/herosol.png").convert(), (66, 66)),
+        "e":pygame.transform.scale(pygame.image.load("assets/sol/shopsol.png").convert(), (66, 66)),
+        "E":pygame.transform.scale(pygame.image.load("assets/sol/escalier_sol.png").convert(), (66, 66)),
         }
 
 while running:
@@ -124,8 +127,16 @@ while running:
                             text = "#theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.ground or a ==1 :"
                             screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
                         else :
-                            screen2.blit(dict_sol[theGame.theGame()._floor._mat[j][i]],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-
+                            elem = theGame.theGame()._floor._mat[j][i]
+                            if not isinstance(elem, str):
+                                elem = elem._abbrv
+                            screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+                hp = theGame.theGame()._hero._hp
+                hpmax = theGame.theGame()._hero.hpMax
+                barreHp = pygame.transform.scale(pygame.image.load("assets/barre_HP.png").convert(), (int(190*hp/hpmax), 107))
+                screen2.blit(barreVide, (screen2.get_width() - 200, 0))
+                screen2.blit(barreHp, (screen2.get_width() - 200, 0))
+                pygame.display.update()
                 running = False
                 game = True
 
