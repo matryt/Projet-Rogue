@@ -30,6 +30,28 @@ screen = pygame.display.set_mode(res, pygame.RESIZABLE)
 sol = pygame.transform.scale(pygame.image.load("assets/sol.png").convert(), (66, 66))
 mur1 = pygame.transform.scale(pygame.image.load("assets/mur1.png").convert(), (66, 66))
 mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (66, 66))
+inventaire = pygame.image.load("assets/inventaireV2.png")
+inventaire= pygame.transform.scale(inventaire, (400, 800))
+item0 = pygame.image.load("assets/chainmail.png")
+item0 = pygame.transform.scale(item0, (66, 66))
+item1 = pygame.image.load("assets/chainmail.png")
+item1 = pygame.transform.scale(item1, (66, 66))
+item2 = pygame.image.load("assets/chainmail.png")
+item2 = pygame.transform.scale(item2, (66, 66))
+item3 = pygame.image.load("assets/chainmail.png")
+item3 = pygame.transform.scale(item3, (66, 66))
+item4 = pygame.image.load("assets/chainmail.png")
+item4 = pygame.transform.scale(item4, (66, 66))
+item5 = pygame.image.load("assets/chainmail.png")
+item5 = pygame.transform.scale(item5, (66, 66))
+item6 = pygame.image.load("assets/chainmail.png")
+item6 = pygame.transform.scale(item6, (66, 66))
+item7 = pygame.image.load("assets/chainmail.png")
+item7 = pygame.transform.scale(item7, (66, 66))
+item8 = pygame.image.load("assets/chainmail.png")
+item8 = pygame.transform.scale(item8, (66, 66))
+item9 = pygame.image.load("assets/chainmail.png")
+item9 = pygame.transform.scale(item9, (66, 66))
 
 
 while running:
@@ -58,6 +80,8 @@ while running:
                 theGame.theGame().buildFloor()
                 print(theGame.theGame()._floor)
                 a = 1
+                screen.blit(inventaire, (2200, 300))
+                screen.blit(item0, (2305, 500))
                 for i in range(13):
                     for j in range(13):
                         if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
