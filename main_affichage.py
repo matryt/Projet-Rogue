@@ -10,10 +10,9 @@ from pygame.locals import *
 from tkinter import simpledialog
 
 def play_final():
-        for event in pygame.event.get():
-            if event.type == KEYDOWN :
-                if event.type in theGame.theGame()._actions:
-                    theGame.theGame()._actions[event.type](theGame.theGame()._hero)
+        if event.type == KEYDOWN :
+            if event.type in theGame.theGame()._actions:
+                theGame.theGame()._actions[event.type](theGame.theGame()._hero)
         theGame.theGame()._hero.checkPoison()
         theGame.theGame()._floor.moveAllMonsters()
 
@@ -172,10 +171,8 @@ while running:
                             if not isinstance(theGame.theGame()._floor._mat[j][i],str):
                                 elem=elem.get_abbrv()
                             screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-
-
-        pygame.display.update()
         for event in pygame.event.get():
+            play_final()
             if event.type == KEYDOWN and event.key == K_k:
                 pygame.display.set_mode(res, pygame.RESIZABLE)
                 pygame.display.set_mode(res, pygame.RESIZABLE)
@@ -192,4 +189,5 @@ while running:
                 theGame.theGame()._actions["s"]
             if event.type == KEYDOWN and event.key == K_d:
                 theGame.theGame()._actions["d"]
+        pygame.display.update()
 
