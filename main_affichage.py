@@ -119,30 +119,21 @@ dict_sol ={
         }
 
 dict_item ={
-        "G": pygame.transform.scale(pygame.image.load("assets/sol/goblinsol.png").convert(), (55, 55)),
-        "E":pygame.transform.scale(pygame.image.load("assets/sol/escalier_sol.png").convert(), (55, 55)),
-        "W":pygame.transform.scale(pygame.image.load("assets/sol/bat_sol.png").convert(), (55, 55)),
-        "O": pygame.transform.scale(pygame.image.load("assets/sol/orksol.png").convert(), (55, 55)),
-        "B":pygame.transform.scale(pygame.image.load("assets/sol/blobsol.png").convert(), (55, 55)),
-        "S":pygame.transform.scale(pygame.image.load("assets/sol/spider_sol.png").convert(), (55, 55)),
-        "D":pygame.transform.scale(pygame.image.load("assets/sol/dragonsol.png").convert(), (55, 55)),
-        "p":pygame.transform.scale(pygame.image.load("assets/sol/potion_hp_sol.png").convert(), (55, 55)),
-        "n":pygame.transform.scale(pygame.image.load("assets/sol/brokensword_sol.png").convert(), (55, 55)),
-        "t":pygame.transform.scale(pygame.image.load("assets/sol/trident_sol.png").convert(), (55, 55)),
-        "d":pygame.transform.scale(pygame.image.load("assets/sol/double_epee_sol.png").convert(), (55, 55)),
-        "o":pygame.transform.scale(pygame.image.load("assets/sol/gold_sol.png").convert(), (55, 55)),
-        "!":pygame.transform.scale(pygame.image.load("assets/sol/teleport_potion_sol.png").convert(), (55, 55)),
-        "s":pygame.transform.scale(pygame.image.load("assets/sol/epeesol.png").convert(), (55, 55)),
-        "b":pygame.transform.scale(pygame.image.load("assets/sol/arcsol.png").convert(), (55, 55)),
-        "l":pygame.transform.scale(pygame.image.load("assets/sol/leathervestsol.png").convert(), (55, 55)),
-        "a":pygame.transform.scale(pygame.image.load("assets/sol/antidote_sol.png").convert(), (55, 55)),
-        "w":pygame.transform.scale(pygame.image.load("assets/sol/portoloin_sol.png").convert(), (55, 55)),
-        "i":pygame.transform.scale(pygame.image.load("assets/sol/invisibility_potion_sol.png").convert(), (55, 55)),
-        "c":pygame.transform.scale(pygame.image.load("assets/sol/chainmail_sol.png").convert(), (55, 55)),
-        "@":pygame.transform.scale(pygame.image.load("assets/sol/herosol.png").convert(), (55, 55)),
-        "e":pygame.transform.scale(pygame.image.load("assets/sol/shopsol.png").convert(), (55, 55)),
-        "M":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ferme_sol.png").convert(), (55, 55)),
-        "Mo":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ouvert_sol.png").convert(), (55, 55))
+        "p":pygame.transform.scale(pygame.image.load("assets/potion_hp.png").convert(), (55, 55)),
+        "n":pygame.transform.scale(pygame.image.load("assets/brokensword.png").convert(), (55, 55)),
+        "t":pygame.transform.scale(pygame.image.load("assets/trident.png").convert(), (55, 55)),
+        "d":pygame.transform.scale(pygame.image.load("assets/double_epee.png").convert(), (55, 55)),
+        "o":pygame.transform.scale(pygame.image.load("assets/gold.png").convert(), (55, 55)),
+        "!":pygame.transform.scale(pygame.image.load("assets/teleport_potion_sol.png").convert(), (55, 55)),
+        "s":pygame.transform.scale(pygame.image.load("assets/epee.png").convert(), (55, 55)),
+        "b":pygame.transform.scale(pygame.image.load("assets/arc.png").convert(), (55, 55)),
+        "l":pygame.transform.scale(pygame.image.load("assets/leathervest.png").convert(), (55, 55)),
+        "a":pygame.transform.scale(pygame.image.load("assets/antidote.png").convert(), (55, 55)),
+        "w":pygame.transform.scale(pygame.image.load("assets/portoloin_sol.png").convert(), (55, 55)),
+        "i":pygame.transform.scale(pygame.image.load("assets/invisibility_potion_sol.png").convert(), (55, 55)),
+        "c":pygame.transform.scale(pygame.image.load("assets/chainmail_sol.png").convert(), (55, 55)),
+        "M":pygame.transform.scale(pygame.image.load("assets/coffre_ferme.png").convert(), (55, 55)),
+        "Mo":pygame.transform.scale(pygame.image.load("assets/coffre_ouvert.png").convert(), (55, 55))
         }
 
 while running:
