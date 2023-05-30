@@ -16,7 +16,10 @@ class Shop(Element.Element):
 	def addQuantity(self, item, qty):
 		if not self.checkItem(item):
 			raise ValueError(f"{item} is not in the shop")
-		self._items[item]["quantity"] += qty
+		for e in self._items:
+			if e.getName() == item.getName():
+				self._items[e]["quantity"] += qty
+				return
 
 	def isEmpty(self):
 		return len(self._items) == 0
@@ -26,7 +29,7 @@ class Shop(Element.Element):
 			return
 		desc = "La boutique vous propose :"
 		for i, item in enumerate(self._items):
-			desc += f"\n\t({i}) {item.getName()} ({self._items[item]['quantity']} exemplaires): {self._items[item]['price']} pièces"
+			desc += f"\n\t({i}) {item.getName()} ({self._items[item]['quantity']} exemplaire(s)): {self._items[item]['price']} pièce(s)"
 		return desc
 
 	def addItem(self, item, qty, price):
@@ -111,6 +114,6 @@ class Shop(Element.Element):
 					theGame.theGame().getHero().addGold(self.getElem(item)["price"])
 					self.addQuantity(item, 1)
 				theGame.theGame().getHero().removeItem(item)
-				theGame.theGame().addMessage(f"Vous avez vendu {item}")
+				theGame.theGame().addMessage(f"Vous avez vendu {item.getName()}")
 				print(theGame.theGame().readMessages())
 		theGame.theGame().addMessage("Merci beaucoup, et à bientôt j'espère !")

@@ -115,15 +115,13 @@ class Game(object):
         self.equiped_outfits = equiped_outfits
         self.allMonsters = []
 
-    def getRarety(self, equipment):
-        i = 0
-        equip = Game.equipments[i]
-        while equipment not in equip:
-            if i >= 4:
-                raise KeyError("Equipment not found")
-            i += 1
-            equip = Game.equipments[i]
-        return i
+    def getRarety(self, equipment, i=0):
+        if i > 4:
+            raise KeyError("Equipment not found")
+        for equip in Game.equipments[i]:
+            if equip.getName() == equipment.getName():
+                return i
+        return self.getRarety(equipment, i + 1)
 
     def buildFloor(self, s=False):
         """Construit la carte"""
