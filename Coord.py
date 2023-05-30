@@ -43,11 +43,11 @@ class Coord(object):
     def __sub__(self, other):
         return Coord(self.x - other.x, self.y - other.y)
 
-	def __mul__(self, other):
-		if isinstance(other, int):
-			return Coord(self.x * other, self.y * other)
+    def __mul__(self, other):
+        if isinstance(other, int):
+            return Coord(self.x * other, self.y * other)
 
-	def distance(self, other):
+    def distance(self, other):
         """
         Calcule la distance entre deux points
 

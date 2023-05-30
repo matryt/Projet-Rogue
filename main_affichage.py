@@ -9,7 +9,14 @@ import tkinter as tk
 from pygame.locals import *
 from tkinter import simpledialog
 
-
+def play_final():
+        for event in pygame.event.get():
+            if event.type == KEYDOWN :
+                if event.type in theGame.theGame()._actions:
+                    theGame.theGame()._actions[event.type](theGame.theGame()._hero)
+        theGame.theGame()._hero.checkPoison()
+        theGame.theGame()._floor.moveAllMonsters()
+        
 def textInput(titre, message):
     root = tk.Tk()
     root.withdraw()  # Masquer la fenêtre principale
@@ -66,6 +73,7 @@ equipments = {
 
 dict_sol ={
         "G": pygame.transform.scale(pygame.image.load("assets/sol/goblinsol.png").convert(), (66, 66)),
+        "E":pygame.transform.scale(pygame.image.load("assets/sol/escalier_sol.png").convert(), (66, 66)),
         "W":pygame.transform.scale(pygame.image.load("assets/sol/bat_sol.png").convert(), (66, 66)),
         "O": pygame.transform.scale(pygame.image.load("assets/sol/orksol.png").convert(), (66, 66)),
         "B":pygame.transform.scale(pygame.image.load("assets/sol/blobsol.png").convert(), (66, 66)),
@@ -84,8 +92,8 @@ dict_sol ={
         "w":pygame.transform.scale(pygame.image.load("assets/sol/portoloin_sol.png").convert(), (66, 66)),
         "i":pygame.transform.scale(pygame.image.load("assets/sol/invisibility_potion_sol.png").convert(), (66, 66)),
         "c":pygame.transform.scale(pygame.image.load("assets/sol/chainmail_sol.png").convert(), (66, 66)),
-        "@":pygame.transform.scale(pygame.image.load("assets/sol/herosol.png").convert(), (66, 66))
-        }
+        "@":pygame.transform.scale(pygame.image.load("assets/sol/herosol.png").convert(), (66, 66)),
+        "e":pygame.transform.scale(pygame.image.load("assets/sol/shopsol.png").convert(), (66, 66))}
 
 while running:
     scrrec = screen.get_rect()
@@ -111,8 +119,6 @@ while running:
                 screen2 = pygame.display.set_mode((0, 0), flags)
                 screen2.fill("white")
                 theGame.theGame().buildFloor()
-                print(theGame.theGame()._floor)
-                a = 1
                 for i in range(13):
                     for j in range(13):
                         if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
@@ -120,11 +126,14 @@ while running:
                                 screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
                             else:
                                 screen2.blit(mur2,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-                        elif theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.ground:
+                        if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.ground:
                             text = "#theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.ground or a ==1 :"
                             screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-                        else :
-                            screen2.blit(dict_sol[theGame.theGame()._floor._mat[j][i]],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+                        elif  theGame.theGame()._floor._mat[j][i]!=theGame.theGame()._floor.empty:
+                            elem=theGame.theGame()._floor._mat[j][i]
+                            if not isinstance(theGame.theGame()._floor._mat[j][i],str):
+                                elem=elem.get_abbrv()
+                            screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 
                 running = False
                 game = True
@@ -145,17 +154,25 @@ while running:
                 screen.blit(background, (0, 0))
                 running = True
 
-    while game:
+    while game and theGame.theGame()._hero._hp>0 :       
         varText = "Press ESCAPE to quit"
         font = pygame.font.Font("freesansbold.ttf", 40)
         text = font.render(varText, True, "black")
         textRect = text.get_rect()
         textRect.center = (210, screen2.get_size()[1] - 25)
         screen2.blit(text, textRect)
+        play_final()
         for i in range(13):
-            for j in range(13):
-                if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.ground:
-                    screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66, (screen2.get_height() - 13 * 66) / 2 + j * 66),)
+                    for j in range(13):
+                        if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.ground:
+                            text = "#theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.ground or a ==1 :"
+                            screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+                        elif  theGame.theGame()._floor._mat[j][i]!=theGame.theGame()._floor.empty:
+                            elem=theGame.theGame()._floor._mat[j][i]
+                            if not isinstance(theGame.theGame()._floor._mat[j][i],str):
+                                elem=elem.get_abbrv()
+                            screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+
 
         pygame.display.update()
         for event in pygame.event.get():
@@ -167,3 +184,12 @@ while running:
             if event.type == KEYDOWN and event.key == K_ESCAPE:
                 game = False
                 running = False
+            if event.type == KEYDOWN and event.key == K_z:
+                theGame.theGame()._actions["z"]
+            if event.type == KEYDOWN and event.key == K_q:
+                theGame.theGame()._actions["q"]
+            if event.type == KEYDOWN and event.key == K_s:
+                theGame.theGame()._actions["s"]
+            if event.type == KEYDOWN and event.key == K_d:
+                theGame.theGame()._actions["d"]
+            
