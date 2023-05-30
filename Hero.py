@@ -77,6 +77,7 @@ class Hero(Creature.Creature):
         self.GoldCount = GoldCount
         self._level = level
         self.hpMax = 10
+        self.xpMax = self.xp 
         self.strengthMax = 2
         self._poisoned = poisoned
         self._invisible = invisible

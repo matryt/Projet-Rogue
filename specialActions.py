@@ -8,25 +8,25 @@ theGame = importlib.import_module("theGame")
 
 
 def heal(creature):
-    """
-    Soigne une créature
+	"""
+	Soigne une créature
 
-    Parameters
-    ----------
-    creature : Creature.Creature
-            La créature à soigner
+	Parameters
+	----------
+	creature : Creature.Creature
+		La créature à soigner
 
-    Returns
-    -------
-    bool
-            True
+	Returns
+	-------
+	bool
+		True
 
-    """
-    creature.heal()
-    return True
+	"""
+	creature.heal()
+	return True
 
 
-  def teleport(creature, unique):
+def teleport(creature, unique):
 	"""
 	Téléporte une créature dans une salle vide
 
@@ -79,19 +79,13 @@ def equip(creature,outfit):
 			if creature._arme_equipee:
 				creature._inventory.append(creature._arme_equipee)
 			creature._arme_equipee = outfit
-			#if creature.strengthMax != creature._strength + outfit.effect[key]:
-			#	theGame.theGame().equiped_outfits.append(outfit)
-			#	return True 
-			#JE SAIS PAS PUTAIN
+
 			creature._strength += outfit.effect.get('strength', 0)
  		
 			if outfit.durability > 0:
-					#while outfit.durability > 0:
-						#creature._strength = creature._strength
+
 						creature.strengthMax += outfit.effect[key]
-						#outfit.durability -= 1
-					#creature._strength -= outfit.effect.get('strength', 0)
-					#pass
+	
 			else:
 		
 				return True
