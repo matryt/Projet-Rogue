@@ -19,6 +19,12 @@ def play_final():
         screen2.fill("white")
     theGame.theGame()._hero.checkPoison()
     theGame.theGame()._floor.moveAllMonsters()
+
+def displayInventory(screen):
+    listEmplacements = [(64, 250),(206, 250), (64, 361), (206, 361), (64, 471), (206, 471), (64, 584), (206, 585), (64, 693), (206, 693)]
+    for i, elem in enumerate(theGame.theGame()._hero._inventory):
+        img = pygame.transform.scale(pygame.image.load(dict_sol[elem.getName()]).convert(), (55, 55))
+        screen.blit(img, listEmplacements[i])
         
 
 def textInput(titre, message):
@@ -50,6 +56,7 @@ screen = pygame.display.set_mode(res, pygame.RESIZABLE)
 sol = pygame.transform.scale(pygame.image.load("assets/sol.png").convert(), (66, 66))
 mur1 = pygame.transform.scale(pygame.image.load("assets/mur1.png").convert(), (66, 66))
 mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (66, 66))
+inventaire = pygame.transform.scale(pygame.image.load("assets/inventaireV2.png").convert(), (400, 800))
 
 equipments = {
         0: [
@@ -132,6 +139,7 @@ while running:
                 screen2 = pygame.display.set_mode((0, 0), flags)
                 screen2.fill("white")
                 theGame.theGame().buildFloor()
+                screen2.blit(inventaire, (-50, 45))
                 for i in range(13):
                     for j in range(13):
                         if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
@@ -175,6 +183,7 @@ while running:
         textRect.center = (210, screen2.get_size()[1] - 25)
         screen2.blit(text, textRect)
         update_health(screen2)
+        displayInventory(screen2)
         for event in pygame.event.get():
             if event.type !=KEYDOWN :
                 continue 
@@ -200,5 +209,5 @@ while running:
                                 elem=elem.get_abbrv()
                             screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
         pygame.display.update()
-    print('Game OVER')
+print('Game OVER')
 
