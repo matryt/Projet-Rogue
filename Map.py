@@ -6,6 +6,7 @@ import Element
 import Room
 import Creature
 import Hero
+import Shop
 
 
 class Map(object):
@@ -289,10 +290,13 @@ class Map(object):
             if (
                 self.get(dest) != Map.empty
                 and self.get(dest) != e
+                and not isinstance(self.get(dest), Shop.Shop)
                 and self.get(dest).meet(e)
                 and self.get(dest) != self._hero
             ):
                 self.rm(dest)
+            if isinstance(self.get(dest), Shop.Shop):
+                self.get(dest).meet(e)
             if self._simulation:
                 for m in self._rooms:
                     if dest in m.coordsInRoom() and m not in self._roomsVisited:
@@ -440,6 +444,17 @@ class Map(object):
             s = self.randRoom()
             if self.intersectNone(s):
                 self.addRoom(s)
+
+    def randRoomfromRooms(self):
+        """
+        Renvoie une salle au hasard dans la carte
+
+        Returns
+        -------
+        Room.Room
+                Une salle au hasard
+        """
+        return random.choice(self._rooms)
 
     def setVisible(self, coords):
         """

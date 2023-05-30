@@ -87,6 +87,9 @@ class Hero(Creature.Creature):
             return self._name == other._name and self._abbrv == other._abbrv
         return False
 
+    def getGoldCount(self):
+        return self.GoldCount
+
     def __hash__(self):
         return hash(f"{self._name},{self._abbrv}")
 
@@ -239,3 +242,19 @@ class Hero(Creature.Creature):
         # itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
 
         # return itemdescription[int(choice)]
+
+    def addItem(self, item):
+        self._inventory.append(item)
+
+    def addGold(self, gold):
+        self.GoldCount += gold
+
+    def removeItem(self, item):
+        self._inventory.remove(item)
+
+    def checkItem(self, item):
+        if isinstance(item, str):
+            for elem in self._inventory:
+                if item == elem.getName():
+                    return True
+        return False
