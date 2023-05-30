@@ -206,6 +206,7 @@ while running:
                 running = True
 
     while game and theGame.theGame().getHero().getHP() > 0:
+        screen2.blit(inventaire, (-50, 45))
         varText = "Press ESCAPE to quit"
         font = pygame.font.Font("freesansbold.ttf", 40)
         text = font.render(varText, True, "black")
