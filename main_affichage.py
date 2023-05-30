@@ -23,8 +23,11 @@ def play_final():
 def displayInventory(screen):
     listEmplacements = [(64, 250),(206, 250), (64, 361), (206, 361), (64, 471), (206, 471), (64, 584), (206, 585), (64, 693), (206, 693)]
     for i, elem in enumerate(theGame.theGame()._hero._inventory):
-        img = pygame.transform.scale(pygame.image.load(dict_sol[elem.getName()]).convert(), (55, 55))
-        screen.blit(img, listEmplacements[i])
+        try:
+            img = dict_item[elem.get_abbrv()]
+            screen.blit(img, listEmplacements[i])
+        except Exception as e:
+            print(e)
         
 
 def textInput(titre, message):
@@ -113,6 +116,33 @@ dict_sol ={
         "e":pygame.transform.scale(pygame.image.load("assets/sol/shopsol.png").convert(), (66, 66)),
         "M":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ferme_sol.png").convert(), (66, 66)),
         "Mo":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ouvert_sol.png").convert(), (66, 66))
+        }
+
+dict_item ={
+        "G": pygame.transform.scale(pygame.image.load("assets/sol/goblinsol.png").convert(), (55, 55)),
+        "E":pygame.transform.scale(pygame.image.load("assets/sol/escalier_sol.png").convert(), (55, 55)),
+        "W":pygame.transform.scale(pygame.image.load("assets/sol/bat_sol.png").convert(), (55, 55)),
+        "O": pygame.transform.scale(pygame.image.load("assets/sol/orksol.png").convert(), (55, 55)),
+        "B":pygame.transform.scale(pygame.image.load("assets/sol/blobsol.png").convert(), (55, 55)),
+        "S":pygame.transform.scale(pygame.image.load("assets/sol/spider_sol.png").convert(), (55, 55)),
+        "D":pygame.transform.scale(pygame.image.load("assets/sol/dragonsol.png").convert(), (55, 55)),
+        "p":pygame.transform.scale(pygame.image.load("assets/sol/potion_hp_sol.png").convert(), (55, 55)),
+        "n":pygame.transform.scale(pygame.image.load("assets/sol/brokensword_sol.png").convert(), (55, 55)),
+        "t":pygame.transform.scale(pygame.image.load("assets/sol/trident_sol.png").convert(), (55, 55)),
+        "d":pygame.transform.scale(pygame.image.load("assets/sol/double_epee_sol.png").convert(), (55, 55)),
+        "o":pygame.transform.scale(pygame.image.load("assets/sol/gold_sol.png").convert(), (55, 55)),
+        "!":pygame.transform.scale(pygame.image.load("assets/sol/teleport_potion_sol.png").convert(), (55, 55)),
+        "s":pygame.transform.scale(pygame.image.load("assets/sol/epeesol.png").convert(), (55, 55)),
+        "b":pygame.transform.scale(pygame.image.load("assets/sol/arcsol.png").convert(), (55, 55)),
+        "l":pygame.transform.scale(pygame.image.load("assets/sol/leathervestsol.png").convert(), (55, 55)),
+        "a":pygame.transform.scale(pygame.image.load("assets/sol/antidote_sol.png").convert(), (55, 55)),
+        "w":pygame.transform.scale(pygame.image.load("assets/sol/portoloin_sol.png").convert(), (55, 55)),
+        "i":pygame.transform.scale(pygame.image.load("assets/sol/invisibility_potion_sol.png").convert(), (55, 55)),
+        "c":pygame.transform.scale(pygame.image.load("assets/sol/chainmail_sol.png").convert(), (55, 55)),
+        "@":pygame.transform.scale(pygame.image.load("assets/sol/herosol.png").convert(), (55, 55)),
+        "e":pygame.transform.scale(pygame.image.load("assets/sol/shopsol.png").convert(), (55, 55)),
+        "M":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ferme_sol.png").convert(), (55, 55)),
+        "Mo":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ouvert_sol.png").convert(), (55, 55))
         }
 
 while running:
