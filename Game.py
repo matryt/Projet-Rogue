@@ -261,7 +261,6 @@ class Game(object):
             element = self._floor.get(coord)
         self._floor.put(coord, s)
 
-
     @staticmethod
     def select(listeChoix):
         """
