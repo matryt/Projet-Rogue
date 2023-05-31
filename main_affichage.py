@@ -231,9 +231,7 @@ while running:
 		screen_aide.fill([255, 255, 255])
 		background = pygame.transform.scale(pygame.image.load("assets/help.png").convert(), (scrrec_aide.right, scrrec_aide.bottom))
 		screen_aide.blit(background, (0, 0))
-		theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
 		pygame.display.update()
-
 		for event in pygame.event.get():
 			if event.type == KEYDOWN and event.key == K_ESCAPE:
 				aide = False
