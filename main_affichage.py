@@ -200,7 +200,7 @@ while running:
 	while game and theGame.theGame().getHero().getHP() > 0:
 		screen2.blit(inventaire, (-5, 15))
 		varText = "Press ESCAPE to quit"
-		font = pygame.font.Font("freesansbold.ttf", 40)
+		font = pygame.font.Font("freesansbold.ttf", 26)
 		text = font.render(varText, True, "black")
 		textRect = text.get_rect()
 		textRect.center = (210, screen2.get_size()[1] - 25)
