@@ -43,6 +43,8 @@ class Creature(Element.Element):
         self._strength = strength
         self._idCreature = idCreature
         self.isPoisoning = isPoisoning
+        self.xp = 0
+        self.xpMax = 0
 
     def __eq__(self, other):
         if isinstance(other, Creature):
@@ -120,6 +122,7 @@ class Creature(Element.Element):
         creature._invisible = False
         if self._hp <= 0:
             creature.xp += random.randint(1 * self._strength, 20 * self._strength)
+            creature.xpMax += creature.xp
             if self._idCreature == theGame.theGame().special_id:
                 creature._inventory.append(Equipment.Equipment("key", "k"))
                 theGame.theGame().addMessage("vous avez trouvé un objet ! ")
@@ -129,6 +132,8 @@ class Creature(Element.Element):
                 theGame.theGame().addMessage(f"You just advanced to level {creature._level}")
                 creature.hpMax += random.randint(0, 2)
                 creature.strengthMax += random.randint(0, 1)
+                creature.xpMax += creature.xp
+                creature.xp = 0
                 creature._hp = creature.hpMax
                 creature._strength = creature.strengthMax
 

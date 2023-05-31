@@ -62,6 +62,21 @@ def update_xp(surface):
 	textRect = text.get_rect()
 	textRect.center = (screen2.get_width() - 180, 295)
 	screen2.blit(text, textRect)
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 325, 400, 100])
+	varXP = f"XP : {str(theGame.theGame().getHero().xp)}/{str(theGame.theGame().getHero().xpMax)}"
+	font = pygame.font.Font("freesansbold.ttf", 30)
+	text = font.render(varXP, True, "black")
+	textRect2 = text.get_rect()
+	textRect2.center = (screen2.get_width() - 170, 325)
+	screen2.blit(text, textRect2)
+	if theGame.theGame().getHero().xp > 0:
+		percent = 230 * (theGame.theGame().getHero().xp / theGame.theGame().getHero().xpMax)
+	else:
+		percent = 0
+	bar_position = [surface.get_width() - 290, 355, percent, 60]
+	back_bar_position = [surface.get_width() - 290, 355, 230, 60]
+	pygame.draw.rect(surface, (80, 88, 94), back_bar_position)
+	pygame.draw.rect(surface, ("blue"), bar_position)
 	
 pygame.init()
 running = True
