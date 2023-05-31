@@ -124,7 +124,7 @@ class Creature(Element.Element):
             if self._idCreature == theGame.theGame().special_id:
                 creature._inventory.append(Equipment.Equipment("key", "k"))
                 theGame.theGame().addMessage("vous avez trouvé un objet ! ")
-            if creature.xpMax >= 20 * creature._level or creature.xp >= 20 * creature._level:
+            if creature.xp >= 20 * creature._level:
                 creature._level += 1
                 print(creature._level)
                 theGame.theGame().addMessage(f"You just advanced to level {creature._level}")
