@@ -4,6 +4,7 @@ import theGame
 import Equipment
 import Wearable
 import Creature
+import Hero
 import specialActions
 import tkinter as tk
 from pygame.locals import *
@@ -230,6 +231,7 @@ while running:
 				screen2 = pygame.display.set_mode((0, 0), flags)
 				screen2.fill("white")
 				theGame.theGame().buildFloor()
+				theGame.theGame()._hero=Hero.Hero()
 				theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
 				screen2.blit(inventaire, (10, 15))
 				for i in range(13):
