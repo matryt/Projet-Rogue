@@ -21,23 +21,23 @@ def play_final():
 	theGame.theGame()._hero.checkPoison()
 	theGame.theGame()._floor.moveAllMonsters()
 listEmplacements =  {"0": [(60, 227),False],
-		      			 "1": [(216, 227),False],
-						 "2": [(60, 353),False],
-						 "3": [(216, 353),False],
-						 "4": [(60, 477),False],
-						 "5": [(216, 477),False],
-						 "6": [(60, 605),False],
-						 "7": [(216, 607),False],
-						 "8": [(60, 729),False],
-						 "9": [(216, 729),False],
-						 }
+		      		"1": [(216, 227),False],
+					"2": [(60, 353),False],
+					"3": [(216, 353),False],
+					"4": [(60, 477),False],
+					"5": [(216, 477),False],
+					"6": [(60, 605),False],
+					"7": [(216, 607),False],
+					"8": [(60, 729),False],
+					"9": [(216, 729),False]}
 
 def displayInventory(screen):
 	#listEmplacements = [(60, 227),(216, 227), (60, 353), (216, 353), (60, 477), (216, 477), (60, 605), (216, 607), (60, 729), (216, 729)]
 	for i, elem in enumerate(theGame.theGame()._hero._inventory):
+		screen.blit(img, listEmplacements[str(i)][0])
 		try:
 			img = dict_item[elem.get_abbrv()]
-			screen.blit(img, listEmplacements[i][0])
+			screen.blit(img, listEmplacements[str(i)][0])
 			listEmplacements[i][1] = True 
 
 		except Exception as e:
@@ -308,11 +308,11 @@ while running:
 		textRect.center = (210, screen2.get_size()[1] - 25)
 		screen2.blit(text, textRect)
 		update_all(screen2)
+		displayInventory(screen2)
 		for event in pygame.event.get():
 			if event.type !=KEYDOWN :
 				continue 
 			play_final()
-			displayInventory(screen2)
 			if event.type == KEYDOWN and event.key == K_k:
 				pygame.display.set_mode(res, pygame.RESIZABLE)
 				pygame.display.set_mode(res, pygame.RESIZABLE)
