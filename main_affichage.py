@@ -1,9 +1,7 @@
 import pygame
-import random
 import theGame
 import Equipment
 import Wearable
-import Creature
 import Hero
 import specialActions
 import tkinter as tk
@@ -41,6 +39,16 @@ def textInput(titre, message):
 	# Afficher le texte saisi
 	if user_input:
 		return user_input
+
+def update_all(surface):
+	update_health(surface)
+	update_xp(surface)
+	update_strength(surface)
+	update_gold(surface)
+	update_armor(surface)
+	update_floor(surface)
+
+
 def update_health(surface):
 	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 160, 400, 50])
 	varHP = f"HP : {str(theGame.theGame().getHero().getHP())}/{str(theGame.theGame().getHero().hpMax)}"
@@ -279,12 +287,7 @@ while running:
 		textRect = text.get_rect()
 		textRect.center = (210, screen2.get_size()[1] - 25)
 		screen2.blit(text, textRect)
-		update_health(screen2)
-		update_xp(screen2)
-		update_strength(screen2)
-		update_gold(screen2)
-		update_floor(screen2)
-		update_armor(screen2)
+		update_all(screen2)
 		displayInventory(screen2)
 		for event in pygame.event.get():
 			if event.type !=KEYDOWN :
