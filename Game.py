@@ -130,7 +130,7 @@ class Game(object):
         escalierPlace = False
         while not escalierPlace:
             try:
-                self._floor.put(self._floor.randRoomfromRooms().randEmptyCoord(self._floor), Stairs.Stairs())
+                self._floor.put(self._floor.randRoomfromRooms().randEmptyCoordNotCorridor(self._floor), Stairs.Stairs())
             except:
                 pass
             else:
@@ -138,13 +138,13 @@ class Game(object):
         nbRooms = len(self._floor.getRooms())
         if nbRooms >= 2 and self._level >= 5 and self._level <= 15:
             self._floor.put(
-                self._floor.getRooms()[random.randint(0, nbRooms - 1)].randEmptyCoord(self._floor), Chest.Chest()
+                self._floor.getRooms()[random.randint(0, nbRooms - 1)].randEmptyCoordNotCorridor(self._floor), Chest.Chest()
             )
         if self._level >= 15:
             randomValue = random.randint(1, 4)
             if randomValue == 1:
                 self._floor.put(
-                    self._floor.getRooms()[random.randint(0, nbRooms - 1)].randEmptyCoord(self._floor),
+                    self._floor.getRooms()[random.randint(0, nbRooms - 1)].randEmptyCoordNotCorridor(self._floor),
                     Chest.Chest(size="big"),
                 )
         self.createShop()
@@ -255,7 +255,7 @@ class Game(object):
         coord = None
         while element != Map.Map.ground:
             r = self._floor.randRoomfromRooms()
-            coord = r.randEmptyCoord(self._floor)
+            coord = r.randEmptyCoordNotCorridor(self._floor)
             element = self._floor.get(coord)
         self._floor.put(coord, s)
 

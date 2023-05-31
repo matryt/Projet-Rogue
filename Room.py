@@ -166,6 +166,25 @@ class Room(object):
             e = m.get(r)
         return r
 
+    def randEmptyCoordNotCorridor(self, m):
+        """
+
+        Parameters
+        ----------
+        m : Map.Map
+                La carte dans laquelle prendre une coordonnée
+
+        Returns
+        -------
+        r : Coord.Coord
+                Un point de la salle au hasard qui n'est pas déjà rempli
+
+        """
+        c = self.randEmptyCoord(m)
+        while m.get(c) == Map.Map.corridor:
+            c = self.randEmptyCoord(m)
+        return c
+
     def decorate(self, m):
         """
 
