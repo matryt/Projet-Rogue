@@ -90,7 +90,7 @@ screen = pygame.display.set_mode(res, pygame.RESIZABLE)
 sol = pygame.transform.scale(pygame.image.load("assets/sol.png").convert(), (66, 66))
 mur1 = pygame.transform.scale(pygame.image.load("assets/mur1.png").convert(), (66, 66))
 mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (66, 66))
-inventaire = pygame.transform.scale(pygame.image.load("assets/inventaireV2_r.png").convert_alpha(), (350, 840))
+inventaire = pygame.transform.scale(pygame.image.load("assets/inventaireV2_r.png").convert_alpha(), (320, 840))
 hero = pygame.transform.scale(pygame.image.load("assets/hero.png").convert_alpha(), (150, 150))
 nuage = pygame.transform.scale(pygame.image.load("assets/sol/nuage_sol.png").convert_alpha(), (66, 66))
 
@@ -195,7 +195,7 @@ while running:
 				screen2.fill("white")
 				theGame.theGame().buildFloor()
 				theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
-				screen2.blit(inventaire, (-5, 15))
+				screen2.blit(inventaire, (10, 15))
 				for i in range(13):
 					for j in range(13):
 						if theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.empty:
@@ -235,7 +235,7 @@ while running:
 				running = True
 
 	while game and theGame.theGame().getHero().getHP() > 0:
-		screen2.blit(inventaire, (-5, 15))
+		screen2.blit(inventaire, (10, 15))
 		screen2.blit(hero, (screen2.get_width()-250, 0))
 		varText = "Press ESCAPE to quit"
 		font = pygame.font.Font("freesansbold.ttf", 26)
@@ -264,7 +264,7 @@ while running:
 							text = "#theGame.theGame()._floor._visibleMap[j][i]==theGame.theGame()._floor.ground or a ==1 :"
 							screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 						elif theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.empty:
-							screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+							screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)																		
 						elif theGame.theGame()._floor._visibleMap[j][i] == "~":
 							screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 						elif  theGame.theGame()._floor._visibleMap[j][i]!=theGame.theGame()._floor.empty:
