@@ -468,7 +468,7 @@ class Map(object):
         for c in coords:
             self._visibleMap[c.y][c.x] = self._mat[c.y][c.x]
 
-    def rangeElement(self, element, dist=50):
+    def rangeElement(self, element, dist=5):
         """
         Permet de renvoyer un ensemble de coordonnées à une distance donnée d'un élément
         Parameters
