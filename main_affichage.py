@@ -3,10 +3,12 @@ import theGame
 import Equipment
 import Wearable
 import Hero
+import CustomDialog
 import specialActions
 import tkinter as tk
 from pygame.locals import *
 from tkinter import simpledialog
+from PIL import Image, ImageTk
 
 def play_final():
 	level = theGame.theGame()._level
@@ -18,35 +20,28 @@ def play_final():
 		screen2.fill("white")
 	theGame.theGame()._hero.checkPoison()
 	theGame.theGame()._floor.moveAllMonsters()
+listEmplacements =  {"0": ((60, 227),False),
+		      			 "1": ((216, 227),False),
+						 "2": ((60, 353),False),
+						 "3": ((216, 353),False),
+						 "4": ((60, 477),False),
+						 "5": ((216, 477),False),
+						 "6": ((60, 605),False),
+						 "7": ((216, 607),False),
+						 "8": ((60, 729),False),
+						 "9": ((216, 729),False),
+						 }
 
 def displayInventory(screen):
-	listEmplacements = [(60, 227),(216, 227), (60, 353), (216, 353), (60, 477), (216, 477), (60, 605), (216, 607), (60, 729), (216, 729)]
+	#listEmplacements = [(60, 227),(216, 227), (60, 353), (216, 353), (60, 477), (216, 477), (60, 605), (216, 607), (60, 729), (216, 729)]
 	for i, elem in enumerate(theGame.theGame()._hero._inventory):
 		try:
 			img = dict_item[elem.get_abbrv()]
-			screen.blit(img, listEmplacements[i])
+			screen.blit(img, listEmplacements[i][0])
+			listEmplacements[i][1] = True 
+
 		except Exception as e:
 			print(e)
-		
-class CustomDialog(simpledialog.Dialog):
-	def __init__(self, parent, title=None, image_path=None):
-		self.image_path = image_path
-		super().__init__(parent, title)
-
-	def body(self, master):
-		if self.image_path:
-			image = Image.open(self.image_path)
-			photo = ImageTk.PhotoImage(image)
-			image_label = tk.Label(master, image=photo)
-			image_label.image = photo  # Conserver une référence à l'image pour éviter la suppression par le garbage collector
-			image_label.pack()
-
-		self.entry = tk.Entry(master)
-		self.entry.pack()
-		return self.entry
-
-	def apply(self):
-		self.result = self.entry.get()
 
 
 def textInput(titre, message, image_path=None):
@@ -54,7 +49,7 @@ def textInput(titre, message, image_path=None):
 	root.withdraw()  # Masquer la fenêtre principale
 
 	# Boîte de dialogue pour saisir du texte
-	dialog = CustomDialog(root, titre, image_path=image_path)
+	dialog = CustomDialog.CustomDialog(root, titre, image_path=image_path)
 	user_input = dialog.result
 
 	# Afficher le texte saisi
@@ -159,6 +154,9 @@ mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (6
 inventaire = pygame.transform.scale(pygame.image.load("assets/inventaireV2_r.png").convert_alpha(), (320, 840))
 hero = pygame.transform.scale(pygame.image.load("assets/hero.png").convert_alpha(), (150, 150))
 nuage = pygame.transform.scale(pygame.image.load("assets/sol/nuage_sol.png").convert_alpha(), (66, 66))
+
+
+
 
 equipments = {
 		0: [
@@ -322,6 +320,14 @@ while running:
 			if event.type == KEYDOWN and event.key == K_ESCAPE:
 				game = False
 				running = False
+
+			if event.type == KEYDOWN and K_0 <= event.key <= K_9: #and listEmplacements[0][1] == True :
+				if listEmplacements[pygame.key.name(event.key)][1] == True :
+					titre = "choose action"
+					message = "Entrez votre texte :"
+					image_path = "assets/chooseaction6.png"
+					resultat = textInput(titre, message, image_path=image_path)
+
 			for i in range(13):
 					for j in range(13):
 						if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
