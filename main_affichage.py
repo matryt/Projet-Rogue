@@ -28,13 +28,34 @@ def displayInventory(screen):
 		except Exception as e:
 			print(e)
 		
+class CustomDialog(simpledialog.Dialog):
+	def __init__(self, parent, title=None, image_path=None):
+		self.image_path = image_path
+		super().__init__(parent, title)
 
-def textInput(titre, message):
+	def body(self, master):
+		if self.image_path:
+			image = Image.open(self.image_path)
+			photo = ImageTk.PhotoImage(image)
+			image_label = tk.Label(master, image=photo)
+			image_label.image = photo  # Conserver une référence à l'image pour éviter la suppression par le garbage collector
+			image_label.pack()
+
+		self.entry = tk.Entry(master)
+		self.entry.pack()
+		return self.entry
+
+	def apply(self):
+		self.result = self.entry.get()
+
+
+def textInput(titre, message, image_path=None):
 	root = tk.Tk()
 	root.withdraw()  # Masquer la fenêtre principale
 
 	# Boîte de dialogue pour saisir du texte
-	user_input = simpledialog.askstring(titre, message)
+	dialog = CustomDialog(root, titre, image_path=image_path)
+	user_input = dialog.result
 
 	# Afficher le texte saisi
 	if user_input:
