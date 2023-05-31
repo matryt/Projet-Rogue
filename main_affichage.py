@@ -41,26 +41,26 @@ def textInput(titre, message):
 	if user_input:
 		return user_input
 def update_health(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 10, 400, 100])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 160, 400, 100])
 	varHP = f"HP : {str(theGame.theGame().getHero().getHP())}/{str(theGame.theGame().getHero().hpMax)}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varHP, True, "black")
 	textRect = text.get_rect()
-	textRect.center = (screen2.get_width()-200, 25)
+	textRect.center = (screen2.get_width()-170, 175)
 	screen2.blit(text, textRect)
 	percent = 230 * (theGame.theGame().getHero().getHP() / theGame.theGame().getHero().hpMax)
-	bar_position=[surface.get_width()-290,55,percent,60]
-	back_bar_position=[surface.get_width()-290,55,230,60]
+	bar_position=[surface.get_width()-290,205,percent,60]
+	back_bar_position=[surface.get_width()-290,205,230,60]
 	pygame.draw.rect(surface,(80, 88, 94),back_bar_position)
 	pygame.draw.rect(surface,("green"),bar_position)
 
 def update_xp(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 280, 130, 400, 100])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 280, 280, 400, 100])
 	varLevel = f"Level {str(theGame.theGame().getHero().getLevel())}"
 	fontText = pygame.font.Font("freesansbold.ttf", 30)
 	text = fontText.render(varLevel, True, "black")
 	textRect = text.get_rect()
-	textRect.center = (screen2.get_width() - 180, 145)
+	textRect.center = (screen2.get_width() - 180, 295)
 	screen2.blit(text, textRect)
 	
 pygame.init()
@@ -76,6 +76,7 @@ sol = pygame.transform.scale(pygame.image.load("assets/sol.png").convert(), (66,
 mur1 = pygame.transform.scale(pygame.image.load("assets/mur1.png").convert(), (66, 66))
 mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (66, 66))
 inventaire = pygame.transform.scale(pygame.image.load("assets/inventaireV2_r.png").convert_alpha(), (350, 840))
+hero = pygame.transform.scale(pygame.image.load("assets/hero.png").convert_alpha(), (150, 150))
 
 equipments = {
 		0: [
@@ -215,6 +216,7 @@ while running:
 
 	while game and theGame.theGame().getHero().getHP() > 0:
 		screen2.blit(inventaire, (-5, 15))
+		screen2.blit(hero, (screen2.get_width()-250, 0))
 		varText = "Press ESCAPE to quit"
 		font = pygame.font.Font("freesansbold.ttf", 26)
 		text = font.render(varText, True, "black")
