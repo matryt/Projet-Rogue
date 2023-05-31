@@ -41,9 +41,16 @@ def textInput(titre, message):
 	if user_input:
 		return user_input
 def update_health(surface):
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 10, 400, 100])
+	varHP = f"HP : {str(theGame.theGame().getHero().getHP())}/{str(theGame.theGame().getHero().hpMax)}"
+	font = pygame.font.Font("freesansbold.ttf", 30)
+	text = font.render(varHP, True, "black")
+	textRect = text.get_rect()
+	textRect.center = (screen2.get_width()-200, 25)
+	screen2.blit(text, textRect)
 	percent = 230 * (theGame.theGame().getHero().getHP() / theGame.theGame().getHero().hpMax)
-	bar_position=[surface.get_width()-290,15,percent,60]
-	back_bar_position=[surface.get_width()-290,15,230,60]
+	bar_position=[surface.get_width()-290,55,percent,60]
+	back_bar_position=[surface.get_width()-290,55,230,60]
 	pygame.draw.rect(surface,(80, 88, 94),back_bar_position)
 	pygame.draw.rect(surface,("green"),bar_position)
 	
