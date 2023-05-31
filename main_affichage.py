@@ -244,7 +244,7 @@ while running:
 							text = "#theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.ground or a ==1 :"
 							screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 						elif theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
-							screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+							screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)																		
 						elif  theGame.theGame()._floor._mat[j][i]!=theGame.theGame()._floor.empty:
 							elem=theGame.theGame()._floor._mat[j][i]
 							if not isinstance(theGame.theGame()._floor._mat[j][i],str):
