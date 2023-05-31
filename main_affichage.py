@@ -4,18 +4,41 @@ import theGame
 import tkinter as tk
 from pygame.locals import *
 from tkinter import simpledialog
+from PIL import Image, ImageTk
+from utils import getch
+
+class CustomDialog(simpledialog.Dialog):
+	def __init__(self, parent, title=None, image_path=None):
+		self.image_path = image_path
+		super().__init__(parent, title)
+
+	def body(self, master):
+		if self.image_path:
+			image = Image.open(self.image_path)
+			photo = ImageTk.PhotoImage(image)
+			image_label = tk.Label(master, image=photo)
+			image_label.image = photo  # Conserver une référence à l'image pour éviter la suppression par le garbage collector
+			image_label.pack()
+
+		self.entry = tk.Entry(master)
+		self.entry.pack()
+		return self.entry
+
+	def apply(self):
+		self.result = self.entry.get()
 
 
-def textInput(titre, message):
-    root = tk.Tk()
-    root.withdraw()  # Masquer la fenêtre principale
+def textInput(titre, message, image_path=None):
+	root = tk.Tk()
+	root.withdraw()  # Masquer la fenêtre principale
 
-    # Boîte de dialogue pour saisir du texte
-    user_input = simpledialog.askstring(titre, message)
+	# Boîte de dialogue pour saisir du texte
+	dialog = CustomDialog(root, titre, image_path=image_path)
+	user_input = dialog.result
 
-    # Afficher le texte saisi
-    if user_input:
-        return user_input
+	# Afficher le texte saisi
+	if user_input:
+		return user_input
 
 
 pygame.init()
@@ -55,82 +78,87 @@ item9 = pygame.transform.scale(item9, (66, 66))
 
 
 while running:
-    scrrec = screen.get_rect()
-    background = pygame.transform.scale(pygame.image.load("assets/background lancement.png").convert(), (scrrec.right, scrrec.bottom))
-    screen.blit(background, (0, 0))
-    play_button = pygame.image.load("assets/LOGO-PLAY.png")
-    play_button_rect = play_button.get_rect()
-    play_button_rect.center = screen.get_rect().center
-    screen.blit(play_button, play_button_rect)
-    pygame.display.update()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-            pygame.quit()
-        elif event.type == KEYDOWN and event.key == K_ESCAPE:
-            pygame.quit()
-            running = False
-        elif event.type == KEYDOWN and event.key == K_h:
-            screen_aide = pygame.display.set_mode((0,0), flags)
-            aide = True
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if play_button_rect.collidepoint(event.pos):
-                screen2 = pygame.display.set_mode((0, 0), flags)
-                screen2.fill("white")
-                theGame.theGame().buildFloor()
-                print(theGame.theGame()._floor)
-                a = 1
-                screen.blit(inventaire, (2200, 300))
-                screen.blit(item0, (2305, 500))
-                for i in range(13):
-                    for j in range(13):
-                        if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
-                            if random.randint(0, 1) == 0:
-                                screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-                            else:
-                                screen2.blit(mur2,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-                        else:
-                            text = "#theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.ground or a ==1 :"
-                            screen2.blit(sol,
-                                ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-                running = False
-                game = True
+	scrrec = screen.get_rect()
+	background = pygame.transform.scale(pygame.image.load("assets/background lancement.png").convert(), (scrrec.right, scrrec.bottom))
+	screen.blit(background, (0, 0))
+	play_button = pygame.image.load("assets/LOGO-PLAY.png")
+	play_button_rect = play_button.get_rect()
+	play_button_rect.center = screen.get_rect().center
+	screen.blit(play_button, play_button_rect)
+	pygame.display.update()
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			running = False
+			pygame.quit()
+		elif event.type == KEYDOWN and event.key == K_ESCAPE:
+			pygame.quit()
+			running = False
+		elif event.type == KEYDOWN and event.key == K_h:
+			screen_aide = pygame.display.set_mode((0,0), flags)
+			aide = True
+		elif event.type == pygame.MOUSEBUTTONDOWN:
+			if play_button_rect.collidepoint(event.pos):
+				screen2 = pygame.display.set_mode((0, 0), flags)
+				screen2.fill("white")
+				theGame.theGame().buildFloor()
+				print(theGame.theGame()._floor)
+				a = 1
+				screen.blit(inventaire, (2200, 300))
+				screen.blit(item0, (2305, 500))
+				for i in range(13):
+					for j in range(13):
+						if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
+							if random.randint(0, 1) == 0:
+								screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+							else:
+								screen2.blit(mur2,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+						else:
+							text = "#theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.ground or a ==1 :"
+							screen2.blit(sol,
+								((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+				running = False
+				game = True
 
-    while aide:
-        scrrec_aide = screen_aide.get_rect()
-        screen_aide.fill([255, 255, 255])
-        background = pygame.transform.scale(pygame.image.load("assets/help.png").convert(), (scrrec_aide.right, scrrec_aide.bottom))
-        screen_aide.blit(background, (0, 0))
-        pygame.display.update()
+	while aide:
+		scrrec_aide = screen_aide.get_rect()
+		screen_aide.fill([255, 255, 255])
+		background = pygame.transform.scale(pygame.image.load("assets/help.png").convert(), (scrrec_aide.right, scrrec_aide.bottom))
+		screen_aide.blit(background, (0, 0))
+		pygame.display.update()
 
-        for event in pygame.event.get():
-            if event.type == KEYDOWN and event.key == K_ESCAPE:
-                aide = False
-                screen = pygame.display.set_mode(res, pygame.RESIZABLE)
-                screen = pygame.display.set_mode(res, pygame.RESIZABLE)
-                background = pygame.transform.scale(pygame.image.load("assets/background lancement.png").convert(), (scrrec.right, scrrec.bottom))
-                screen.blit(background, (0, 0))
-                running = True
+		for event in pygame.event.get():
+			if event.type == KEYDOWN and event.key == K_ESCAPE:
+				aide = False
+				screen = pygame.display.set_mode(res, pygame.RESIZABLE)
+				screen = pygame.display.set_mode(res, pygame.RESIZABLE)
+				background = pygame.transform.scale(pygame.image.load("assets/background lancement.png").convert(), (scrrec.right, scrrec.bottom))
+				screen.blit(background, (0, 0))
+				running = True
 
-    while game:
-        varText = "Press ESCAPE to quit"
-        font = pygame.font.Font("freesansbold.ttf", 40)
-        text = font.render(varText, True, "black")
-        textRect = text.get_rect()
-        textRect.center = (210, screen2.get_size()[1] - 25)
-        screen2.blit(text, textRect)
-        for i in range(13):
-            for j in range(13):
-                if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.ground:
-                    screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66, (screen2.get_height() - 13 * 66) / 2 + j * 66),)
+	while game:
+		varText = "Press ESCAPE to quit"
+		font = pygame.font.Font("freesansbold.ttf", 40)
+		text = font.render(varText, True, "black")
+		textRect = text.get_rect()
+		textRect.center = (210, screen2.get_size()[1] - 25)
+		screen2.blit(text, textRect)
+		for i in range(13):
+			for j in range(13):
+				if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.ground:
+					screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66, (screen2.get_height() - 13 * 66) / 2 + j * 66),)
+		pygame.display.update()
+		for event in pygame.event.get():
+			if event.type == KEYDOWN and event.key == K_k:
+				pygame.display.set_mode(res, pygame.RESIZABLE)
+				pygame.display.set_mode(res, pygame.RESIZABLE)
+				game = False
+				running = True
+			if event.type == KEYDOWN and event.key == K_ESCAPE:
+				game = False
+				running = False
 
-        pygame.display.update()
-        for event in pygame.event.get():
-            if event.type == KEYDOWN and event.key == K_k:
-                pygame.display.set_mode(res, pygame.RESIZABLE)
-                pygame.display.set_mode(res, pygame.RESIZABLE)
-                game = False
-                running = True
-            if event.type == KEYDOWN and event.key == K_ESCAPE:
-                game = False
-                running = False
+			if event.type == KEYDOWN and event.key == K_0:
+				titre = "choose action"
+				message = "Entrez votre texte :"
+				image_path = "C:/Users/legen/Downloads/chooseaction6.png"
+				resultat = textInput(titre, message, image_path=image_path)
