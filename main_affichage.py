@@ -207,21 +207,21 @@ while running:
 				screen2.blit(inventaire, (10, 15))
 				for i in range(13):
 					for j in range(13):
-						if theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.empty:
-							if random.randint(0, 1) == 0:
-								screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-							else:
-								screen2.blit(mur2,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-						elif theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.ground:
-							text = "#theGame.theGame()._floor._visibleMap[j][i]==theGame.theGame()._floor.ground or a ==1 :"
-							screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-						elif theGame.theGame()._floor._visibleMap[j][i] == "~":
-							screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-						elif  theGame.theGame()._floor._visibleMap[j][i]!=theGame.theGame()._floor.empty:
-							elem=theGame.theGame()._floor._visibleMap[j][i]
-							if not isinstance(theGame.theGame()._floor._visibleMap[j][i],str):
-								elem=elem.get_abbrv()
-							screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+						if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
+							screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+						else:
+							if theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.ground:
+								text = "#theGame.theGame()._floor._visibleMap[j][i]==theGame.theGame()._floor.ground or a ==1 :"
+								screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+							elif theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.empty:
+								screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)																		
+							elif theGame.theGame()._floor._visibleMap[j][i] == "~":
+								screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+							elif  theGame.theGame()._floor._visibleMap[j][i]!=theGame.theGame()._floor.empty:
+								elem=theGame.theGame()._floor._visibleMap[j][i]
+								if not isinstance(theGame.theGame()._floor._visibleMap[j][i],str):
+									elem=elem.get_abbrv()
+								screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 
 				running = False
 				game = True
@@ -270,18 +270,21 @@ while running:
 				running = False
 			for i in range(13):
 					for j in range(13):
-						if theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.ground:
-							text = "#theGame.theGame()._floor._visibleMap[j][i]==theGame.theGame()._floor.ground or a ==1 :"
-							screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-						elif theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.empty:
-							screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)																		
-						elif theGame.theGame()._floor._visibleMap[j][i] == "~":
-							screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-						elif  theGame.theGame()._floor._visibleMap[j][i]!=theGame.theGame()._floor.empty:
-							elem=theGame.theGame()._floor._visibleMap[j][i]
-							if not isinstance(theGame.theGame()._floor._visibleMap[j][i],str):
-								elem=elem.get_abbrv()
-							screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+						if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
+							screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+						else:
+							if theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.ground:
+								text = "#theGame.theGame()._floor._visibleMap[j][i]==theGame.theGame()._floor.ground or a ==1 :"
+								screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+							elif theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.empty:
+								screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)																		
+							elif theGame.theGame()._floor._visibleMap[j][i] == "~":
+								screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+							elif  theGame.theGame()._floor._visibleMap[j][i]!=theGame.theGame()._floor.empty:
+								elem=theGame.theGame()._floor._visibleMap[j][i]
+								if not isinstance(theGame.theGame()._floor._visibleMap[j][i],str):
+									elem=elem.get_abbrv()
+								screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 		pygame.display.update()
 print('Game OVER')
 
