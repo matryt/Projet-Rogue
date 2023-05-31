@@ -20,16 +20,16 @@ def play_final():
 		screen2.fill("white")
 	theGame.theGame()._hero.checkPoison()
 	theGame.theGame()._floor.moveAllMonsters()
-listEmplacements =  {"0": ((60, 227),False),
-		      			 "1": ((216, 227),False),
-						 "2": ((60, 353),False),
-						 "3": ((216, 353),False),
-						 "4": ((60, 477),False),
-						 "5": ((216, 477),False),
-						 "6": ((60, 605),False),
-						 "7": ((216, 607),False),
-						 "8": ((60, 729),False),
-						 "9": ((216, 729),False),
+listEmplacements =  {"0": [(60, 227),False],
+		      			 "1": [(216, 227),False],
+						 "2": [(60, 353),False],
+						 "3": [(216, 353),False],
+						 "4": [(60, 477),False],
+						 "5": [(216, 477),False],
+						 "6": [(60, 605),False],
+						 "7": [(216, 607),False],
+						 "8": [(60, 729),False],
+						 "9": [(216, 729),False],
 						 }
 
 def displayInventory(screen):
@@ -41,7 +41,7 @@ def displayInventory(screen):
 			listEmplacements[i][1] = True 
 
 		except Exception as e:
-			print(e)
+			print(theGame.theGame()._hero._inventory)
 
 
 def textInput(titre, message, image_path=None):
@@ -308,11 +308,11 @@ while running:
 		textRect.center = (210, screen2.get_size()[1] - 25)
 		screen2.blit(text, textRect)
 		update_all(screen2)
-		displayInventory(screen2)
 		for event in pygame.event.get():
 			if event.type !=KEYDOWN :
 				continue 
 			play_final()
+			displayInventory(screen2)
 			if event.type == KEYDOWN and event.key == K_k:
 				pygame.display.set_mode(res, pygame.RESIZABLE)
 				pygame.display.set_mode(res, pygame.RESIZABLE)
@@ -321,13 +321,17 @@ while running:
 			if event.type == KEYDOWN and event.key == K_ESCAPE:
 				game = False
 				running = False
+			try :
+				a = int(pygame.key.name(event.key))
+				if event.type == KEYDOWN and 0 <= a <= 9: #and listEmplacements[0][1] == True :
+					if listEmplacements[pygame.key.name(event.key)][1] == True :
+						titre = "choose action"
+						message = "Entrez votre texte :"
+						image_path = "assets/chooseaction6.png"
+						resultat = textInput(titre, message, image_path=image_path)
 
-			if event.type == KEYDOWN and K_0 <= event.key <= K_9: #and listEmplacements[0][1] == True :
-				if listEmplacements[pygame.key.name(event.key)][1] == True :
-					titre = "choose action"
-					message = "Entrez votre texte :"
-					image_path = "assets/chooseaction6.png"
-					resultat = textInput(titre, message, image_path=image_path)
+			except:
+				pass
 
 			for i in range(13):
 					for j in range(13):
