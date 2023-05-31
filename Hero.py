@@ -90,6 +90,9 @@ class Hero(Creature.Creature):
     def getGoldCount(self):
         return self.GoldCount
 
+    def getLevel(self):
+        return self._level
+
     def __hash__(self):
         return hash(f"{self._name},{self._abbrv}")
 
