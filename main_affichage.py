@@ -1,9 +1,7 @@
 import pygame
-import random
 import theGame
 import Equipment
 import Wearable
-import Creature
 import Hero
 import specialActions
 import tkinter as tk
@@ -30,19 +28,50 @@ def displayInventory(screen):
 		except Exception as e:
 			print(e)
 		
+class CustomDialog(simpledialog.Dialog):
+	def __init__(self, parent, title=None, image_path=None):
+		self.image_path = image_path
+		super().__init__(parent, title)
 
-def textInput(titre, message):
+	def body(self, master):
+		if self.image_path:
+			image = Image.open(self.image_path)
+			photo = ImageTk.PhotoImage(image)
+			image_label = tk.Label(master, image=photo)
+			image_label.image = photo  # Conserver une référence à l'image pour éviter la suppression par le garbage collector
+			image_label.pack()
+
+		self.entry = tk.Entry(master)
+		self.entry.pack()
+		return self.entry
+
+	def apply(self):
+		self.result = self.entry.get()
+
+
+def textInput(titre, message, image_path=None):
 	root = tk.Tk()
 	root.withdraw()  # Masquer la fenêtre principale
 
 	# Boîte de dialogue pour saisir du texte
-	user_input = simpledialog.askstring(titre, message)
+	dialog = CustomDialog(root, titre, image_path=image_path)
+	user_input = dialog.result
 
 	# Afficher le texte saisi
 	if user_input:
 		return user_input
+
+def update_all(surface):
+	update_health(surface)
+	update_xp(surface)
+	update_strength(surface)
+	update_gold(surface)
+	update_armor(surface)
+	update_floor(surface)
+
+
 def update_health(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 160, 400, 100])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 160, 400, 50])
 	varHP = f"HP : {str(theGame.theGame().getHero().getHP())}/{str(theGame.theGame().getHero().hpMax)}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varHP, True, "black")
@@ -50,20 +79,20 @@ def update_health(surface):
 	textRect.center = (screen2.get_width()-170, 175)
 	screen2.blit(text, textRect)
 	percent = 230 * (theGame.theGame().getHero().getHP() / theGame.theGame().getHero().hpMax)
-	bar_position=[surface.get_width()-290,205,percent,60]
-	back_bar_position=[surface.get_width()-290,205,230,60]
+	bar_position=[surface.get_width()-290,195,percent,60]
+	back_bar_position=[surface.get_width()-290,195,230,60]
 	pygame.draw.rect(surface,(80, 88, 94),back_bar_position)
 	pygame.draw.rect(surface,("green"),bar_position)
 
 def update_xp(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 280, 280, 400, 100])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 270, 280, 400, 50])
 	varLevel = f"Level {str(theGame.theGame().getHero().getLevel())}"
 	fontText = pygame.font.Font("freesansbold.ttf", 30)
 	text = fontText.render(varLevel, True, "black")
 	textRect = text.get_rect()
-	textRect.center = (screen2.get_width() - 180, 295)
+	textRect.center = (screen2.get_width() - 170, 295)
 	screen2.blit(text, textRect)
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 325, 400, 100])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 325, 400, 50])
 	varXP = f"XP : {str(theGame.theGame().getHero().xp)}/{str(theGame.theGame().getHero().xpMax)}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varXP, True, "black")
@@ -74,19 +103,46 @@ def update_xp(surface):
 		percent = 230 * (theGame.theGame().getHero().xp / theGame.theGame().getHero().xpMax)
 	else:
 		percent = 0
-	bar_position = [surface.get_width() - 290, 355, percent, 60]
-	back_bar_position = [surface.get_width() - 290, 355, 230, 60]
+	bar_position = [surface.get_width() - 290, 345, percent, 60]
+	back_bar_position = [surface.get_width() - 290, 345, 230, 60]
 	pygame.draw.rect(surface, (80, 88, 94), back_bar_position)
 	pygame.draw.rect(surface, ("blue"), bar_position)
 
 def update_strength(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 425, 400, 100])
-	varHP = f"Strength : {str(theGame.theGame().getHero()._strength)}"
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 405, 400, 75])
+	varStrength = f"Strength : {str(theGame.theGame().getHero()._strength)}"
+	font = pygame.font.Font("freesansbold.ttf", 30)
+	text = font.render(varStrength, True, "black")
+	textRect = text.get_rect()
+	textRect.center = (screen2.get_width() - 170, 425)
+	surface.blit(text, textRect)
+
+def update_armor(surface):
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 440, 400, 50])
+	varArmor = f"Armor : {str(theGame.theGame().getHero().armor)}"
+	font = pygame.font.Font("freesansbold.ttf", 30)
+	text = font.render(varArmor, True, "black")
+	textRect = text.get_rect()
+	textRect.center = (screen2.get_width() - 170, 455)
+	surface.blit(text, textRect)
+
+def update_floor(surface):
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 555, 400, 50])
+	varFloor = f"Floor : {theGame.theGame().getLevel() - 1}"
+	font = pygame.font.Font("freesansbold.ttf", 30)
+	text = font.render(varFloor, True, "black")
+	textRect = text.get_rect()
+	textRect.center = (screen2.get_width() - 170, 595)
+	surface.blit(text, textRect)
+
+def update_gold(surface):
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 505, 400, 50])
+	varHP = f"Gold(s) : {str(theGame.theGame().getHero().getGoldCount())}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varHP, True, "black")
 	textRect = text.get_rect()
-	textRect.center = (screen2.get_width() - 170, 445)
-	screen2.blit(text, textRect)
+	textRect.center = (screen2.get_width() - 170, 525)
+	surface.blit(text, textRect)
 	
 pygame.init()
 running = True
@@ -220,7 +276,7 @@ while running:
 								screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)																		
 							elif theGame.theGame()._floor._visibleMap[j][i] == "~":
 								screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-							elif  theGame.theGame()._floor._visibleMap[j][i]!=theGame.theGame()._floor.empty:
+							elif theGame.theGame()._floor._visibleMap[j][i]!=theGame.theGame()._floor.empty:
 								elem=theGame.theGame()._floor._visibleMap[j][i]
 								if not isinstance(theGame.theGame()._floor._visibleMap[j][i],str):
 									elem=elem.get_abbrv()
@@ -253,9 +309,7 @@ while running:
 		textRect = text.get_rect()
 		textRect.center = (210, screen2.get_size()[1] - 25)
 		screen2.blit(text, textRect)
-		update_health(screen2)
-		update_xp(screen2)
-		update_strength(screen2)
+		update_all(screen2)
 		displayInventory(screen2)
 		for event in pygame.event.get():
 			if event.type !=KEYDOWN :

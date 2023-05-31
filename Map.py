@@ -62,6 +62,7 @@ class Map(object):
         self._roomsToReach = []
         self._rooms = []
         self.generateRooms(self.nbRooms)
+        self.listeCorridors = []
         self.reachAllRooms()
         coordH = self._rooms[0].center()
         self._mat[coordH.y][coordH.x] = hero
@@ -370,6 +371,7 @@ class Map(object):
         end : Coord.Coord
                 Coordonnée d'arrivée
         """
+        self.listeCorridors.append(start)
         self.dig(start)
         if start.y < end.y:
             cY = Coord.Coord(0, 1)
@@ -382,10 +384,13 @@ class Map(object):
         s = start
         while s.y != end.y:
             s += cY
+            self.listeCorridors.append(s)
             self.dig(s)
         while s.x != end.x:
             s += cX
+            self.listeCorridors.append(s)
             self.dig(s)
+        self.listeCorridors.append(end)
 
     def reach(self):
         """Rejoint deux salles au hasard (entre une déjà rejointe et une pas encore atteinte)"""

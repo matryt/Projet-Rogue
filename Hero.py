@@ -25,19 +25,8 @@ class Hero(Creature.Creature):
 
     """
 
-    def __init__(
-        self,
-        name="Hero",
-        hp=10,
-        abbrv=None,
-        strength=2,
-        inventory=None,
-        xp=0,
-        GoldCount=0,
-        level=1,
-        poisoned=False,
-        invisible=False,
-        arme_equipee=None,
+    def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp=0, GoldCount=0, level=1,
+        poisoned=False, invisible=False, arme_equipee=None, armor=0
     ):
         """
 
@@ -81,6 +70,7 @@ class Hero(Creature.Creature):
         self._poisoned = poisoned
         self._invisible = invisible
         self._arme_equipee = arme_equipee
+        self.armor = armor
 
     def __eq__(self, other):
         if isinstance(other, Hero):
