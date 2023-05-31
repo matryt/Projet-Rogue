@@ -92,6 +92,7 @@ pygame.init()
 running = True
 game = False
 aide = False
+fin_=False
 flags = pygame.FULLSCREEN | pygame.RESIZABLE
 clock = pygame.time.Clock()
 pygame.display.set_caption("DONGEON MASTER")
@@ -287,9 +288,68 @@ while running:
 								screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 		pygame.display.update()
 		if theGame.theGame().getHero().getHP() <= 0:
-			pygame.display.set_mode(res, pygame.RESIZABLE)
-			pygame.display.set_mode(res, pygame.RESIZABLE)
+			screen_fin = pygame.display.set_mode(res, pygame.RESIZABLE)
+			screen_fin = pygame.display.set_mode(res, pygame.RESIZABLE)
+			screen_fin.fill("black")
+			fin_=True
 			game=False
-			running = True
-			print('Game OVER')
+		while fin_ :
+			menu_button = pygame.image.load("assets/bouton_menu.png")
+			retry_button = pygame.image.load("assets/bouton_retry_.png")
+			menu_button_rect = play_button.get_rect()
+			retry_button_rect = retry_button.get_rect()
+			#retry_button_rect.move((160,250))
+			#screen_fin.blit(retry_button, retry_button_rect)
+			retry_button_rect.move_ip(350,200)
+			menu_button_rect.move_ip(680,200)
+			#screen_fin.blit(menu_button, menu_button_rect)
+			screen_fin.blit(menu_button, menu_button_rect)
+			screen_fin.blit(retry_button, retry_button_rect)
+			pygame.display.update()
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					running = False
+					pygame.quit()
+				elif event.type == KEYDOWN and event.key == K_ESCAPE:
+					pygame.quit()
+					running = False
+				elif event.type == KEYDOWN and event.key == K_h:
+					screen_aide = pygame.display.set_mode((0,0), flags)
+					aide = True
+				elif event.type == pygame.MOUSEBUTTONDOWN:
+					if menu_button_rect.collidepoint(event.pos):
+						screen = pygame.display.set_mode(res, pygame.RESIZABLE)
+						screen = pygame.display.set_mode(res, pygame.RESIZABLE)
+						game=False
+						fin_=False
+						running=True
+
+					if retry_button_rect.collidepoint(event.pos):
+						screen2 = pygame.display.set_mode((0, 0), flags)
+						screen2.fill("white")
+						theGame.theGame().buildFloor()
+						theGame.theGame()._hero=Hero.Hero()
+						theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
+						screen2.blit(inventaire, (10, 15))
+						for i in range(13):
+							for j in range(13):
+								if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
+									screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+								else:
+									if theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.ground:
+										text = "#theGame.theGame()._floor._visibleMap[j][i]==theGame.theGame()._floor.ground or a ==1 :"
+										screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+									elif theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.empty:
+										screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)																		
+									elif theGame.theGame()._floor._visibleMap[j][i] == "~":
+										screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+									elif  theGame.theGame()._floor._visibleMap[j][i]!=theGame.theGame()._floor.empty:
+										elem=theGame.theGame()._floor._visibleMap[j][i]
+										if not isinstance(theGame.theGame()._floor._visibleMap[j][i],str):
+											elem=elem.get_abbrv()
+										screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+						game=True
+						fin_=False
+				
+					
 
