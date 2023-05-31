@@ -21,7 +21,7 @@ def play_final():
 	theGame.theGame()._floor.moveAllMonsters()
 
 def displayInventory(screen):
-	listEmplacements = [(64, 250),(206, 250), (64, 361), (206, 361), (64, 471), (206, 471), (64, 584), (206, 585), (64, 693), (206, 693)]
+	listEmplacements = [(60, 227),(216, 227), (60, 353), (216, 353), (60, 477), (216, 477), (60, 605), (216, 607), (60, 729), (216, 729)]
 	for i, elem in enumerate(theGame.theGame()._hero._inventory):
 		try:
 			img = dict_item[elem.get_abbrv()]
@@ -59,7 +59,7 @@ screen = pygame.display.set_mode(res, pygame.RESIZABLE)
 sol = pygame.transform.scale(pygame.image.load("assets/sol.png").convert(), (66, 66))
 mur1 = pygame.transform.scale(pygame.image.load("assets/mur1.png").convert(), (66, 66))
 mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (66, 66))
-inventaire = pygame.transform.scale(pygame.image.load("assets/inventaireV2_r.png").convert_alpha(), (340, 680))
+inventaire = pygame.transform.scale(pygame.image.load("assets/inventaireV2_r.png").convert_alpha(), (350, 840))
 
 equipments = {
 		0: [
@@ -119,22 +119,22 @@ dict_sol ={
 		}
 
 dict_item ={
-        "p":pygame.transform.scale(pygame.image.load("assets/potion_hp.png").convert_alpha(), (55, 55)),
-        "n":pygame.transform.scale(pygame.image.load("assets/brokensword.png").convert_alpha(), (55, 55)),
-        "t":pygame.transform.scale(pygame.image.load("assets/trident.png").convert_alpha(), (55, 55)),
-        "d":pygame.transform.scale(pygame.image.load("assets/double_epee.png").convert_alpha(), (55, 55)),
-        "o":pygame.transform.scale(pygame.image.load("assets/gold.png").convert_alpha(), (55, 55)),
-        "!":pygame.transform.scale(pygame.image.load("assets/teleport_potion.png").convert_alpha(), (55, 55)),
-        "s":pygame.transform.scale(pygame.image.load("assets/epee.png").convert_alpha(), (55, 55)),
-        "b":pygame.transform.scale(pygame.image.load("assets/arc.png").convert_alpha(), (55, 55)),
-        "l":pygame.transform.scale(pygame.image.load("assets/leathervest.png").convert_alpha(), (55, 55)),
-        "a":pygame.transform.scale(pygame.image.load("assets/antidote.png").convert_alpha(), (55, 55)),
-        "w":pygame.transform.scale(pygame.image.load("assets/portoloin.png").convert_alpha(), (55, 55)),
-        "i":pygame.transform.scale(pygame.image.load("assets/invisible_potion.png").convert_alpha(), (55, 55)),
-        "c":pygame.transform.scale(pygame.image.load("assets/chainmail.png").convert_alpha(), (55, 55)),
-        "M":pygame.transform.scale(pygame.image.load("assets/coffre_ferme.png").convert_alpha(), (55, 55)),
-        "Mo":pygame.transform.scale(pygame.image.load("assets/coffre_ouvert.png").convert_alpha(), (55, 55)),
-		"k":pygame.transform.scale(pygame.image.load("assets/cle.png").convert_alpha(), (55, 55))
+        "p":pygame.transform.scale(pygame.image.load("assets/potion_hp.png").convert_alpha(), (66, 66)),
+        "n":pygame.transform.scale(pygame.image.load("assets/brokensword.png").convert_alpha(), (66, 66)),
+        "t":pygame.transform.scale(pygame.image.load("assets/trident.png").convert_alpha(), (66, 66)),
+        "d":pygame.transform.scale(pygame.image.load("assets/double_epee.png").convert_alpha(), (66, 66)),
+        "o":pygame.transform.scale(pygame.image.load("assets/gold.png").convert_alpha(), (66, 66)),
+        "!":pygame.transform.scale(pygame.image.load("assets/teleport_potion.png").convert_alpha(), (66, 66)),
+        "s":pygame.transform.scale(pygame.image.load("assets/epee.png").convert_alpha(), (66, 66)),
+        "b":pygame.transform.scale(pygame.image.load("assets/arc.png").convert_alpha(), (66, 66)),
+        "l":pygame.transform.scale(pygame.image.load("assets/leathervest.png").convert_alpha(), (66, 66)),
+        "a":pygame.transform.scale(pygame.image.load("assets/antidote.png").convert_alpha(), (66, 66)),
+        "w":pygame.transform.scale(pygame.image.load("assets/portoloin.png").convert_alpha(), (66, 66)),
+        "i":pygame.transform.scale(pygame.image.load("assets/invisible_potion.png").convert_alpha(), (66, 66)),
+        "c":pygame.transform.scale(pygame.image.load("assets/chainmail.png").convert_alpha(), (66, 66)),
+        "M":pygame.transform.scale(pygame.image.load("assets/coffre_ferme.png").convert_alpha(), (66, 66)),
+        "Mo":pygame.transform.scale(pygame.image.load("assets/coffre_ouvert.png").convert_alpha(), (66, 66)),
+		"k":pygame.transform.scale(pygame.image.load("assets/cle.png").convert_alpha(), (66, 66))
         }
 
 while running:
@@ -161,7 +161,7 @@ while running:
 				screen2 = pygame.display.set_mode((0, 0), flags)
 				screen2.fill("white")
 				theGame.theGame().buildFloor()
-				screen2.blit(inventaire, (-5, 105))
+				screen2.blit(inventaire, (-5, 15))
 				for i in range(13):
 					for j in range(13):
 						if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
@@ -198,7 +198,7 @@ while running:
 				running = True
 
 	while game and theGame.theGame().getHero().getHP() > 0:
-		screen2.blit(inventaire, (-5, 105))
+		screen2.blit(inventaire, (-5, 15))
 		varText = "Press ESCAPE to quit"
 		font = pygame.font.Font("freesansbold.ttf", 40)
 		text = font.render(varText, True, "black")
