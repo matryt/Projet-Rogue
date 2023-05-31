@@ -77,6 +77,7 @@ mur1 = pygame.transform.scale(pygame.image.load("assets/mur1.png").convert(), (6
 mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (66, 66))
 inventaire = pygame.transform.scale(pygame.image.load("assets/inventaireV2_r.png").convert_alpha(), (350, 840))
 hero = pygame.transform.scale(pygame.image.load("assets/hero.png").convert_alpha(), (150, 150))
+nuage = pygame.transform.scale(pygame.image.load("assets/sol/nuage_sol.png").convert_alpha(), (66, 66))
 
 equipments = {
 		0: [
@@ -178,20 +179,23 @@ while running:
 				screen2 = pygame.display.set_mode((0, 0), flags)
 				screen2.fill("white")
 				theGame.theGame().buildFloor()
+				theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
 				screen2.blit(inventaire, (-5, 15))
 				for i in range(13):
 					for j in range(13):
-						if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
+						if theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.empty:
 							if random.randint(0, 1) == 0:
 								screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 							else:
 								screen2.blit(mur2,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-						elif theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.ground:
-							text = "#theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.ground or a ==1 :"
+						elif theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.ground:
+							text = "#theGame.theGame()._floor._visibleMap[j][i]==theGame.theGame()._floor.ground or a ==1 :"
 							screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-						elif  theGame.theGame()._floor._mat[j][i]!=theGame.theGame()._floor.empty:
-							elem=theGame.theGame()._floor._mat[j][i]
-							if not isinstance(theGame.theGame()._floor._mat[j][i],str):
+						elif theGame.theGame()._floor._visibleMap[j][i] == "~":
+							screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+						elif  theGame.theGame()._floor._visibleMap[j][i]!=theGame.theGame()._floor.empty:
+							elem=theGame.theGame()._floor._visibleMap[j][i]
+							if not isinstance(theGame.theGame()._floor._visibleMap[j][i],str):
 								elem=elem.get_abbrv()
 							screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 
@@ -203,6 +207,7 @@ while running:
 		screen_aide.fill([255, 255, 255])
 		background = pygame.transform.scale(pygame.image.load("assets/help.png").convert(), (scrrec_aide.right, scrrec_aide.bottom))
 		screen_aide.blit(background, (0, 0))
+		theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
 		pygame.display.update()
 
 		for event in pygame.event.get():
@@ -240,14 +245,16 @@ while running:
 				running = False
 			for i in range(13):
 					for j in range(13):
-						if theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.ground:
-							text = "#theGame.theGame()._floor._mat[j][i]==theGame.theGame()._floor.ground or a ==1 :"
+						if theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.ground:
+							text = "#theGame.theGame()._floor._visibleMap[j][i]==theGame.theGame()._floor.ground or a ==1 :"
 							screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-						elif theGame.theGame()._floor._mat[j][i] == theGame.theGame()._floor.empty:
+						elif theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.empty:
 							screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)																		
-						elif  theGame.theGame()._floor._mat[j][i]!=theGame.theGame()._floor.empty:
-							elem=theGame.theGame()._floor._mat[j][i]
-							if not isinstance(theGame.theGame()._floor._mat[j][i],str):
+						elif theGame.theGame()._floor._visibleMap[j][i] == "~":
+							screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
+						elif  theGame.theGame()._floor._visibleMap[j][i]!=theGame.theGame()._floor.empty:
+							elem=theGame.theGame()._floor._visibleMap[j][i]
+							if not isinstance(theGame.theGame()._floor._visibleMap[j][i],str):
 								elem=elem.get_abbrv()
 							screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 		pygame.display.update()
