@@ -130,8 +130,8 @@ class Creature(Element.Element):
                 creature._level += 1
                 print(creature._level)
                 theGame.theGame().addMessage(f"You just advanced to level {creature._level}")
-                creature.hpMax += random.randint(0, 2)
-                creature.strengthMax += random.randint(0, 1)
+                creature.hpMax += random.randint(1, 3)
+                creature.strengthMax += random.randint(1, 3)
                 creature.xpMax += creature.xp
                 creature.xp = 0
                 creature._hp = creature.hpMax

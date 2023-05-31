@@ -77,6 +77,15 @@ def update_xp(surface):
 	back_bar_position = [surface.get_width() - 290, 355, 230, 60]
 	pygame.draw.rect(surface, (80, 88, 94), back_bar_position)
 	pygame.draw.rect(surface, ("blue"), bar_position)
+
+def update_strength(surface):
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 425, 400, 100])
+	varHP = f"Strength : {str(theGame.theGame().getHero()._strength)}"
+	font = pygame.font.Font("freesansbold.ttf", 30)
+	text = font.render(varHP, True, "black")
+	textRect = text.get_rect()
+	textRect.center = (screen2.get_width() - 170, 445)
+	screen2.blit(text, textRect)
 	
 pygame.init()
 running = True
@@ -245,6 +254,7 @@ while running:
 		screen2.blit(text, textRect)
 		update_health(screen2)
 		update_xp(screen2)
+		update_strength(screen2)
 		displayInventory(screen2)
 		for event in pygame.event.get():
 			if event.type !=KEYDOWN :
