@@ -49,18 +49,18 @@ class Coord(object):
 
     def distance(self, other):
         """
-                Calcule la distance entre deux points
+        Calcule la distance entre deux points
 
-                Parameters
-                ----------
-                other : Coord
-                        Le deuxième point
+        Parameters
+        ----------
+        other : Coord
+                Le deuxième point
 
-                Returns
-                -------
-                float
-                        La distance entre les deux points
-                """
+        Returns
+        -------
+        float
+                La distance entre les deux points
+        """
         return math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
 
     def voisins(self, map):

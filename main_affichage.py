@@ -34,11 +34,11 @@ listEmplacements =  {"0": [(60, 227),False],
 def displayInventory(screen):
 	#listEmplacements = [(60, 227),(216, 227), (60, 353), (216, 353), (60, 477), (216, 477), (60, 605), (216, 607), (60, 729), (216, 729)]
 	for i, elem in enumerate(theGame.theGame()._hero._inventory):
-		screen.blit(img, listEmplacements[str(i)][0])
+
 		try:
 			img = dict_item[elem.get_abbrv()]
 			screen.blit(img, listEmplacements[str(i)][0])
-			listEmplacements[i][1] = True 
+			listEmplacements[str(i)][1] = True
 
 		except Exception as e:
 			print(theGame.theGame()._hero._inventory)

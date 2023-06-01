@@ -52,11 +52,6 @@ class Shop(Element.Element):
 		if self._items[item]["quantity"] == 0:
 			del self._items[item]
 
-	def changePrice(self, item, price):
-		if not self.checkItem(item):
-			raise ValueError(f"{item} is not in the shop")
-		self._items[item]["price"] = price
-
 	def getElem(self, item):
 		cle = None
 		for elem in self._items:
