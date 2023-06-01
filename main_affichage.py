@@ -8,7 +8,6 @@ import tkinter as tk
 from pygame.locals import *
 from tkinter.simpledialog import askstring, askinteger
 from tkinter import ttk
-import ctypes
 
 def play_final():
 	level = theGame.theGame()._level
@@ -48,8 +47,6 @@ def textInput(titre, message, typeInput):
 	root2.withdraw()
 	ttk_style = ttk.Style(root2)
 	ttk_style.configure('TEntry')
-	if 'win' in root2.tk.call('tk', 'windowingsystem'):
-		ctypes.windll.user32.SetWindowLongW(root2.winfo_id(), -16, 0x800000)
 	match typeInput:
 		case "int":
 			val = askinteger(titre, message)
