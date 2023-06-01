@@ -14,8 +14,8 @@ def play_final():
 	level = theGame.theGame()._level
 	if event.type == KEYDOWN :
 		num=pygame.key.name(event.key)
-		if num in theGame.theGame()._actions:
-			theGame.theGame()._actions[num](theGame.theGame()._hero)
+		if num in theGame.theGame()._actionsAffichage:
+			theGame.theGame()._actionsAffichage[num](theGame.theGame()._hero)
 	if theGame.theGame()._level != level:
 		screen2.fill("white")
 	theGame.theGame()._hero.checkPoison()
@@ -32,7 +32,6 @@ listEmplacements =  {"0": [(60, 227),False],
 					"9": [(216, 729),False]}
 
 def displayInventory(screen):
-	#listEmplacements = [(60, 227),(216, 227), (60, 353), (216, 353), (60, 477), (216, 477), (60, 605), (216, 607), (60, 729), (216, 729)]
 	for i, elem in enumerate(theGame.theGame()._hero._inventory):
 
 		try:
@@ -324,7 +323,9 @@ while running:
 			try :
 				a = int(pygame.key.name(event.key))
 				if event.type == KEYDOWN and 0 <= a <= 9: #and listEmplacements[0][1] == True :
+					print(listEmplacements[pygame.key.name(event.key)][1])
 					if listEmplacements[pygame.key.name(event.key)][1] == True :
+						print("Coucou toi")
 						titre = "choose action"
 						message = "Entrez votre texte :"
 						image_path = "assets/chooseaction6.png"

@@ -84,3 +84,6 @@ class Equipment(Element.Element):
             return self.usage(self, creature)
         theGame.theGame().addMessage(f"The {self._name} is not usable")
         return False
+
+    def meetAffichage(self, elem):
+        return self.meet(elem)

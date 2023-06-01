@@ -304,6 +304,39 @@ class Map(object):
                         self._roomsVisited.append(m)
         self.setVisible(self.rangeElement(self._hero))
 
+    def moveAffichage(self, e, way):
+        """
+        Permet de bouger un élément e d'une case à une autre
+        Parameters
+        ----------
+        e : str | Element.Element
+                Element à déplacer
+        way : Coord.Coord
+                Vecteur déplacement à appliquer à l'élément
+        """
+        orig = self.pos(e)
+        dest = orig + way
+        if dest in self:
+            if self.get(dest) == Map.ground:
+                self._mat[orig.y][orig.x] = Map.ground
+                self._mat[dest.y][dest.x] = e
+                self._elem[e] = dest
+            if (
+                self.get(dest) != Map.empty
+                and self.get(dest) != e
+                and not isinstance(self.get(dest), Shop.Shop)
+                and self.get(dest).meetAffichage(e)
+                and self.get(dest) != self._hero
+            ):
+                self.rm(dest)
+            if isinstance(self.get(dest), Shop.Shop):
+                self.get(dest).meetAffichage(e)
+            if self._simulation:
+                for m in self._rooms:
+                    if dest in m.coordsInRoom() and m not in self._roomsVisited:
+                        self._roomsVisited.append(m)
+        self.setVisible(self.rangeElement(self._hero))
+
     def __getitem__(self, key):
         if isinstance(key, Coord.Coord):
             return self.get(key)
