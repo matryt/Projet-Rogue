@@ -412,14 +412,14 @@ while running:
 						theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
 						listEmplacements =  {"0": [(60, 227),False],
 		      								 "1": [(216, 227),False],
-											"2": [(60, 353),False],
-											"3": [(216, 353),False],
-											"4": [(60, 477),False],
-											"5": [(216, 477),False],
-											"6": [(60, 605),False],
-											"7": [(216, 607),False],
-											"8": [(60, 729),False],
-											"9": [(216, 729),False]}
+											 "2": [(60, 353),False],
+											 "3": [(216, 353),False],
+											 "4": [(60, 477),False],
+											 "5": [(216, 477),False],
+											 "6": [(60, 605),False],
+											 "7": [(216, 607),False],
+											 "8": [(60, 729),False],
+											 "9": [(216, 729),False]}
 						screen2.blit(inventaire, (10, 15))
 						for i in range(13):
 							for j in range(13):
