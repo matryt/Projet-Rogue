@@ -3,11 +3,11 @@ import theGame
 import Equipment
 import Wearable
 import Hero
-import CustomDialog
 import specialActions
 import tkinter as tk
 from pygame.locals import *
 from tkinter.simpledialog import askstring, askinteger
+from tkinter import ttk
 
 def play_final():
 	level = theGame.theGame()._level
@@ -45,6 +45,8 @@ def displayInventory(screen):
 def textInput(titre, message, typeInput):
 	root2 = tk.Tk()
 	root2.withdraw()
+	ttk_style = ttk.Style(root2)
+	ttk_style.configure('TEntry')
 	match typeInput:
 		case "int":
 			val = askinteger(titre, message)
@@ -260,6 +262,16 @@ while running:
 				theGame.theGame().buildFloor()
 				theGame.theGame()._hero=Hero.Hero()
 				theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
+				listEmplacements =  {"0": [(60, 227),False],
+		      		"1": [(216, 227),False],
+					"2": [(60, 353),False],
+					"3": [(216, 353),False],
+					"4": [(60, 477),False],
+					"5": [(216, 477),False],
+					"6": [(60, 605),False],
+					"7": [(216, 607),False],
+					"8": [(60, 729),False],
+					"9": [(216, 729),False]}
 				screen2.blit(inventaire, (10, 15))
 				for i in range(13):
 					for j in range(13):
@@ -323,20 +335,17 @@ while running:
 			try :
 				a = int(pygame.key.name(event.key))
 				if event.type == KEYDOWN and 0 <= a <= 9: #and listEmplacements[0][1] == True :
-					print(listEmplacements[pygame.key.name(event.key)][1])
-					if listEmplacements[pygame.key.name(event.key)][1] == True :
-						print("Coucou toi")
-						titre = "choose action"
-						message = "0 : 'use' \n1: 'drop' \n2: 'destroy'"
-						image_path = "assets/chooseaction6.png"
-						#resultat = textInput(titre, message, image_path=image_path)
-						resultat = int(textInput("Inventaire", message, "int"))
-						if resultat == "0":
-							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
-						if resultat == "1":
-							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
-						if resultat == "2":
-							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+					titre = "choose action"
+					message = "0 : 'use' \n1: 'drop' \n2: 'destroy'"
+					image_path = "assets/chooseaction6.png"
+					#resultat = textInput(titre, message, image_path=image_path)
+					resultat = int(textInput("Inventaire", message, "int"))
+					if resultat == "0":
+						theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+					if resultat == "1":
+						theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+					if resultat == "2":
+						theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
 
 
 			except:
@@ -403,6 +412,16 @@ while running:
 						theGame.theGame().buildFloor()
 						theGame.theGame()._hero=Hero.Hero()
 						theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
+						listEmplacements =  {"0": [(60, 227),False],
+		      								 "1": [(216, 227),False],
+											 "2": [(60, 353),False],
+											 "3": [(216, 353),False],
+											 "4": [(60, 477),False],
+											 "5": [(216, 477),False],
+											 "6": [(60, 605),False],
+											 "7": [(216, 607),False],
+											 "8": [(60, 729),False],
+											 "9": [(216, 729),False]}
 						screen2.blit(inventaire, (10, 15))
 						for i in range(13):
 							for j in range(13):

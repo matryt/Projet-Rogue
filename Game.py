@@ -70,8 +70,7 @@ class Game(object):
     monsters = {
         0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
         1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
-        4: [Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
-        5: [Creature.Creature("Dragon", 20, strength=3)],
+        10: [Creature.Creature("Dragon", 20, strength=3), Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
     }
 
     _actions = {
