@@ -7,8 +7,6 @@ import CustomDialog
 import specialActions
 import tkinter as tk
 from pygame.locals import *
-from tkinter import simpledialog
-from PIL import Image, ImageTk
 
 def play_final():
 	level = theGame.theGame()._level
@@ -179,7 +177,7 @@ equipments = {
 				"sword", place="right hand", effect={"strength": 2}, usage=lambda self, hero: specialActions.equip(hero, self)
 			),
 			Equipment.Equipment("bow"),
-			Wearable.Wearable("leather vest", place="torso", effect={"armor": 1}),
+			Wearable.Wearable("leather vest", place="torso", effect={"armor": 1}, usage=lambda self, hero: specialActions.equip(hero, self)),
 			Equipment.Equipment("antidotal", usage=lambda self, hero: specialActions.recover(hero, True)),
 		],
 		3: [
