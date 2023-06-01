@@ -330,7 +330,7 @@ while running:
 						message = "Entrez votre texte :"
 						image_path = "assets/chooseaction6.png"
 						#resultat = textInput(titre, message, image_path=image_path)
-						resultat = textInput(message, image_path=image_path)
+						resultat = textInput(titre,message, image_path=image_path)
 						if resultat == "0":
 							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
 						if resultat == "1":
