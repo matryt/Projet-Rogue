@@ -7,6 +7,8 @@ import CustomDialog
 import specialActions
 import tkinter as tk
 from pygame.locals import *
+from tkinter import simpledialog
+from PIL import Image, ImageTk
 
 def play_final():
 	level = theGame.theGame()._level
@@ -327,7 +329,15 @@ while running:
 						titre = "choose action"
 						message = "Entrez votre texte :"
 						image_path = "assets/chooseaction6.png"
-						resultat = textInput(titre, message, image_path=image_path)
+						#resultat = textInput(titre, message, image_path=image_path)
+						resultat = textInput(message, image_path=image_path)
+						if resultat == "0":
+							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+						if resultat == "1":
+							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+						if resultat == "2":
+							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+
 
 			except:
 				pass
@@ -400,6 +410,7 @@ while running:
 									screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 								else:
 									if theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.ground:
+
 										text = "#theGame.theGame()._floor._visibleMap[j][i]==theGame.theGame()._floor.ground or a ==1 :"
 										screen2.blit(sol,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 									elif theGame.theGame()._floor._visibleMap[j][i] == theGame.theGame()._floor.empty:
