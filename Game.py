@@ -6,7 +6,7 @@ import Stairs
 import Chest
 import Wearable
 from utils import getch
-from specialActions import heal, teleport, equip, recover , revive 
+from specialActions import heal, teleport, equip, recover
 import Equipment
 import Creature
 import Hero
@@ -14,8 +14,6 @@ import Map
 import Coord
 import Shop
 import importlib
-import pygame
-from pygame.locals import *
 
 theGame = importlib.import_module("theGame")
 
@@ -81,6 +79,19 @@ class Game(object):
         "s": lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(0, 1)),
         "q": lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(-1, 0)),
         "d": lambda hero: theGame.theGame().getFloor().move(hero, Coord.Coord(1, 0)),
+        "i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
+        "k": lambda hero: hero.__setattr__("_hp", 0),
+        " ": lambda hero: None,
+        "u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
+        "p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
+        "f": lambda hero: theGame.theGame().floorInfos(),
+    }
+
+    _actionsAffichage = {
+        "z": lambda hero: theGame.theGame().getFloor().moveAffichage(hero, Coord.Coord(0, -1)),
+        "s": lambda hero: theGame.theGame().getFloor().moveAffichage(hero, Coord.Coord(0, 1)),
+        "q": lambda hero: theGame.theGame().getFloor().moveAffichage(hero, Coord.Coord(-1, 0)),
+        "d": lambda hero: theGame.theGame().getFloor().moveAffichage(hero, Coord.Coord(1, 0)),
         "i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
         "k": lambda hero: hero.__setattr__("_hp", 0),
         " ": lambda hero: None,

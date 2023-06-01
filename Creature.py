@@ -156,3 +156,6 @@ class Creature(Element.Element):
             self.advanceLevel(creature)
             return True
         return False
+
+    def meetAffichage(self, elem):
+        return self.meet(elem)

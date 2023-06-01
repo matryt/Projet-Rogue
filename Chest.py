@@ -72,3 +72,6 @@ class Chest(Element.Element):
                 theGame.theGame().addMessage(f"the luxurious chest has been opened")
                 return
             theGame.theGame().addMessage(f"it seems that a key is needed to open this luxurious chest ! ")
+
+    def meetAffichage(self, hero):
+        return self.meet(hero)
