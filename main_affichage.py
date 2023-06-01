@@ -323,20 +323,17 @@ while running:
 			try :
 				a = int(pygame.key.name(event.key))
 				if event.type == KEYDOWN and 0 <= a <= 9: #and listEmplacements[0][1] == True :
-					print(listEmplacements[pygame.key.name(event.key)][1])
-					if listEmplacements[pygame.key.name(event.key)][1] == True :
-						print("Coucou toi")
-						titre = "choose action"
-						message = "0 : 'use' \n1: 'drop' \n2: 'destroy'"
-						image_path = "assets/chooseaction6.png"
-						#resultat = textInput(titre, message, image_path=image_path)
-						resultat = int(textInput("Inventaire", message, "int"))
-						if resultat == "0":
-							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
-						if resultat == "1":
-							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
-						if resultat == "2":
-							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+					titre = "choose action"
+					message = "0 : 'use' \n1: 'drop' \n2: 'destroy'"
+					image_path = "assets/chooseaction6.png"
+					#resultat = textInput(titre, message, image_path=image_path)
+					resultat = int(textInput("Inventaire", message, "int"))
+					if resultat == "0":
+						theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+					if resultat == "1":
+						theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+					if resultat == "2":
+						theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
 
 
 			except:
