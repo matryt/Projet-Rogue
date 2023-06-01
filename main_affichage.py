@@ -7,8 +7,7 @@ import CustomDialog
 import specialActions
 import tkinter as tk
 from pygame.locals import *
-from tkinter import simpledialog
-from PIL import Image, ImageTk
+from tkinter.simpledialog import askstring, askinteger
 
 def play_final():
 	level = theGame.theGame()._level
@@ -43,17 +42,18 @@ def displayInventory(screen):
 			print(theGame.theGame()._hero._inventory)
 
 
-def textInput(titre, message, image_path=None):
-	root = tk.Tk()
-	root.withdraw()  # Masquer la fenêtre principale
-
-	# Boîte de dialogue pour saisir du texte
-	dialog = CustomDialog.CustomDialog(root, titre, image_path=image_path)
-	user_input = dialog.result
-
-	# Afficher le texte saisi
-	if user_input:
-		return user_input
+def textInput(titre, message, typeInput):
+	root2 = tk.Tk()
+	root2.withdraw()
+	match typeInput:
+		case "int":
+			val = askinteger(titre, message)
+		case "str":
+			val = askstring(titre, message)
+		case _:
+			raise ValueError("Type invalide")
+	root2.quit()
+	return val
 
 def update_all(surface):
 	update_health(surface)
@@ -327,10 +327,10 @@ while running:
 					if listEmplacements[pygame.key.name(event.key)][1] == True :
 						print("Coucou toi")
 						titre = "choose action"
-						message = "Entrez votre texte :"
+						message = "0 : 'use' \n1: 'drop' \n2: 'destroy'"
 						image_path = "assets/chooseaction6.png"
 						#resultat = textInput(titre, message, image_path=image_path)
-						resultat = textInput(message, image_path=image_path)
+						resultat = int(textInput("Inventaire", message, "int"))
 						if resultat == "0":
 							theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
 						if resultat == "1":
