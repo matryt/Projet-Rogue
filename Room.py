@@ -181,7 +181,7 @@ class Room(object):
 
         """
         c = self.randEmptyCoord(m)
-        while m.get(c) in theGame.theGame().getFloor().listeCorridors:
+        while c in theGame.theGame().getFloor().listeCorridors:
             c = self.randEmptyCoord(m)
         return c
 
