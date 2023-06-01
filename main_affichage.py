@@ -3,11 +3,11 @@ import theGame
 import Equipment
 import Wearable
 import Hero
-import CustomDialog
 import specialActions
 import tkinter as tk
 from pygame.locals import *
 from tkinter.simpledialog import askstring, askinteger
+from tkinter import ttk
 
 def play_final():
 	level = theGame.theGame()._level
@@ -45,6 +45,8 @@ def displayInventory(screen):
 def textInput(titre, message, typeInput):
 	root2 = tk.Tk()
 	root2.withdraw()
+	ttk_style = ttk.Style(root2)
+	ttk_style.configure('TEntry')
 	match typeInput:
 		case "int":
 			val = askinteger(titre, message)
