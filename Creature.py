@@ -143,6 +143,14 @@ class Creature(Element.Element):
         self._hp -= creature.getStrength()
         theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
         creature._invisible = False
+        if creature._arme_equipee != None:
+            creature._arme_equipee.durability -= 1
+            if creature._arme_equipee.durability == 0:
+                theGame.theGame().addMessage(
+                    f"Your {str(creature._arme_equipee._name)} just broke"
+                )
+                creature._inventory.remove(creature._arme_equipee)
+                creature.strengthMax -= creature._arme_equipee.effect.get('strength', 0)
         if self._hp <= 0:
             self.advanceLevel(creature)
             return True
