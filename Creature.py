@@ -20,7 +20,7 @@ class Creature(Element.Element):
     _idCreature
     """
 
-    def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False):
+    def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False, isBlinding=False):
         """
 
         Parameters
@@ -37,12 +37,15 @@ class Creature(Element.Element):
                 L'identifiant de la créature
         isPoisoning : bool, optional
                 Indique si la créature empoisonne le héros
+        isBlinding : bool, optional
+                Indique si la créature aveugle le héros
         """
         super().__init__(name, abbrv)
         self._hp = hp
         self._strength = strength
         self._idCreature = idCreature
         self.isPoisoning = isPoisoning
+        self.isBlinding = isBlinding
         self.xp = 0
         self.xpMax = 0
 
@@ -139,8 +142,7 @@ class Creature(Element.Element):
         bool
                 True si la créature a encore des points de vie, False sinon
         """
-        self._hp -= creature.getStrength()
-        self._hp = max(self._hp, 0)
+        self._hp  = max(self._hp - creature.getStrength(), 0)
         theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
         creature._invisible = False
         if creature._arme_equipee != None:

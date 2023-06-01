@@ -70,7 +70,8 @@ class Game(object):
     monsters = {
         0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
         1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
-        10: [Creature.Creature("Dragon", 20, strength=3), Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
+        6: [Creature.Creature("Witch", 12, "X", isBlinding=True)],
+        15: [Creature.Creature("Dragon", 20, strength=3), Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
     }
 
     _actions = {
@@ -84,6 +85,7 @@ class Game(object):
         "u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
         "p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
         "f": lambda hero: theGame.theGame().floorInfos(),
+        "c": lambda hero: hero.useSkills(),
     }
 
     _actionsAffichage = {
@@ -97,6 +99,7 @@ class Game(object):
         "u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
         "p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
         "f": lambda hero: theGame.theGame().floorInfos(),
+        "c": lambda hero: hero.useSkillsAffichage(),
     }
 
     def __init__(self, hero=None, level=1, floor=None, messages=None, equiped_outfits=[]):
@@ -122,6 +125,8 @@ class Game(object):
         self.seed = None
         self.equiped_outfits = equiped_outfits
         self.allMonsters = []
+        self.levelsUsed = {}
+        self.range = 5
 
     def getRarety(self, equipment, i=0):
         if i > 4:
@@ -137,6 +142,7 @@ class Game(object):
         self.allMonsters = []
         self._floor = Map.Map(hero=self._hero, simulation=s)
         self._level += 1
+        self.range = 5
         escalierPlace = False
         while not escalierPlace:
             try:
@@ -223,6 +229,12 @@ class Game(object):
             x -= 1
         return copy.copy(random.choice(collection[x]))
 
+    def resetVision(self):
+        """Reset la vision du joueur"""
+        if self.turn % 10 == 0 and self.range != 5:
+            self.range = 5
+            theGame.theGame().addMessage("Your vision is reset")
+
     def randEquipment(self):
         """
         Renvoie un équipement au hasard
@@ -308,6 +320,7 @@ class Game(object):
         """Main game loop"""
         self.seed = setSeed()
         self.buildFloor()
+        self.resetVision()
         print("--- Welcome Hero! ---")
         while self._hero.getHP() > 0:
             print()
@@ -319,6 +332,7 @@ class Game(object):
                 Game._actions[c](self._hero)
             self._hero.checkPoison()
             self._floor.moveAllMonsters()
+            self._hero.unlockSkills()
         print("--- Game Over ---")
     
     
@@ -386,6 +400,7 @@ class Game(object):
                 Game._actions[c](self._hero)
             self._hero.checkPoison()
             self._floor.moveAllMonsters()
+            self._hero.unlockSkills()
         print("--- Game Over ---")
 
     def floorInfos(self):
