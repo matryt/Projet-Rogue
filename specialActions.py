@@ -77,6 +77,8 @@ def equip(creature,outfit):
 		True
 
 	"""
+	if creature._arme_equipee !=  None:
+		return  
 	for key in outfit.effect:
 		if key == 'strength':
 			if creature._arme_equipee:
