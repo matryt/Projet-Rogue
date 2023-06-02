@@ -24,9 +24,9 @@ class Room(object):
         Parameters
         ----------
         c1 : Coord.Coord
-                Coin en haut à gauche de la salle
+            Coin en haut à gauche de la salle
         c2 : Coord.Coord
-                Coin en bas à droite de la salle
+            Coin en bas à droite de la salle
         """
         self.c1 = c1
         self.c2 = c2
@@ -37,7 +37,10 @@ class Room(object):
     def __eq__(self, other):
         if type(self) is type(other):
             return self.c1 == other.c1 and self.c2 == other.c2
-        raise NotImplementedError
+        raise NotImplemented
+
+    def __hash__(self):
+        return hash((self.c1, self.c2))
 
     def __contains__(self, other):
         return self.c1.x <= other.x <= self.c2.x and self.c1.y <= other.y <= self.c2.y
@@ -47,8 +50,8 @@ class Room(object):
 
         Returns
         -------
-        Coord.Coord
-                Point représentant le centre de la salle
+        Coord
+            Point représentant le centre de la salle
         """
         return Coord.Coord((self.c2.x + self.c1.x) // 2, (self.c2.y + self.c1.y) // 2)
 
@@ -58,22 +61,17 @@ class Room(object):
         Parameters
         ----------
         other : Room
-                L'autre salle avec laquelle on doit vérifier l'intersection
+            L'autre salle avec laquelle on doit vérifier l'intersection
 
         Returns
         -------
         bool
-                True si les deux salles possèdent une intersection, False sinon
+            True si les deux salles possèdent une intersection, False sinon
         """
         coinsSelf = [self.c1, Coord.Coord(self.c2.x, self.c1.y), Coord.Coord(self.c1.x, self.c2.y), self.c2]
         coinsOther = [other.c1, Coord.Coord(other.c2.x, other.c1.y), Coord.Coord(other.c1.x, other.c2.y), other.c2]
 
-        if (
-            any(x in other for x in coinsSelf)
-            or any(x in self for x in coinsOther)
-            or (other.c1 in self and other.c2 not in self)
-            or (other.c2 in self and other.c1 not in self)
-        ):
+        if any(x in other for x in coinsSelf) or any(x in self for x in coinsOther) or (other.c1 in self and other.c2 not in self) or (other.c2 in self and other.c1 not in self):
             return True
 
         cote1 = False
@@ -81,11 +79,7 @@ class Room(object):
 
         i = 0
         while i < 2 and not cote1:
-            if (
-                min(coinsOther[i].x, coinsOther[i + 2].x) <= coinsSelf[i].x <= max(coinsOther[i + 2].x, coinsOther[i].x)
-            ) and (
-                min(coinsSelf[i].y, coinsSelf[i + 2].y) <= coinsOther[i].y <= max(coinsSelf[i].y, coinsSelf[i + 2].y)
-            ):
+            if (min(coinsOther[i].x, coinsOther[i+2].x) <= coinsSelf[i].x <= max(coinsOther[i+2].x, coinsOther[i].x)) and (min(coinsSelf[i].y, coinsSelf[i+2].y) <= coinsOther[i].y <= max(coinsSelf[i].y, coinsSelf[i+2].y)):
                 cote1 = True
             i += 1
 
@@ -94,11 +88,7 @@ class Room(object):
 
         i = 0
         while i < 2 and not cote2:
-            if (
-                min(coinsSelf[i].x, coinsSelf[i + 2].x) <= coinsOther[i].x <= max(coinsSelf[i].x, coinsSelf[i + 2].x)
-            ) and (
-                min(coinsOther[i].y, coinsOther[i + 2].y) <= coinsSelf[i].y <= max(coinsOther[i].y, coinsOther[i + 2].y)
-            ):
+            if (min(coinsSelf[i].x, coinsSelf[i+2].x) <= coinsOther[i].x <= max(coinsSelf[i].x, coinsSelf[i+2].x)) and (min(coinsOther[i].y, coinsOther[i+2].y) <= coinsSelf[i].y <= max(coinsOther[i].y, coinsOther[i+2].y)):
                 cote2 = True
             i += 1
 
@@ -107,8 +97,8 @@ class Room(object):
     def coordsInRoom(self):
         """Returns a list of all the coordinates in the room"""
         coords = []
-        for x in range(self.c1.x, self.c2.x + 1):
-            for y in range(self.c1.y, self.c2.y + 1):
+        for x in range(self.c1.x, self.c2.x+1):
+            for y in range(self.c1.y, self.c2.y+1):
                 coords.append(Coord.Coord(x, y))
         return coords
 
@@ -118,7 +108,7 @@ class Room(object):
         Returns
         -------
         Coord.Coord
-                Un point de la salle au hasard
+            Un point de la salle au hasard
         """
         return Coord.Coord(random.randint(self.c1.x, self.c2.x), random.randint(self.c1.y, self.c2.y))
 
@@ -127,16 +117,16 @@ class Room(object):
         Parameters
         ----------
         m : Map.Map
-                La carte dans laquelle prendre une coordonnée
+            La carte dans laquelle prendre une coordonnée
 
         Returns
         -------
         bool
-                True s'il existe au moins une case dont la valeur est Map.ground dans la salle,
-                False sinon
+            True s'il existe au moins une case dont la valeur est Map.ground dans la salle,
+            False sinon
         """
-        for x in range(self.c1.x, self.c2.x + 1):
-            for y in range(self.c1.y, self.c2.y + 1):
+        for x in range(self.c1.x, self.c2.x+1):
+            for y in range(self.c1.y, self.c2.y+1):
                 if m.get(Coord.Coord(x, y)) == Map.Map.ground:
                     return True
         return False
@@ -147,12 +137,12 @@ class Room(object):
         Parameters
         ----------
         m : Map.Map
-                La carte dans laquelle prendre une coordonnée
+            La carte dans laquelle prendre une coordonnée
 
         Returns
         -------
         r : Coord.Coord
-                Un point de la salle au hasard qui n'est pas déjà rempli
+            Un point de la salle au hasard qui n'est pas déjà rempli
 
         """
         if not isinstance(m, Map.Map):
@@ -186,13 +176,5 @@ class Room(object):
         return c
 
     def decorate(self, m):
-        """
-
-        Parameters
-        ----------
-        m : Map.Map
-                La carte dans laquelle prendre une coordonnée
-
-        """
         m.put(self.randEmptyCoord(m), theGame.theGame().randEquipment())
         m.put(self.randEmptyCoord(m), theGame.theGame().randMonster())

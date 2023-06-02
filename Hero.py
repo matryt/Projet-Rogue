@@ -39,27 +39,27 @@ class Hero(Creature.Creature):
 		Parameters
 		----------
 		name : str
-				Le nom de la créature
+			Le nom de la créature
 		hp : int
-				Les points de vie initiaux de la créature
+			Les points de vie initiaux de la créature
 		abbrv : str, optional
-				L'abréviation représentant la créature
+			L'abréviation représentant la créature
 		strength : int, optional
-				La force de la créature
+			La force de la créature
 		inventory : list, optional
-				L'inventaire du héros
-		xp : int, optional
+			L'inventaire du héros
+		xp : int, optional 
 		  les points d'expérience du héros
 		GoldCount : int, optional
-				Le nombre de pièces d'or du héros
+			Le nombre de pièces d'or du héros
 		level : int, optional
-				Le niveau du héros
+			Le niveau du héros
 		poisoned : bool, optional
-				Indique si le héros est empoisonné
+			Indique si le héros est empoisonné
 		invisible : bool, optional
-				Indique si le héros est invisible
+			Indique si le héros est invisible
 		arme_equipee : variable
-				Indique si une arme est équipée par le héro
+			Indique si une arme est équipée par le héro
 		"""
 
 		if inventory is None:
@@ -86,9 +86,6 @@ class Hero(Creature.Creature):
 		if isinstance(other, Hero):
 			return self._name == other._name and self._abbrv == other._abbrv
 		return False
-
-	def getGoldCount(self):
-		return self.GoldCount
 
 	def getLevel(self):
 		return self._level
@@ -327,6 +324,33 @@ class Hero(Creature.Creature):
 		"""
 		self._skills.append(skill)
 
+	def addIntoInventory(self, item):
+		"""
+		Parameters
+		-------
+		item : Equipment.Equipment
+			L'item à ajouter à l'inventaire
+		"""
+		self._inventory.append(item)
+
+	def removeFromInventory(self, item):
+		"""
+		Parameters
+		-------
+		item : Equipment.Equipment
+			L'item à retirer de l'inventaire
+		"""
+		self._inventory.remove(item)
+
+	def getGoldCount(self):
+		"""
+		Returns
+		-------
+		int
+			Le nombre de pièces d'or que possède le héros
+		"""
+		return self.GoldCount
+
 def on_closing():
 	root2.quit()
 	root2.destroy()
@@ -344,6 +368,8 @@ def fenetreInput(titre, message, typeInput):
 	root2.quit()
 	return val
 
+
+
 def messageFenetre(message, titre="Entrée"):
 	global root2
 	root2 = tk.Tk()
@@ -360,4 +386,5 @@ def messageFenetre(message, titre="Entrée"):
 	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
+
 
