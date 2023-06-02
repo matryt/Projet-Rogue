@@ -54,7 +54,7 @@ def teleport(creature, unique):
 	while not moved and i < numberRooms:
 		room = roomsAvailable[i]
 		r = room.randEmptyCoord(m)
-		if r is not None and r != p:
+		if r is not None and r.distance(p) > 1:
 			m.move(creature, r-p)
 			moved = True
 		i += 1

@@ -42,6 +42,7 @@ class Creature(Element.Element):
         """
         super().__init__(name, abbrv)
         self._hp = hp
+        self.hpMax = hp
         self._strength = strength
         self._idCreature = idCreature
         self.isPoisoning = isPoisoning
@@ -78,6 +79,7 @@ class Creature(Element.Element):
     def heal(self):
         """Permet de soigner la créature"""
         self._hp += 3
+        self.hpMax += 3
 
     def getName(self):
         """
@@ -115,7 +117,7 @@ class Creature(Element.Element):
         """
         creature.xp += random.randint(1 * self._strength, 20 * self._strength)
         creature.xpMax += creature.xp
-        if self._idCreature == theGame.theGame().special_id:
+        if self._idCreature == theGame.theGame().special_id and len(creature._inventory) < 10:
             creature._inventory.append(Equipment.Equipment("key", "k"))
             theGame.theGame().addMessage("vous avez trouvé un objet ! ")
         if creature.xp >= 20 * creature._level:
