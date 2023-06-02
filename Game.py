@@ -101,7 +101,7 @@ class Game(object):
         "i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
         "k": lambda hero: hero.__setattr__("_hp", 0),
         " ": lambda hero: None,
-        "u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
+        #"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
         "p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
         "f": lambda hero: theGame.theGame().floorInfos(),
         "c": lambda hero: hero.useSkillsAffichage(),
