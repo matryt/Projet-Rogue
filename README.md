@@ -1,31 +1,29 @@
-# Dongeon Master
+# Dungeon Master
 
 ## Description
+Dungeon Master est un jeu Rogue-like dans lequel les joueurs doivent affronter des monstres et progresser à travers différents niveaux jusqu'à atteindre le niveau final.
 
-Dongeon Master est un jeu rogue-like développé en interface graphique.
+## Installation
+Assurez-vous d'avoir Python installé (version 3.10 ou supérieure) sur votre machine.
 
-Le but du jeu est de parcourir un dongon généré aléatoirement et de vaincre les monstres qui s'y trouvent afin d'arriver au niveau final.
-
-## Comment installer et exécuter le projet
-
-Une fois dans le dossier du projet, exécutez 
-
+Installez les dépendances nécessaires en exécutant la commande suivante :
 ```bash
 pip install -r requirements.txt
 ```
 
-## Comment utiliser le projet
-
-Il existe plusieurs commandes désignant l'installation de Python : `py`, `py3`, `python3` ou encore `python`.
-
-En fonction de la commande que votre ordinateur utilise, remplacez `pythonInstall` par la commande correspondante dans les commandes suivantes.
-
+## Comment jouer
+1. Ouvrez un terminal ou une ligne de commande.
+2. Naviguez jusqu'au répertoire contenant les fichiers du jeu.
+3. Exécutez la commande suivante pour lancer le jeu :
 ```bash
-$ pythonInstall main_affichage.py
-``` 
+python main_affichage.py
+```
 
 ## Auteurs
 
 - CUVELIER Mathieu
 - LAMOUR Loïc
 - LUCENAY Léonard
+
+## Compatibilité Python
+Ce jeu nécessite Python 3.10 ou supérieur pour fonctionner correctement en raison de l'utilisation de la structure `match`.
