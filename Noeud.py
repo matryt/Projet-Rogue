@@ -15,17 +15,14 @@ class Noeud(object):
     def __eq__(self, other):
         if isinstance(other, Noeud):
             return self.pos == other.pos
-        raise NotImplemented
-
-    def __hash__(self):
-        return hash((self.pos, self.cout, self.heuristique, self.parent))
+        raise NotImplementedError
 
     def manhattanDistance(self, other):
         if isinstance(other, Noeud):
             return abs(self.pos.x - other.pos.x) + abs(self.pos.y - other.pos.y)
         raise NotImplementedError
 
-    def shortestPath(self, other, m):
+    def shortestPath(self, other, map):
         listeFermee = []
         listeOuverte = [self]
 
@@ -34,7 +31,7 @@ class Noeud(object):
             noeudCourant = listeOuverte.pop(0)
             if noeudCourant.pos == other.pos:
                 return self.reconstructPath(noeudCourant)
-            voisins = noeudCourant.voisins(m)
+            voisins = noeudCourant.voisins(map)
             for voisin in voisins:
                 if voisin not in listeFermee:
                     newCost = noeudCourant.cout + 1
@@ -47,11 +44,11 @@ class Noeud(object):
                         listeOuverte.append(voisin)
             if noeudCourant not in listeFermee:
                 listeFermee.append(noeudCourant)
-            if len(listeFermee) > len(m) ** 2:
+            if len(listeFermee) > len(map) ** 2:
                 raise ValueError("ListeFermee trop grande ! Il y a sûrement une erreur dans la fonction shortestPath.")
         return None
 
-    def voisins(self, m):
+    def voisins(self, map):
         listeVoisins = [
             Noeud(Coord.Coord(self.pos.x, self.pos.y + 1), self.cout + 1),
             Noeud(Coord.Coord(self.pos.x, self.pos.y - 1), self.cout + 1),
@@ -61,14 +58,13 @@ class Noeud(object):
         i = 0
         while i < len(listeVoisins):
             v = listeVoisins[i]
-            if v.pos not in m or m.get(v.pos) == Map.Map.empty:
+            if v.pos not in map or map.get(v.pos) == Map.Map.empty:
                 listeVoisins.pop(i)
             else:
                 i += 1
         return listeVoisins
 
-    @staticmethod
-    def reconstructPath(noeud):
+    def reconstructPath(self, noeud):
         path = []
         while noeud.parent:
             path.append(noeud.pos)

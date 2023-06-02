@@ -43,13 +43,13 @@ class Coord(object):
     def __sub__(self, other):
         return Coord(self.x - other.x, self.y - other.y)
 
-	def __mul__(self, other):
-		if isinstance(other, int):
-			return Coord(self.x * other, self.y * other)
+    def __mul__(self, other):
+        if isinstance(other, int):
+            return Coord(self.x * other, self.y * other)
 
-	def distance(self, other):
+    def distance(self, other):
         """
-		    Calcule la distance entre deux points
+        Calcule la distance entre deux points
 
         Parameters
         ----------
@@ -63,7 +63,7 @@ class Coord(object):
         """
         return math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
 
-    def voisins(self, m):
+    def voisins(self, map):
         listeVoisins = [
             Coord(self.x, self.y + 1),
             Coord(self.x, self.y - 1),
@@ -73,7 +73,7 @@ class Coord(object):
         i = 0
         while i < len(listeVoisins):
             v = listeVoisins[i]
-            if v not in m or m.get(v) == Map.Map.empty:
+            if v not in map or map.get(v) == Map.Map.empty:
                 listeVoisins.pop(i)
             else:
                 i += 1

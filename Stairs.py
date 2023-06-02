@@ -28,3 +28,6 @@ class Stairs(Element.Element):
         theGame.theGame().addMessage(
             f"The {theGame.theGame().getHero().getName()} goes down to level {theGame.theGame().getLevel()-1}"
         )
+
+    def meetAffichage(self, *args):
+        return self.meet(*args)
