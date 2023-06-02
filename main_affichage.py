@@ -351,15 +351,15 @@ while running:
 					#resultat = textInput(titre, message, image_path=image_path)
 				resultat = int(textInput("Inventaire", message, "int"))
 				print(resultat)
-				if resultat == 0:
+				if resultat == 0: 	#"use item"
 						print(theGame.theGame()._hero._inventory)
 						theGame.theGame()._hero.use(theGame.theGame()._hero._inventory[a])
-						print(theGame.theGame()._hero._inventory)#listEmplacements[pygame.key.name(event.key)][0].use(item)
-				if resultat == 1:
+						print(theGame.theGame()._hero._inventory)			#listEmplacements[pygame.key.name(event.key)][0].use(item)
+				if resultat == 1: 	#"drop item"
 						theGame.theGame()._hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
-				if resultat == 2:
-						theGame.theGame()._hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
-
+				if resultat == 2: 	#"destroy item"
+					theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
+					
 
 			#except:
 			#d	pass
