@@ -1,3 +1,2 @@
-importlib
 Pillow==9.5.0
 pygame==2.4.0
