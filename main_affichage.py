@@ -9,6 +9,8 @@ from pygame.locals import *
 from tkinter.simpledialog import askstring, askinteger
 from tkinter import ttk
 
+import random
+
 
 def is_digit_key(key):
 	return key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]
@@ -352,14 +354,23 @@ while running:
 				resultat = int(textInput("Inventaire", message, "int"))
 				print(resultat)
 				if resultat == 0: 	#"use item"
-						print(theGame.theGame()._hero._inventory)
+						#print(theGame.theGame()._hero._inventory)
 						theGame.theGame()._hero.use(theGame.theGame()._hero._inventory[a])
-						print(theGame.theGame()._hero._inventory)			#listEmplacements[pygame.key.name(event.key)][0].use(item)
+						#print(theGame.theGame()._hero._inventory)			#listEmplacements[pygame.key.name(event.key)][0].use(item)
 				if resultat == 1: 	#"drop item"
-						theGame.theGame()._hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+					voisins = theGame.theGame()._floor.pos(theGame.theGame()._hero).voisins(theGame.theGame()._floor)
+					for v in voisins:
+						if theGame.theGame()._floor.get(v) != theGame.theGame()._floor.empty:    #Map.Map.empty:
+							voisins.remove(v)
+					if v:
+						theGame.theGame()._floor.put(random.choice(voisins), theGame.theGame()._hero._inventory[a]) #cette ligne fait de la D mais tkt dans le try ça rend bien 
+						theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
+					else:
+						theGame.theGame().addMessage("There is no place to drop the item")
+						#theGame.theGame()._hero.opendescription(theGame.theGame()._hero._inventory[a],theGame.theGame()._floor,a=1)
 				if resultat == 2: 	#"destroy item"
 					theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
-					
+
 
 			#except:
 			#d	pass

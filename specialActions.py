@@ -89,7 +89,7 @@ def equip(creature,outfit):
 			creature._strength += outfit.effect.get('strength', 0)
  		
 			if outfit.durability > 0:
-					creature.strengthMax += outfit.effect[key]
+					creature._strength += outfit.effect[key]
 					outfit.durability -= 1
 					#creature._strength -= outfit.effect.get('strength', 0)
 					#pass
