@@ -285,11 +285,11 @@ class Hero(Creature.Creature):
 		if len(self._skills) == 0:
 			messageFenetre("You don't have any skills yet")
 			return
-		skills = [f"{i} : {skill.__name__}" for i, skill in enumerate(self._skills)]
+		skills = [f"{i} : {skill.__name__[:-9]}" for i, skill in enumerate(self._skills)]
 		choice = int(fenetreInput("Choose skill", f"Choose a skill to use > {skills}", "int"))
 		if choice < 0 or choice >= len(self._skills):
-			messageFenetre("You must enter a number between 0 and {len(self._skills)}")
-			self.useSkills()
+			messageFenetre(f"You must enter a number \n between 0  and {len(self._skills)}")
+			self.useSkillsAffichage()
 		self._skills[choice](self, theGame.theGame().getFloor(), theGame.theGame().levelsUsed[choice])
 		theGame.theGame().levelsUsed[choice].append(theGame.theGame().getLevel())
 
@@ -309,11 +309,11 @@ class Hero(Creature.Creature):
 		"""Débloque les compétences du héros"""
 		if self._level == 5 and specialActions.fireballThrowAffichage not in self._skills:
 			self.addSkills(specialActions.fireballThrowAffichage)
-			messageFenetre("You gained a new skill : fireballThrow")
+			messageFenetre("You gained a new skill : \nfireballThrow")
 			theGame.theGame().levelsUsed[0] = []
-		if self._level == 10 and specialActions.supervision not in self._skills:
-			self.addSkills(specialActions.supervision)
-			messageFenetre("You gained a new skill : Super-Vision")
+		if self._level == 10 and specialActions.supervisionAffichage not in self._skills:
+			self.addSkills(specialActions.supervisionAffichage)
+			messageFenetre("You gained a new skill : \nSuper-Vision")
 			theGame.theGame().levelsUsed[1] = []
 
 	def addSkills(self, skill):

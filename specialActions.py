@@ -8,6 +8,7 @@ from tkinter.simpledialog import askinteger, askstring
 
 theGame = importlib.import_module("theGame")
 root2 = tk.Tk()
+root2.withdraw()
 
 def heal(creature):
     """
@@ -201,21 +202,23 @@ def fireballThrowAffichage(creature, map, levelsUsed = []):
 		La liste des niveaux auxquels la boule de feu a déjà été lancée
 	"""
 	if theGame.theGame().getLevel() in levelsUsed:
-		theGame.theGame().addMessage("You can't use this power again on this level")
+		messageFenetre("You can't use this power \nagain on this level", "Erreur")
 		return
-	fenetreInput("Direction", "In which direction do you want to throw the fireball ?", "str")
-	d = getch()
+	d = fenetreInput("Direction", "In which direction do you want \n to throw the fireball ?", "str")
 	while d not in ['z', 'q', 's', 'd']:
 		messageFenetre("Please enter a valid direction")
-		fireballThrow(creature, map)
+		fireballThrowAffichage(creature, map)
 	direction = theGame.theGame().getFloor().dir[d]
 	pos = map.pos(creature)
 	casesConcernees = [(pos+direction*i, 10-2*i) for i in range(1, 5)]
 	for case in casesConcernees:
-		g = map.get(case[0])
+		try:
+			g = map.get(case[0])
+		except IndexError:
+			continue
 		if isinstance(g, Creature.Creature):
 			g._hp -= case[1]
-			messageFenetre(f"The fireball hits the {g._name} and causes him {case[1]} damage")
+			messageFenetre(f"The fireball hits the {g._name} \n and causes him {case[1]} damage")
 	return levelsUsed
 
 def blind(hero):
@@ -230,6 +233,15 @@ def supervision(*args):
 		theGame.theGame().addMessage("You can't use this power again on this level")
 		return
 	theGame.theGame().addMessage("You have now a super-vision for 10 turns")
+	theGame.theGame().range = 10
+	theGame.theGame().turn = 1
+	return True
+
+def supervisionAffichage(*args):
+	if theGame.theGame().getLevel() in theGame.theGame().levelsUsed[1]:
+		messageFenetre("You can't use this power again \non this level", "Erreur")
+		return
+	messageFenetre("You have now a \nsuper-vision for 10 turns", "Super-vision")
 	theGame.theGame().range = 10
 	theGame.theGame().turn = 1
 	return True

@@ -285,6 +285,8 @@ class Map(object):
         orig = self.pos(e)
         dest = orig + way
         if dest in self:
+            if isinstance(e, Hero.Hero):
+                theGame.theGame().turn += 1
             if self.get(dest) == Map.ground:
                 self._mat[orig.y][orig.x] = Map.ground
                 self._mat[dest.y][dest.x] = e
@@ -318,6 +320,8 @@ class Map(object):
         orig = self.pos(e)
         dest = orig + way
         if dest in self:
+            if isinstance(e, Hero.Hero):
+                theGame.theGame().turn += 1
             if self.get(dest) == Map.ground:
                 self._mat[orig.y][orig.x] = Map.ground
                 self._mat[dest.y][dest.x] = e
