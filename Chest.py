@@ -26,12 +26,15 @@ class Chest(Element.Element):
         if self.chestopened:
             theGame.theGame().addMessage(f"the chest has already been opened")
             return
+        if len(hero.getInventory()) > 10:
+            return
         if self.size == "normal":
             i = 0
             keyFound = False
             while i < len(hero._inventory) and not keyFound:
                 object = hero._inventory[i]
                 if object._name == "key":
+                    hero._inventory.remove(object)
                     self.chestopened = True
                     Totalequipments = theGame.theGame().equipments
                     theGame.theGame().addMessage(f"you open the chest with the key")
@@ -41,9 +44,7 @@ class Chest(Element.Element):
                         #if rarete >= 2 * theGame.theGame()._level and len(hero.getInventory()) <= 10:
                         if len(hero.getInventory()) < 10:
                             hero.take(Totalequipments[rarete][random.randint(0, len(Totalequipments[rarete]) - 1)])
-                            print()
 
-                    hero._inventory.remove(object)
                     keyFound = True
                 i += 1
 
@@ -58,6 +59,7 @@ class Chest(Element.Element):
         if self.size == "big":
             for object in hero._inventory:
                 if object._name == "key":
+                    hero._inventory.remove(object)
                     self.chestopened = True
                     Totalequipments = theGame.theGame().equipments
                     theGame.theGame().addMessage(f"you open the chest with the key")
@@ -67,8 +69,6 @@ class Chest(Element.Element):
                         # if rarete >= 2 * theGame.theGame()._level and len(hero.getInventory()) <= 10:
                         if len(hero.getInventory()) < 10:
                             hero.take(Totalequipments[rarete][random.randint(3, len(Totalequipments[rarete]) - 1)])
-                            print()
-                    hero._inventory.remove(object)
 
             if self.chestopened:
                 theGame.theGame().addMessage(f"the luxurious chest has been opened")

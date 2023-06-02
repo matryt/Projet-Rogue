@@ -70,7 +70,7 @@ class Game(object):
             Equipment.Equipment("portoloin", "w", usage=lambda self, hero: teleport(hero, False)),
             Equipment.Equipment("invisibility potion", "i", usage=lambda self, hero: hero.becomeInvisible()),
         ],
-        4: [Wearable.Wearable("chainmail", place="torso", effect={"armor": 2})],
+        4: [Wearable.Wearable("chainmail", place="torso", effect={"armor": 2}, usage=lambda self, hero: equip(hero, self))],
     }
     monsters = {
         0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],

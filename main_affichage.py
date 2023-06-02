@@ -36,7 +36,7 @@ def messageFenetre(message, titre="Entrée"):
 	root2.mainloop()
 
 def is_digit_key(key):
-	return key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]
+	return key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9, pygame.K_KP0, pygame.K_KP1, pygame.K_KP2, pygame.K_KP3, pygame.K_KP4, pygame.K_KP5, pygame.K_KP6, pygame.K_KP7, pygame.K_KP8, pygame.K_KP9]
 
 
 def play_final():
@@ -71,7 +71,7 @@ def displayInventory(screen):
 			listEmplacements[str(i)][1] = True
 
 		except Exception as e:
-			print(theGame.theGame()._hero._inventory)
+			pass
 
 
 def textInput(titre, message, typeInput):
@@ -219,7 +219,7 @@ equipments = {
 			Equipment.Equipment("portoloin", "w", usage=lambda self, hero: specialActions.teleport(hero, False)),
 			Equipment.Equipment("invisibility potion", "i", usage=lambda self, hero: hero.becomeInvisible()),
 		],
-		4: [Wearable.Wearable("chainmail", place="torso", effect={"armor": 2})],
+		4: [Wearable.Wearable("chainmail", place="torso", effect={"armor": 2}, usage=lambda self, hero: specialActions.equip(hero, self))],
 	}
 
 dict_sol ={
@@ -368,8 +368,13 @@ while running:
 				running = False
 			#try :
 			if is_digit_key(event.key):
-				Key_value = int(pygame.key.name(event.key))
-				a = int(pygame.key.name(event.key))
+				a = pygame.key.name(event.key)
+				if len(a)>1:
+					a = a[1]
+				a = int(a)
+				if a >= len(theGame.theGame()._hero._inventory):
+					messageFenetre("Vous n'avez pas d'objet \nà cet emplacement", "Erreur")
+					continue
 				titre = "choose action"
 				message = "0 : 'use' \n1: 'drop' \n2: 'destroy'"
 				image_path = "assets/chooseaction6.png"
@@ -396,6 +401,7 @@ while running:
 						#theGame.theGame()._hero.opendescription(theGame.theGame()._hero._inventory[a],theGame.theGame()._floor,a=1)
 				if resultat == 2: 	#"destroy item"
 					theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
+				displayInventory(screen2)
 
 
 			#except:

@@ -113,7 +113,8 @@ class Hero(Creature.Creature):
 		if elem._name == "gold":
 			self.GoldCount += 1
 		else:
-			self._inventory.append(elem)
+			if len(self._inventory) < 10:
+				self._inventory.append(elem)
 
 	def meet(self, creature):
 		"""Est appelé lorsque le héros rencontre une créature
