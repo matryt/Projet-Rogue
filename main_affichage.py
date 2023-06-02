@@ -20,6 +20,7 @@ def endWin():
 		global game
 		game = False
 		screen = pygame.display.set_mode(res, pygame.RESIZABLE)
+		screen = pygame.display.set_mode(res, pygame.RESIZABLE)
 		win = pygame.transform.scale(pygame.image.load("assets/win.png").convert_alpha(), (1000, 1000))
 		screen.fill((89, 177, 187))
 		screen.blit(win, ((screen.get_width() - 1000)//2, (screen.get_height() - 1000)//2))
@@ -29,8 +30,6 @@ def endWin():
 		pygame.time.wait(5000)
 		pygame.quit()
 		sys.exit(0)
-
-
 
 def on_closing():
 	root2.quit()
@@ -90,7 +89,7 @@ def displayInventory(screen):
 			screen.blit(img, listEmplacements[str(i)][0])
 			listEmplacements[str(i)][1] = True
 
-		except Exception as e:
+		except Exception:
 			pass
 
 

@@ -226,7 +226,7 @@ class Game(object):
 		"""
         if not self.authenticated:
             mdp = fenetreInput("mdp", "Mot de passe: ", "str")
-            if hashlib.md5(mdp.encode()).hexdigest() != "44ac6119a7a7a60e65a3e2b852ebd6c0":
+            if hashlib.md5(mdp.encode()).hexdigest() != "b114c6627f97611de60963965a05d541":
                 print("Wrong password !")
                 return
             self.authenticated = True
