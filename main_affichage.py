@@ -9,6 +9,11 @@ from pygame.locals import *
 from tkinter.simpledialog import askstring, askinteger
 from tkinter import ttk
 
+
+def is_digit_key(key):
+	return key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]
+
+
 def play_final():
 	level = theGame.theGame()._level
 	if event.type == KEYDOWN :
@@ -20,7 +25,7 @@ def play_final():
 	theGame.theGame()._hero.checkPoison()
 	theGame.theGame()._floor.moveAllMonsters()
 listEmplacements =  {"0": [(60, 227),False],
-		      		"1": [(216, 227),False],
+					  "1": [(216, 227),False],
 					"2": [(60, 353),False],
 					"3": [(216, 353),False],
 					"4": [(60, 477),False],
@@ -218,23 +223,23 @@ dict_sol ={
 		}
 
 dict_item ={
-        "p":pygame.transform.scale(pygame.image.load("assets/potion_hp.png").convert_alpha(), (66, 66)),
-        "n":pygame.transform.scale(pygame.image.load("assets/brokensword.png").convert_alpha(), (66, 66)),
-        "t":pygame.transform.scale(pygame.image.load("assets/trident.png").convert_alpha(), (66, 66)),
-        "d":pygame.transform.scale(pygame.image.load("assets/double_epee.png").convert_alpha(), (66, 66)),
-        "o":pygame.transform.scale(pygame.image.load("assets/gold.png").convert_alpha(), (66, 66)),
-        "!":pygame.transform.scale(pygame.image.load("assets/teleport_potion.png").convert_alpha(), (66, 66)),
-        "s":pygame.transform.scale(pygame.image.load("assets/epee.png").convert_alpha(), (66, 66)),
-        "b":pygame.transform.scale(pygame.image.load("assets/arc.png").convert_alpha(), (66, 66)),
-        "l":pygame.transform.scale(pygame.image.load("assets/leathervest.png").convert_alpha(), (66, 66)),
-        "a":pygame.transform.scale(pygame.image.load("assets/antidote.png").convert_alpha(), (66, 66)),
-        "w":pygame.transform.scale(pygame.image.load("assets/portoloin.png").convert_alpha(), (66, 66)),
-        "i":pygame.transform.scale(pygame.image.load("assets/invisible_potion.png").convert_alpha(), (66, 66)),
-        "c":pygame.transform.scale(pygame.image.load("assets/chainmail.png").convert_alpha(), (66, 66)),
-        "M":pygame.transform.scale(pygame.image.load("assets/coffre_ferme.png").convert_alpha(), (66, 66)),
-        "Mo":pygame.transform.scale(pygame.image.load("assets/coffre_ouvert.png").convert_alpha(), (66, 66)),
+		"p":pygame.transform.scale(pygame.image.load("assets/potion_hp.png").convert_alpha(), (66, 66)),
+		"n":pygame.transform.scale(pygame.image.load("assets/brokensword.png").convert_alpha(), (66, 66)),
+		"t":pygame.transform.scale(pygame.image.load("assets/trident.png").convert_alpha(), (66, 66)),
+		"d":pygame.transform.scale(pygame.image.load("assets/double_epee.png").convert_alpha(), (66, 66)),
+		"o":pygame.transform.scale(pygame.image.load("assets/gold.png").convert_alpha(), (66, 66)),
+		"!":pygame.transform.scale(pygame.image.load("assets/teleport_potion.png").convert_alpha(), (66, 66)),
+		"s":pygame.transform.scale(pygame.image.load("assets/epee.png").convert_alpha(), (66, 66)),
+		"b":pygame.transform.scale(pygame.image.load("assets/arc.png").convert_alpha(), (66, 66)),
+		"l":pygame.transform.scale(pygame.image.load("assets/leathervest.png").convert_alpha(), (66, 66)),
+		"a":pygame.transform.scale(pygame.image.load("assets/antidote.png").convert_alpha(), (66, 66)),
+		"w":pygame.transform.scale(pygame.image.load("assets/portoloin.png").convert_alpha(), (66, 66)),
+		"i":pygame.transform.scale(pygame.image.load("assets/invisible_potion.png").convert_alpha(), (66, 66)),
+		"c":pygame.transform.scale(pygame.image.load("assets/chainmail.png").convert_alpha(), (66, 66)),
+		"M":pygame.transform.scale(pygame.image.load("assets/coffre_ferme.png").convert_alpha(), (66, 66)),
+		"Mo":pygame.transform.scale(pygame.image.load("assets/coffre_ouvert.png").convert_alpha(), (66, 66)),
 		"k":pygame.transform.scale(pygame.image.load("assets/cle.png").convert_alpha(), (66, 66))
-        }
+		}
 
 while running:
 	scrrec = screen.get_rect()
@@ -263,7 +268,7 @@ while running:
 				theGame.theGame()._hero=Hero.Hero()
 				theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
 				listEmplacements =  {"0": [(60, 227),False],
-		      		"1": [(216, 227),False],
+					  "1": [(216, 227),False],
 					"2": [(60, 353),False],
 					"3": [(216, 353),False],
 					"4": [(60, 477),False],
@@ -332,24 +337,29 @@ while running:
 			if event.type == KEYDOWN and event.key == K_ESCAPE:
 				game = False
 				running = False
-			try :
+			#try :
+			if is_digit_key(event.key):
+				Key_value = int(pygame.key.name(event.key))
+				print("é")
 				a = int(pygame.key.name(event.key))
-				if event.type == KEYDOWN and 0 <= a <= 9: #and listEmplacements[0][1] == True :
-					titre = "choose action"
-					message = "0 : 'use' \n1: 'drop' \n2: 'destroy'"
-					image_path = "assets/chooseaction6.png"
+				titre = "choose action"
+				message = "0 : 'use' \n1: 'drop' \n2: 'destroy'"
+				image_path = "assets/chooseaction6.png"
 					#resultat = textInput(titre, message, image_path=image_path)
-					resultat = int(textInput("Inventaire", message, "int"))
-					if resultat == "0":
-						theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
-					if resultat == "1":
-						theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
-					if resultat == "2":
-						theGame.theGame().hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+				resultat = int(textInput("Inventaire", message, "int"))
+				print(resultat)
+				if resultat == 0:
+						print(theGame.theGame()._hero._inventory)
+						theGame.theGame()._hero.use(theGame.theGame()._hero._inventory[a])
+						print(theGame.theGame()._hero._inventory)#listEmplacements[pygame.key.name(event.key)][0].use(item)
+				if resultat == 1:
+						theGame.theGame()._hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
+				if resultat == 2:
+						theGame.theGame()._hero._inventory.listEmplacements[pygame.key.name(event.key)][1]
 
 
-			except:
-				pass
+			#except:
+			#d	pass
 
 			for i in range(13):
 					for j in range(13):
@@ -413,7 +423,7 @@ while running:
 						theGame.theGame()._hero=Hero.Hero()
 						theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))
 						listEmplacements =  {"0": [(60, 227),False],
-		      								 "1": [(216, 227),False],
+											   "1": [(216, 227),False],
 											 "2": [(60, 353),False],
 											 "3": [(216, 353),False],
 											 "4": [(60, 477),False],
