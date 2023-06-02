@@ -89,7 +89,7 @@ def displayInventory(screen):
 			screen.blit(img, listEmplacements[str(i)][0])
 			listEmplacements[str(i)][1] = True
 
-		except Exception as e:
+		except Exception:
 			pass
 
 
@@ -140,7 +140,7 @@ def update_xp(surface):
 	textRect.center = (screen2.get_width() - 170, 295)
 	screen2.blit(text, textRect)
 	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 325, 400, 50])
-	varXP = f"XP : {str(theGame.theGame().getHero().xp)}/{str(theGame.theGame().getHero().xpMax)}"
+	varXP = f"XP : {str(theGame.theGame().getHero().xp)}/{str(theGame.theGame().getHero()._level*20 )}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varXP, True, "black")
 	textRect2 = text.get_rect()
