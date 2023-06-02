@@ -31,8 +31,8 @@ class Hero(Creature.Creature):
 
 	"""
 
-	def __init__(self, name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp=0, GoldCount=0, level=1,
-				 poisoned=False, invisible=False, arme_equipee=None, armor=0, skills=None
+	def __init__(self,name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp=0, GoldCount=0, level=1,
+				 poisoned=False, invisible=False, arme_equipee=None, _arme_equipee2 = 0 , armor=0, skills=None , 
 				 ):
 		"""
 
@@ -80,6 +80,7 @@ class Hero(Creature.Creature):
 		if skills is None:
 			skills = []
 		self._skills = skills
+		self._arme_equipee2 = _arme_equipee2
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
