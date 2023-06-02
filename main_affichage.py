@@ -90,7 +90,7 @@ def displayInventory(screen):
 			screen.blit(img, listEmplacements[str(i)][0])
 			listEmplacements[str(i)][1] = True
 
-		except Exception as e:
+		except Exception:
 			pass
 
 
