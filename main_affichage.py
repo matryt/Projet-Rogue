@@ -11,6 +11,29 @@ from tkinter import ttk
 
 import random
 
+root2 = tk.Tk()
+root2.withdraw()
+
+def on_closing():
+	root2.quit()
+	root2.destroy()
+
+def messageFenetre(message, titre="Entrée"):
+	global root2
+	root2 = tk.Tk()
+	root2.title(titre)
+	width = 420
+	height = 100
+	screen_width = root2.winfo_screenwidth()
+	screen_height = root2.winfo_screenheight()
+	x = (screen_width - width) // 2
+	y = (screen_height - height) // 2
+	label = tk.Label(root2, text=message)
+	label.pack()
+	label.config(font=("Arial", 24))
+	root2.protocol("WM_DELETE_WINDOW", on_closing)
+	root2.geometry(f"{width}x{height}+{x}+{y}")
+	root2.mainloop()
 
 def is_digit_key(key):
 	return key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]
@@ -224,7 +247,8 @@ dict_sol ={
 		"e":pygame.transform.scale(pygame.image.load("assets/sol/shopsol.png").convert(), (66, 66)),
 		"M":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ferme_sol.png").convert(), (66, 66)),
 		"Mo":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ouvert_sol.png").convert(), (66, 66)),
-		"X":pygame.transform.scale(pygame.image.load("assets/sol/witchsol.png").convert(), (66, 66))
+		"X":pygame.transform.scale(pygame.image.load("assets/sol/witchsol.png").convert(), (66, 66)),
+		"k":pygame.transform.scale(pygame.image.load("assets/sol/clesol.png").convert(), (66, 66))
 		}
 
 dict_item ={
@@ -345,14 +369,12 @@ while running:
 			#try :
 			if is_digit_key(event.key):
 				Key_value = int(pygame.key.name(event.key))
-				print("é")
 				a = int(pygame.key.name(event.key))
 				titre = "choose action"
 				message = "0 : 'use' \n1: 'drop' \n2: 'destroy'"
 				image_path = "assets/chooseaction6.png"
 					#resultat = textInput(titre, message, image_path=image_path)
 				resultat = int(textInput("Inventaire", message, "int"))
-				print(resultat)
 				if resultat == 0: 	#"use item"
 						#print(theGame.theGame()._hero._inventory)
 						theGame.theGame()._hero.use(theGame.theGame()._hero._inventory[a])
@@ -360,13 +382,17 @@ while running:
 				if resultat == 1: 	#"drop item"
 					voisins = theGame.theGame()._floor.pos(theGame.theGame()._hero).voisins(theGame.theGame()._floor)
 					for v in voisins:
-						if theGame.theGame()._floor.get(v) != theGame.theGame()._floor.empty:    #Map.Map.empty:
+						if theGame.theGame()._floor.get(v) != theGame.theGame()._floor.ground:    #Map.Map.empty:
 							voisins.remove(v)
-					if v:
-						theGame.theGame()._floor.put(random.choice(voisins), theGame.theGame()._hero._inventory[a]) #cette ligne fait de la D mais tkt dans le try ça rend bien 
-						theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
+					if len(voisins)>0:
+						try:
+							theGame.theGame()._floor.put(random.choice(voisins), theGame.theGame()._hero._inventory[a]) #cette ligne fait de la D mais tkt dans le try ça rend bien
+						except:
+							messageFenetre("There is no place \nto drop the item")
+						else:
+							theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
 					else:
-						theGame.theGame().addMessage("There is no place to drop the item")
+						messageFenetre("There is no place \nto drop the item")
 						#theGame.theGame()._hero.opendescription(theGame.theGame()._hero._inventory[a],theGame.theGame()._floor,a=1)
 				if resultat == 2: 	#"destroy item"
 					theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
