@@ -8,11 +8,29 @@ import tkinter as tk
 from pygame.locals import *
 from tkinter.simpledialog import askstring, askinteger
 from tkinter import ttk
+import sys
 
 import random
 
 root2 = tk.Tk()
 root2.withdraw()
+
+def endWin():
+	if theGame.theGame()._level == 25:
+		global game
+		game = False
+		screen = pygame.display.set_mode(res, pygame.RESIZABLE)
+		win = pygame.transform.scale(pygame.image.load("assets/win.png").convert_alpha(), (1000, 1000))
+		screen.fill((89, 177, 187))
+		screen.blit(win, ((screen.get_width() - 1000)//2, (screen.get_height() - 1000)//2))
+		pygame.display.flip()
+		global running
+		running = False
+		pygame.time.wait(5000)
+		pygame.quit()
+		sys.exit(0)
+
+
 
 def on_closing():
 	root2.quit()
@@ -51,6 +69,8 @@ def play_final():
 	theGame.theGame()._floor.moveAllMonsters()
 	theGame.theGame()._hero.unlockSkillsAffichage()
 	theGame.theGame().resetVision()
+	endWin()
+
 listEmplacements =  {"0": [(60, 227),False],
 					  "1": [(216, 227),False],
 					"2": [(60, 353),False],
