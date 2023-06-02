@@ -1,9 +1,47 @@
 import random
+import tkinter as tk
+from tkinter.simpledialog import askinteger, askstring
 
 import Element
 import theGame
 from utils import getch
 
+root2 = tk.Tk()
+root2.withdraw()
+
+def on_closing():
+	root2.quit()
+	root2.destroy()
+
+def fenetreInput(titre, message, typeInput):
+	root2 = tk.Tk()
+	root2.withdraw()
+	match typeInput:
+		case "int":
+			val = askinteger(titre, message)
+		case "str":
+			val = askstring(titre, message)
+		case _:
+			raise ValueError("Type invalide")
+	root2.quit()
+	return val
+
+def messageFenetre(message, titre="Entrée"):
+	global root2
+	root2 = tk.Tk()
+	root2.title(titre)
+	width = 420
+	height = 100
+	screen_width = root2.winfo_screenwidth()
+	screen_height = root2.winfo_screenheight()
+	x = (screen_width - width) // 2
+	y = (screen_height - height) // 2
+	label = tk.Label(root2, text=message)
+	label.pack()
+	label.config(font=("Arial", 24))
+	root2.protocol("WM_DELETE_WINDOW", on_closing)
+	root2.geometry(f"{width}x{height}+{x}+{y}")
+	root2.mainloop()
 
 class Shop(Element.Element):
 	def __init__(self):
@@ -12,6 +50,9 @@ class Shop(Element.Element):
 
 	def checkItem(self, item):
 		return any(item.getName() == i.getName() for i in self._items)
+	
+	def __repr__(self):
+		return self._abbrv
 
 	def addQuantity(self, item, qty):
 		if not self.checkItem(item):
@@ -49,11 +90,6 @@ class Shop(Element.Element):
 		if self._items[item]["quantity"] == 0:
 			del self._items[item]
 
-	def changePrice(self, item, price):
-		if not self.checkItem(item):
-			raise ValueError(f"{item} is not in the shop")
-		self._items[item]["price"] = price
-
 	def getElem(self, item):
 		cle = None
 		for elem in self._items:
@@ -61,6 +97,47 @@ class Shop(Element.Element):
 				cle = elem
 		if cle:
 			return self._items[cle]
+
+	def meetAffichage(self, elem):
+		choix = ""
+		while choix != "f":
+			choix = fenetreInput("Choix", f"{self.description()} \nQue voulez-vous faire ? (a)cheter, (v)endre, (f)inir : ", "str")
+			if choix == "a":
+				item = fenetreInput("Choix", f"{self.description()} \nQuel item voulez-vous acheter ? ", "int")
+				try:
+					item = self.getElementByNumber(int(item))
+				except:
+					messageFenetre("Cet item n'existe pas", "Erreur")
+					continue
+				if theGame.theGame().getHero().getGoldCount() < self._items[item]["price"]:
+					messageFenetre("Vous n'avez pas assez d'\nargent pour acheter cet item", "Erreur")
+					continue
+				theGame.theGame().getHero().addGold(-self.getElem(item)["price"])
+				theGame.theGame().getHero().addItem(item)
+				self.removeItem(item)
+				messageFenetre(f"Vous avez acheté \n{item}", "Achat")
+			if choix == "v":
+				inventory = "".join([f"({i}) {item.getName()}\n" for i, item in enumerate(theGame.theGame().getHero().getInventory())])
+				item = fenetreInput("Choix", "Here is your inventory : \n" + inventory + "\n" + "Quel item voulez-vous vendre ? ", "int")
+				try:
+					item = theGame.theGame().getHero().getInventory()[int(item)]
+				except:
+					messageFenetre("Cet item n'existe pas", "Erreur")
+					continue
+				if not self.checkItem(item):
+					try:
+						price = int(random.expovariate(theGame.theGame().getRarety(item) + 1))+1
+					except:
+						messageFenetre("Cet item n'est pas vendable", "Erreur")
+						continue
+					self.addItem(item, 1, price)
+					theGame.theGame().getHero().addGold(price)
+				else:
+					theGame.theGame().getHero().addGold(self.getElem(item)["price"])
+					self.addQuantity(item, 1)
+				theGame.theGame().getHero().removeItem(item)
+				messageFenetre(f"Vous avez vendu \n{item.getName()}", "Vente")
+		messageFenetre("Merci beaucoup, \net à bientôt j'espère !", "Au revoir")
 
 	def meet(self, elem):
 		choix = ""

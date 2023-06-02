@@ -17,7 +17,7 @@ class Equipment(Element.Element):
     resum
     """
 
-    def __init__(self, name, abbrv="", usage=None,resum = "a thing"):
+    def __init__(self, name, abbrv="", usage=None, resum="a thing"):
         """
 
         Parameters
@@ -46,11 +46,9 @@ class Equipment(Element.Element):
         -------
         bool
             True
-        """
-        """inventaire limité: return False quand un equipment est rencontré par un element si l'inventaire du héro dépasse X valeur."""
+        inventaire limité: return False quand un equipment est rencontré par un element si l'inventaire du héro dépasse X valeur."""
         elem._invisible = False
         if len(theGame.theGame()._hero._inventory) == 10:
-
             theGame.theGame().addMessage("Your inventory is full "+str(theGame.theGame()._hero._name))
             return False
 
@@ -86,3 +84,6 @@ class Equipment(Element.Element):
             return self.usage(self, creature)
         theGame.theGame().addMessage(f"The {self._name} is not usable")
         return False
+
+    def meetAffichage(self, elem):
+        return self.meet(elem)
