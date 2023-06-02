@@ -24,6 +24,8 @@ def play_final():
 		screen2.fill("white")
 	theGame.theGame()._hero.checkPoison()
 	theGame.theGame()._floor.moveAllMonsters()
+	theGame.theGame()._hero.unlockSkillsAffichage()
+	theGame.theGame().resetVision()
 listEmplacements =  {"0": [(60, 227),False],
 					  "1": [(216, 227),False],
 					"2": [(60, 353),False],
@@ -219,7 +221,8 @@ dict_sol ={
 		"@":pygame.transform.scale(pygame.image.load("assets/sol/herosol.png").convert(), (66, 66)),
 		"e":pygame.transform.scale(pygame.image.load("assets/sol/shopsol.png").convert(), (66, 66)),
 		"M":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ferme_sol.png").convert(), (66, 66)),
-		"Mo":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ouvert_sol.png").convert(), (66, 66))
+		"Mo":pygame.transform.scale(pygame.image.load("assets/sol/coffre_ouvert_sol.png").convert(), (66, 66)),
+		"X":pygame.transform.scale(pygame.image.load("assets/sol/witchsol.png").convert(), (66, 66))
 		}
 
 dict_item ={

@@ -14,8 +14,13 @@ import Map
 import Coord
 import Shop
 import importlib
+import tkinter as tk
+from tkinter.simpledialog import askinteger, askstring
+import hashlib
 
 theGame = importlib.import_module("theGame")
+root2 = tk.Tk()
+root2.withdraw()
 
 
 class Game(object):
@@ -70,7 +75,8 @@ class Game(object):
     monsters = {
         0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
         1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
-        10: [Creature.Creature("Dragon", 20, strength=3), Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
+        6: [Creature.Creature("Witch", 12, "X", isBlinding=True)],
+        15: [Creature.Creature("Dragon", 20, strength=3), Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
     }
 
     _actions = {
@@ -84,6 +90,7 @@ class Game(object):
         "u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
         "p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
         "f": lambda hero: theGame.theGame().floorInfos(),
+        "c": lambda hero: hero.useSkills(),
     }
 
     _actionsAffichage = {
@@ -97,6 +104,8 @@ class Game(object):
         "u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
         "p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
         "f": lambda hero: theGame.theGame().floorInfos(),
+        "c": lambda hero: hero.useSkillsAffichage(),
+        "t": lambda hero: theGame.theGame().cheatAffichage(),
     }
 
     def __init__(self, hero=None, level=1, floor=None, messages=None, equiped_outfits=[]):
@@ -122,6 +131,10 @@ class Game(object):
         self.seed = None
         self.equiped_outfits = equiped_outfits
         self.allMonsters = []
+        self.levelsUsed = {}
+        self.range = 5
+        self.authenticated = False
+        self.turn = 1
 
     def getRarety(self, equipment, i=0):
         if i > 4:
@@ -137,6 +150,7 @@ class Game(object):
         self.allMonsters = []
         self._floor = Map.Map(hero=self._hero, simulation=s)
         self._level += 1
+        self.range = 5
         escalierPlace = False
         while not escalierPlace:
             try:
@@ -204,6 +218,24 @@ class Game(object):
         self._messages = []
         return msg
 
+    def cheatAffichage(self):
+        """
+		Permet d'exécuter une commande entrée par input, tout en vérifiant que la commande utilise theGame
+		Returns
+		-------
+		"""
+        if not self.authenticated:
+            mdp = fenetreInput("mdp", "Mot de passe: ", "str")
+            if hashlib.md5(mdp.encode()).hexdigest() != "44ac6119a7a7a60e65a3e2b852ebd6c0":
+                print("Wrong password !")
+                return
+            self.authenticated = True
+        c = fenetreInput("Cmd","Commande de test: ", "str")
+        if "theGame" in c:
+            exec(c)
+        else:
+            messageFenetre("You aren't allowed to do that !", "Erreur")
+
     def randElement(self, collection):
         """
         Renvoie un élément au hasard parmi la collection passée en paramètre
@@ -222,6 +254,12 @@ class Game(object):
         while not collection.get(x):
             x -= 1
         return copy.copy(random.choice(collection[x]))
+
+    def resetVision(self):
+        """Reset la vision du joueur"""
+        if self.turn % 10 == 0 and self.range != 5:
+            self.range = 5
+            theGame.theGame().addMessage("Your vision is reset")
 
     def randEquipment(self):
         """
@@ -308,6 +346,7 @@ class Game(object):
         """Main game loop"""
         self.seed = setSeed()
         self.buildFloor()
+        self.resetVision()
         print("--- Welcome Hero! ---")
         while self._hero.getHP() > 0:
             print()
@@ -319,6 +358,7 @@ class Game(object):
                 Game._actions[c](self._hero)
             self._hero.checkPoison()
             self._floor.moveAllMonsters()
+            self._hero.unlockSkills()
         print("--- Game Over ---")
     
     
@@ -386,6 +426,7 @@ class Game(object):
                 Game._actions[c](self._hero)
             self._hero.checkPoison()
             self._floor.moveAllMonsters()
+            self._hero.unlockSkills()
         print("--- Game Over ---")
 
     def floorInfos(self):
@@ -406,3 +447,37 @@ def setSeed():
     # r = 102781142
     random.seed(r)
     return r
+
+def on_closing():
+	root2.quit()
+	root2.destroy()
+
+def fenetreInput(titre, message, typeInput):
+	root2 = tk.Tk()
+	root2.withdraw()
+	match typeInput:
+		case "int":
+			val = askinteger(titre, message)
+		case "str":
+			val = askstring(titre, message)
+		case _:
+			raise ValueError("Type invalide")
+	root2.quit()
+	return val
+
+def messageFenetre(message, titre="Entrée"):
+	global root2
+	root2 = tk.Tk()
+	root2.title(titre)
+	width = 420
+	height = 100
+	screen_width = root2.winfo_screenwidth()
+	screen_height = root2.winfo_screenheight()
+	x = (screen_width - width) // 2
+	y = (screen_height - height) // 2
+	label = tk.Label(root2, text=message)
+	label.pack()
+	label.config(font=("Arial", 24))
+	root2.protocol("WM_DELETE_WINDOW", on_closing)
+	root2.geometry(f"{width}x{height}+{x}+{y}")
+	root2.mainloop()
