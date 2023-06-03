@@ -187,7 +187,7 @@ def update_armor(surface):
 
 def update_floor(surface):
 	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 555, 400, 50])
-	varFloor = f"Floor : {theGame.theGame().getLevel() - 1}"
+	varFloor = f"Floor : {theGame.theGame().getLevel()}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varFloor, True, "black")
 	textRect = text.get_rect()

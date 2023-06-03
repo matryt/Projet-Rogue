@@ -255,3 +255,14 @@ def revive(creature):
 	"""
 	creature.revive = True
 	return True
+
+def tornadoAffichage(hero, map, levelsUsed):
+	if theGame.theGame().getLevel() in levelsUsed:
+		messageFenetre("You can't use this power \nagain on this level", "Erreur")
+		return
+	voisins = map.pos(hero).voisins(map)
+	for v in voisins:
+		if isinstance(map.get(v), Creature.Creature):
+			creature = map.get(v)
+			creature._hp /= 2
+	messageFenetre("The creatures around you \nare now weaker", "Tornado")

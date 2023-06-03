@@ -154,7 +154,7 @@ class Game(object):
 		self._level += 1
 		self.range = 5
 		escalierPlace = False
-		if self._level < 24:
+		if self._level < 25:
 			while not escalierPlace:
 				try:
 					self._floor.put(self._floor.randRoomfromRooms().randEmptyCoord(self._floor), Stairs.Stairs())
