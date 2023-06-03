@@ -126,6 +126,10 @@ class Hero(Creature.Creature):
 		if not self._invisible:
 			degats = int(max(creature.getStrength() - 2 * math.log(self.armor + 1), 1))
 			if random.randint(1,self.chance)==1:
+				print("tarace")
+				messageFenetre_esquive("Vous avez esquivé un coup !","Esquive")
+				return
+			else :
 				self._hp = max(self._hp - degats, 0)
 			if creature.isPoisoning and not self._poisoned and self._hp > 0:
 				self.poison()
@@ -387,6 +391,21 @@ def messageFenetre(message, titre="Entrée"):
 	label.config(font=("Arial", 24))
 	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
+	
+
+def messageFenetre_esquive(message, titre="Entrée"):
+	global root2
+	root2 = tk.Tk()
+	root2.title(titre)
+	width = 420
+	height = 100
+	screen_width = root2.winfo_screenwidth()
+	screen_height = root2.winfo_screenheight()
+	x = (screen_width - width) // 2
+	y = (screen_height - height) // 2
+	label = tk.Label(root2, text=message)
+	label.pack()
+	label.config(font=("Arial", 24))
+	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
-
-
+	root2.after(500,on_closing)

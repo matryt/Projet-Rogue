@@ -2,6 +2,7 @@ import Element
 import importlib
 import random
 import Equipment
+import tkinter as tk
 
 theGame = importlib.import_module("theGame")
 
@@ -121,6 +122,8 @@ class Creature(Element.Element):
             theGame.theGame().addMessage("vous avez trouvé un objet ! ")
         if creature.xp >= 20 * creature._level:
             creature._level += 1
+            if creature.chance >2 :
+                creature.chance-=1
             theGame.theGame().addMessage(f"You just advanced to level {creature._level}")
             creature.hpMax += random.randint(1, 3)
             creature.strengthMax += random.randint(1, 3)
@@ -156,7 +159,6 @@ class Creature(Element.Element):
                 creature.strengthMax -= creature._arme_equipee.effect.get('strength', 0)
         if self._hp <= 0:
             self.advanceLevel(creature)
-            creature.chance-=1
             return True
         return False
 
