@@ -84,6 +84,7 @@ class Chest(Element.Element):
 class Tresor(Chest):
     def __init__(self, chestopened=False):
         super().__init__(chestopened, "big")
+        self._abbrv="M"
 
     def meet(self, hero):
         super().meet(hero)

@@ -20,9 +20,10 @@ root2.withdraw()
 def findTresor():
 	for i in range(len(theGame.theGame()._floor)):
 		for j in range(len(theGame.theGame()._floor)):
-			c = Coord.Coord(i, j)
-			if isinstance(c, Chest.Tresor):
-				if c.chestopened:
+			elem = theGame.theGame()._floor.get(Coord.Coord(i, j))
+			if isinstance(elem, Chest.Tresor):
+				print("Trésor trouvé")
+				if elem.chestopened:
 					return True
 	return False
 
@@ -157,7 +158,7 @@ def update_xp(surface):
 	textRect2 = text.get_rect()
 	textRect2.center = (screen2.get_width() - 170, 325)
 	screen2.blit(text, textRect2)
-	if theGame.theGame().getHero().xp > 0:
+	if theGame.theGame().getHero().xp > 0 and theGame.theGame().getHero().xpMax > 0:
 		percent = 230 * (theGame.theGame().getHero().xp / theGame.theGame().getHero().xpMax)
 	else:
 		percent = 0
