@@ -32,7 +32,7 @@ class Hero(Creature.Creature):
 	"""
 
 	def __init__(self,name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp=0, GoldCount=0, level=1,
-				 poisoned=False, invisible=False, arme_equipee=None, _arme_equipee2 = 0 , armor=0, skills=None ,chance=30 
+				 poisoned=False, invisible=False, arme_equipee=None, _arme_equipee2 = 0 , armor=0, skills=None ,chance=0.05 
 				 ):
 		"""
 
@@ -125,8 +125,7 @@ class Hero(Creature.Creature):
 		"""
 		if not self._invisible:
 			degats = int(max(creature.getStrength() - 2 * math.log(self.armor + 1), 1))
-			if random.randint(1,self.chance)==1:
-				print("tarace")
+			if random.random()<self.chance:
 				messageFenetre_esquive("Vous avez esquivé un coup !","Esquive")
 				return
 			else :
@@ -406,6 +405,6 @@ def messageFenetre_esquive(message, titre="Entrée"):
 	label = tk.Label(root2, text=message)
 	label.pack()
 	label.config(font=("Arial", 24))
+	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
-	root2.after(500,on_closing)

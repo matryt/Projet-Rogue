@@ -122,8 +122,8 @@ class Creature(Element.Element):
             theGame.theGame().addMessage("vous avez trouvé un objet ! ")
         if creature.xp >= 20 * creature._level:
             creature._level += 1
-            if creature.chance >2 :
-                creature.chance-=1
+            if creature.chance <=1 :
+                creature.chance+=0.05
             theGame.theGame().addMessage(f"You just advanced to level {creature._level}")
             creature.hpMax += random.randint(1, 3)
             creature.strengthMax += random.randint(1, 3)
