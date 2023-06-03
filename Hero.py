@@ -32,7 +32,7 @@ class Hero(Creature.Creature):
 	"""
 
 	def __init__(self,name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp=0, GoldCount=0, level=1,
-				 poisoned=False, invisible=False, arme_equipee=None, _arme_equipee2 = 0 , armor=0, skills=None , 
+				 poisoned=False, invisible=False, arme_equipee=None, _arme_equipee2 = 0 , armor=0, skills=None ,chance=30 
 				 ):
 		"""
 
@@ -81,6 +81,7 @@ class Hero(Creature.Creature):
 			skills = []
 		self._skills = skills
 		self._arme_equipee2 = _arme_equipee2
+		self.chance=chance
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
@@ -124,7 +125,8 @@ class Hero(Creature.Creature):
 		"""
 		if not self._invisible:
 			degats = int(max(creature.getStrength() - 2 * math.log(self.armor + 1), 1))
-			self._hp = max(self._hp - degats, 0)
+			if random.randint(1,self.chance)==1:
+				self._hp = max(self._hp - degats, 0)
 			if creature.isPoisoning and not self._poisoned and self._hp > 0:
 				self.poison()
 			if creature.isBlinding:
