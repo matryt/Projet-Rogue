@@ -9,14 +9,26 @@ from pygame.locals import *
 from tkinter.simpledialog import askstring, askinteger
 from tkinter import ttk
 import sys
+import Coord
+import Chest
 
 import random
 
 root2 = tk.Tk()
 root2.withdraw()
 
+def findTresor():
+	for i in range(len(theGame.theGame()._floor)):
+		for j in range(len(theGame.theGame()._floor)):
+			elem = theGame.theGame()._floor.get(Coord.Coord(i, j))
+			if isinstance(elem, Chest.Tresor):
+				print("Trésor trouvé")
+				if elem.chestopened:
+					return True
+	return False
+
 def endWin():
-	if theGame.theGame()._level == 25:
+	if theGame.theGame()._level == 25 and findTresor():
 		global game
 		game = False
 		screen = pygame.display.set_mode(res, pygame.RESIZABLE)
@@ -146,7 +158,7 @@ def update_xp(surface):
 	textRect2 = text.get_rect()
 	textRect2.center = (screen2.get_width() - 170, 325)
 	screen2.blit(text, textRect2)
-	if theGame.theGame().getHero().xp > 0:
+	if theGame.theGame().getHero().xp > 0 and theGame.theGame().getHero().xpMax > 0:
 		percent = 230 * (theGame.theGame().getHero().xp / theGame.theGame().getHero().xpMax)
 	else:
 		percent = 0
@@ -175,7 +187,7 @@ def update_armor(surface):
 
 def update_floor(surface):
 	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 555, 400, 50])
-	varFloor = f"Floor : {theGame.theGame().getLevel() - 1}"
+	varFloor = f"Floor : {theGame.theGame().getLevel()}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varFloor, True, "black")
 	textRect = text.get_rect()
@@ -238,7 +250,7 @@ equipments = {
 			Equipment.Equipment("portoloin", "w", usage=lambda self, hero: specialActions.teleport(hero, False)),
 			Equipment.Equipment("invisibility potion", "i", usage=lambda self, hero: hero.becomeInvisible()),
 		],
-		4: [Wearable.Wearable("chainmail", place="torso", effect={"armor": 2}, usage=lambda self, hero: specialActions.equip(hero, self))],
+		4: [Wearable.Wearable("chainmail", place="torso", durability=7, effect={"armor": 2}, usage=lambda self, hero: specialActions.equip(hero, self))],
 	}
 
 dict_sol ={
@@ -518,6 +530,3 @@ while running:
 										screen2.blit(dict_sol[elem],((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
 						game=True
 						fin_=False
-				
-					
-

@@ -2,6 +2,7 @@ import Element
 import importlib
 import random
 import Equipment
+import tkinter as tk
 
 theGame = importlib.import_module("theGame")
 
@@ -43,6 +44,7 @@ class Creature(Element.Element):
         self._hp = hp
         self.hpMax = hp
         self._strength = strength
+        self._armure_equipee = None
         self._idCreature = idCreature
         self.isPoisoning = isPoisoning
         self.isBlinding = isBlinding
@@ -128,6 +130,8 @@ class Creature(Element.Element):
             creature.xp = 0
             creature._hp = creature.hpMax
             creature._strength = creature.strengthMax
+            if creature._arme_equipee != None:
+                creature._strength += creature._arme_equipee.effect.get('strength', 0)
 
     def meet(self, creature):
         """
@@ -153,11 +157,65 @@ class Creature(Element.Element):
                     f"Your {str(creature._arme_equipee._name)} just broke"
                 )
                 creature._inventory.remove(creature._arme_equipee)
+                creature._strength -= creature._arme_equipee.effect.get('strength', 0)
                 creature.strengthMax -= creature._arme_equipee.effect.get('strength', 0)
+                creature._arme_equipee = None
+        if creature._armure_equipee != None:
+            creature._armure_equipee.durability -= 1
+            if creature._armure_equipee.durability == 0:
+                theGame.theGame.addMessage(
+                    f"Your {str(creature._armure_equipee._name)} just broke"
+                )
+                creature._inventory.remove(creature._armure_equipee)
+                creature.armor -= creature._armure_equipee.effect.get('armor', 0)
+                creature._armure_equipee = None
         if self._hp <= 0:
             self.advanceLevel(creature)
             return True
         return False
 
-    def meetAffichage(self, elem):
-        return self.meet(elem)
+    def meetAffichage(self, creature):
+        self._hp = max(self._hp - creature.getStrength(), 0)
+        creature._invisible = False
+        if creature._arme_equipee != None:
+            creature._arme_equipee.durability -= 1
+            if creature._arme_equipee.durability == 0:
+                messageFenetre(f"Your {str(creature._arme_equipee._name)} just broke")
+                creature._inventory.remove(creature._arme_equipee)
+                creature._strength -= creature._arme_equipee.effect.get('strength', 0)
+                creature.strengthMax -= creature._arme_equipee.effect.get('strength', 0)
+                creature._arme_equipee = None
+        if creature._armure_equipee != None:
+            creature._armure_equipee.durability -= 1
+            if creature._armure_equipee.durability == 0:
+                messageFenetre(f"Your {str(creature._armure_equipee._name)} just broke")
+                creature._inventory.remove(creature._armure_equipee)
+                creature.armor -= creature._armure_equipee.effect.get('armor', 0)
+                creature._armure_equipee = None
+        if self._hp <= 0:
+            self.advanceLevel(creature)
+            return True
+        return False
+
+
+def on_closing():
+    root2.quit()
+    root2.destroy()
+
+
+def messageFenetre(message, titre="A message"):
+    global root2
+    root2 = tk.Tk()
+    root2.title(titre)
+    width = 420
+    height = 100
+    screen_width = root2.winfo_screenwidth()
+    screen_height = root2.winfo_screenheight()
+    x = (screen_width - width) // 2
+    y = (screen_height - height) // 2
+    label = tk.Label(root2, text=message)
+    label.pack()
+    label.config(font=("Arial", 24))
+    root2.protocol("WM_DELETE_WINDOW", on_closing)
+    root2.geometry(f"{width}x{height}+{x}+{y}")
+    root2.mainloop()
