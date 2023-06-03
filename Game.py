@@ -50,10 +50,10 @@ class Game(object):
 	equipments = {
 		0: [
 			Equipment.Equipment("potion", "p", usage=lambda self, hero: heal(hero)),
-			Wearable.Wearable("broken sword",abbrv="n",place="right hand", effect={"strength": 1}, usage=lambda self, hero: equip(hero, self)),
-			Wearable.Wearable("trident", place="right hand", effect={"strength": 3}, usage=lambda self, hero: equip(hero, self)),
+			Wearable.Wearable("broken sword",abbrv="n",durability=1, place="right hand", effect={"strength": 1}, usage=lambda self, hero: equip(hero, self)),
+			Wearable.Wearable("trident", place="right hand", durability=7, effect={"strength": 3}, usage=lambda self, hero: equip(hero, self)),
 			Wearable.Wearable(
-				"double_epee", place="right hand", effect={"strength": 2}, usage=lambda self, hero: equip(hero, self)
+				"double_epee", place="right hand", durability=5, effect={"strength": 2}, usage=lambda self, hero: equip(hero, self)
 			),
 			Equipment.Equipment("gold", "o"),
 		],
@@ -63,7 +63,7 @@ class Game(object):
 				"sword", place="right hand", effect={"strength": 2}, usage=lambda self, hero: equip(hero, self)
 			),
 			Equipment.Equipment("bow"),
-			Wearable.Wearable("leather vest", place="torso", effect={"armor": 1}, usage=lambda self, hero: recover(hero, True)),
+			Wearable.Wearable("leather vest", place="torso", effect={"armor": 1}, usage=lambda self, hero: equip(hero, self)),
 			Equipment.Equipment("antidotal", usage=lambda self, hero: recover(hero, True)),
 		],
 		3: [
@@ -76,7 +76,7 @@ class Game(object):
 		0: [Creature.Creature("Goblin", 4), Creature.Creature("Bat", 2, "W")],
 		1: [Creature.Creature("Ork", 6, strength=2), Creature.Creature("Blob", 10)],
 		6: [Creature.Creature("Witch", 12, "X", isBlinding=True)],
-		15: [Creature.Creature("Dragon", 20, strength=3), Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
+		15: [Creature.Creature("Dragon", 15, strength=3), Creature.Creature("Spider", 8, isPoisoning=True, strength=2)],
 	}
 
 	_actions = {
