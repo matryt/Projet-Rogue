@@ -156,6 +156,7 @@ class Creature(Element.Element):
                 creature.strengthMax -= creature._arme_equipee.effect.get('strength', 0)
         if self._hp <= 0:
             self.advanceLevel(creature)
+            creature.chance-=1
             return True
         return False
 
