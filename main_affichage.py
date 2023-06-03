@@ -175,33 +175,36 @@ def update_strength(surface):
 	textRect = text.get_rect()
 	textRect.center = (screen2.get_width() - 170, 425)
 	surface.blit(text, textRect)
+	surface.blit(epeeIcon, (screen2.get_width() - 295, 410))
 
 def update_armor(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 440, 400, 50])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 465, 400, 50])
 	varArmor = f"Armor : {str(theGame.theGame().getHero().armor)}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varArmor, True, "black")
 	textRect = text.get_rect()
-	textRect.center = (screen2.get_width() - 170, 455)
+	textRect.center = (screen2.get_width() - 170, 480)
 	surface.blit(text, textRect)
+	surface.blit(bouclier, (screen2.get_width() - 285, 465))
 
 def update_floor(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 555, 400, 50])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 580, 400, 50])
 	varFloor = f"Floor : {theGame.theGame().getLevel()}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varFloor, True, "black")
 	textRect = text.get_rect()
-	textRect.center = (screen2.get_width() - 170, 595)
+	textRect.center = (screen2.get_width() - 170, 615)
 	surface.blit(text, textRect)
 
 def update_gold(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 505, 400, 50])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 525, 400, 50])
 	varHP = f"Gold(s) : {str(theGame.theGame().getHero().getGoldCount())}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varHP, True, "black")
 	textRect = text.get_rect()
-	textRect.center = (screen2.get_width() - 170, 525)
+	textRect.center = (screen2.get_width() - 170, 545)
 	surface.blit(text, textRect)
+	surface.blit(gold, (screen2.get_width() - 285, 525))
 	
 pygame.init()
 running = True
@@ -219,7 +222,9 @@ mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (6
 inventaire = pygame.transform.scale(pygame.image.load("assets/inventaireV2_r.png").convert_alpha(), (320, 840))
 hero = pygame.transform.scale(pygame.image.load("assets/hero.png").convert_alpha(), (150, 150))
 nuage = pygame.transform.scale(pygame.image.load("assets/sol/nuage_sol.png").convert_alpha(), (66, 66))
-
+bouclier = pygame.transform.scale(pygame.image.load("assets/shield_icon.png").convert_alpha(), (35, 35))
+epeeIcon = pygame.transform.scale(pygame.image.load("assets/strength_icon.png").convert_alpha(), (26, 43))
+gold = pygame.transform.scale(pygame.image.load("assets/coin.png").convert_alpha(), (35, 35))
 
 
 
