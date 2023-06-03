@@ -68,7 +68,10 @@ class Chest(Element.Element):
                     for rarete in Totalequipments:
                         # if rarete >= 2 * theGame.theGame()._level and len(hero.getInventory()) <= 10:
                         if len(hero.getInventory()) < 10:
-                            hero.take(Totalequipments[rarete][random.randint(3, len(Totalequipments[rarete]) - 1)])
+                            try:
+                                hero.take(Totalequipments[rarete][random.randint(3, len(Totalequipments[rarete]) - 1)])
+                            except:
+                                pass
 
             if self.chestopened:
                 theGame.theGame().addMessage(f"the luxurious chest has been opened")
@@ -77,3 +80,10 @@ class Chest(Element.Element):
 
     def meetAffichage(self, hero):
         return self.meet(hero)
+
+class Tresor(Chest):
+    def __init__(self, chestopened=False):
+        super().__init__(chestopened, "big")
+
+    def meet(self, hero):
+        super().meet(hero)
