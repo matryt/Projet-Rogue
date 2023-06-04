@@ -122,18 +122,18 @@ class Hero(Creature.Creature):
         creature : Creature.Creature
                 La créature qui est rencontrée
         """
-        random_nb = random.randint(0,4) #  random.randint(0,4)
-        if random_nb == 1 and isinstance(creature, Creature.Creature):
-            messageFenetre("Vous avez été attaqué \ndeux fois ","furie !")
-            self.meet(creature)
-
         if not self._invisible:
             degats = int(max(creature.getStrength() - 2 * math.log(self.armor + 1), 1))
+            random_nb = random.randint(0,4) #  random.randint(0,4)
             if random.random()<self.chance and isinstance(creature, Creature.Creature):
                 messageFenetre("Vous avez esquivé un coup !","Esquive")
                 return
             else :
                 self._hp = max(self._hp - degats, 0)
+            if random_nb == 1 and isinstance(creature, Creature.Creature):
+                messageFenetre("Vous avez été attaqué \ndeux fois ","furie !")
+                self._hp = max(self._hp -degats, 0)
+            degats = int(max(creature.getStrength() - 2 * math.log(self.armor + 1), 1))
             if creature.isPoisoning and not self._poisoned and self._hp > 0:
                 self.poison()
             if creature.isBlinding:
