@@ -123,6 +123,11 @@ class Hero(Creature.Creature):
 		creature : Creature.Creature
 				La créature qui est rencontrée
 		"""
+		random_nb = random.randint(0,4) #random.randint(0,4)
+		if random_nb == 1:
+			messageFenetre_esquive("Vous avez été attaqué deux fois ","furie !")
+			self.meet(creature)
+
 		if not self._invisible:
 			degats = int(max(creature.getStrength() - 2 * math.log(self.armor + 1), 1))
 			if random.random()<self.chance:
