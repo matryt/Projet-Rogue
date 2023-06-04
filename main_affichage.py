@@ -21,10 +21,8 @@ def findTresor():
 	for i in range(len(theGame.theGame()._floor)):
 		for j in range(len(theGame.theGame()._floor)):
 			elem = theGame.theGame()._floor.get(Coord.Coord(i, j))
-			if isinstance(elem, Chest.Tresor):
-				print("Trésor trouvé")
-				if elem.chestopened:
-					return True
+			if isinstance(elem, Chest.Tresor) and elem.chestopened:
+				return True
 	return False
 
 def endWin():
