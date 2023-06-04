@@ -106,6 +106,8 @@ class Shop(Element.Element):
 		while choix != "f":
 			choix = fenetreInput("Choix", f"{self.description()} \nQue voulez-vous faire ? (a)cheter, (v)endre, (f)inir : ", "str")
 			if choix == "a":
+				if len(theGame.theGame().getHero().getInventory()) > 9:
+					continue
 				item = fenetreInput("Choix", f"{self.description()} \nQuel item voulez-vous acheter ? ", "int")
 				try:
 					item = self.getElementByNumber(int(item))
@@ -118,7 +120,7 @@ class Shop(Element.Element):
 				theGame.theGame().getHero().addGold(-self.getElem(item)["price"])
 				theGame.theGame().getHero().addItem(item)
 				self.removeItem(item)
-				messageFenetre(f"Vous avez acheté \n{item}", "Achat")
+				messageFenetre(f"Vous avez acheté \n{item.getName()}", "Achat")
 			if choix == "v":
 				inventory = "".join([f"({i}) {item.getName()}\n" for i, item in enumerate(theGame.theGame().getHero().getInventory())])
 				item = fenetreInput("Choix", "Here is your inventory : \n" + inventory + "\n" + "Quel item voulez-vous vendre ? ", "int")
