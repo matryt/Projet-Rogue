@@ -47,5 +47,6 @@ class Element(object):
                 Cette méthode doit être implémentée dans les classes filles
         """
         raise NotImplementedError("Not implemented yet")
+
     def get_abbrv(self):
         return self._abbrv

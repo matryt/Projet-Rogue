@@ -135,18 +135,14 @@ class Map(object):
         return self._simulation
 
     def setVisitedRooms(self, rooms):
-        """
-        Permet de mettre à jour les salles visitées par le héros
-        """
+        """Permet de mettre à jour les salles visitées par le héros"""
         if self._simulation:
             self._roomsVisited = rooms
         else:
             raise ValueError("Not in simulation")
 
     def shuffleRooms(self):
-        """
-        Mélange les salles de la carte
-        """
+        """Mélange les salles de la carte"""
         random.shuffle(self._rooms)
 
     def checkCoord(self, c):
@@ -452,9 +448,8 @@ class Map(object):
                     and posHero.distance(posMonster) < 8
                 ):
                     d = posMonster.direction(posHero, self)
-                    if d:
-                        if self.get(posMonster + d) in [Map.ground, self._hero]:
-                            self.move(m, d)
+                    if d and self.get(posMonster + d) in [Map.ground, self._hero]:
+                        self.move(m, d)
 
     def randRoom(self):
         """

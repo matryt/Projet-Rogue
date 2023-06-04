@@ -9,9 +9,11 @@ from utils import getch
 root2 = tk.Tk()
 root2.withdraw()
 
+
 def on_closing():
 	root2.quit()
 	root2.destroy()
+
 
 def fenetreInput(titre, message, typeInput):
 	root2 = tk.Tk()
@@ -42,6 +44,7 @@ def messageFenetre(message, titre="Entrée"):
 	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
+
 
 class Shop(Element.Element):
 	def __init__(self):

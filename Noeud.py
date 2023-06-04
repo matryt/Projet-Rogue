@@ -51,7 +51,7 @@ class Noeud(object):
                 raise ValueError("ListeFermee trop grande ! Il y a sûrement une erreur dans la fonction shortestPath.")
         return None
 
-    def voisins(self, map):
+    def voisins(self, floor):
         listeVoisins = [
             Noeud(Coord.Coord(self.pos.x, self.pos.y + 1), self.cout + 1),
             Noeud(Coord.Coord(self.pos.x, self.pos.y - 1), self.cout + 1),
@@ -61,7 +61,7 @@ class Noeud(object):
         i = 0
         while i < len(listeVoisins):
             v = listeVoisins[i]
-            if v.pos not in map or map.get(v.pos) == Map.Map.empty:
+            if v.pos not in floor or floor.get(v.pos) == Map.Map.empty:
                 listeVoisins.pop(i)
             else:
                 i += 1

@@ -22,6 +22,7 @@ class Creature(Element.Element):
     _strength
     _idCreature
     """
+
     def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False, isBlinding=False):
         """
 
@@ -151,7 +152,7 @@ class Creature(Element.Element):
         bool
                 True si la créature a encore des points de vie, False sinon
         """
-        self._hp  = max(self._hp - creature.getStrength(), 0)
+        self._hp = max(self._hp - creature.getStrength(), 0)
         theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
         creature._invisible = False
         if creature._arme_equipee is not None:

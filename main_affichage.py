@@ -81,7 +81,8 @@ def play_final():
 	theGame.theGame().resetVision()
 	endWin()
 
-listEmplacements =  {"0": [(60, 227),False],
+
+listEmplacements = {"0": [(60, 227),False],
 					  "1": [(216, 227),False],
 					"2": [(60, 353),False],
 					"3": [(216, 353),False],
@@ -202,6 +203,7 @@ def update_gold(surface):
 	textRect.center = (screen2.get_width() - 170, 545)
 	surface.blit(text, textRect)
 	surface.blit(gold, (screen2.get_width() - 315, 525))
+
 
 pygame.init()
 running = True
@@ -329,7 +331,7 @@ while running:
 				theGame.theGame().buildFloor()
 				theGame.theGame()._hero=Hero.Hero()
 				theGame.theGame()._floor.setVisible(theGame.theGame().getFloor().rangeElement(theGame.theGame().getFloor()._hero))
-				listEmplacements =  {"0": [(60, 227),False],
+				listEmplacements = {"0": [(60, 227),False],
 					  "1": [(216, 227),False],
 					"2": [(60, 353),False],
 					"3": [(216, 353),False],
@@ -410,25 +412,20 @@ while running:
 				if resultat == 1: 	#"drop item"
 					voisins = theGame.theGame().getFloor().pos(theGame.theGame()._hero).voisins(theGame.theGame().getFloor())
 					for v in voisins:
-						if theGame.theGame().getFloor().get(v) != theGame.theGame().getFloor().ground:    #Map.Map.empty:
+						if theGame.theGame().getFloor().get(v) != theGame.theGame().getFloor().ground:    #  Map.Map.empty:
 							voisins.remove(v)
 					if len(voisins)>0:
 						try:
-							theGame.theGame()._floor.put(random.choice(voisins), theGame.theGame()._hero._inventory[a]) #cette ligne fait de la D mais tkt dans le try ça rend bien
+							theGame.theGame()._floor.put(random.choice(voisins), theGame.theGame()._hero._inventory[a]) #  cette ligne fait de la D mais tkt dans le try ça rend bien
 						except:
 							messageFenetre("There is no place \nto drop the item")
 						else:
 							theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
 					else:
 						messageFenetre("There is no place \nto drop the item")
-				if resultat == 2: 	#"destroy item"
+				if resultat == 2: 	#  "destroy item"
 					theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
 				displayInventory(screen2)
-
-
-			#except:
-			#d	pass
-
 			for i in range(13):
 					for j in range(13):
 						if theGame.theGame().getFloor()._mat[j][i] == theGame.theGame().getFloor().empty:
@@ -440,7 +437,7 @@ while running:
 								screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)																		
 							elif theGame.theGame().getFloor()._visibleMap[j][i] == "~":
 								screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-							elif  theGame.theGame().getFloor()._visibleMap[j][i]!=theGame.theGame().getFloor().empty:
+							elif theGame.theGame().getFloor()._visibleMap[j][i]!=theGame.theGame().getFloor().empty:
 								elem=theGame.theGame().getFloor()._visibleMap[j][i]
 								if not isinstance(theGame.theGame().getFloor()._visibleMap[j][i],str):
 									elem=elem.get_abbrv()
@@ -457,7 +454,6 @@ while running:
 			retry_button = pygame.image.load("assets/bouton_retry_.png")
 			menu_button_rect = play_button.get_rect()
 			retry_button_rect = retry_button.get_rect()
-			#screen_fin.blit(retry_button, retry_button_rect)
 			retry_button_rect.move_ip(350,200)
 			menu_button_rect.move_ip(680,200)
 			screen_fin.blit(menu_button, menu_button_rect)
@@ -488,16 +484,16 @@ while running:
 						theGame.theGame().buildFloor()
 						theGame.theGame()._hero=Hero.Hero()
 						theGame.theGame()._floor.setVisible(theGame.theGame().getFloor().rangeElement(theGame.theGame().getFloor()._hero))
-						listEmplacements =  {"0": [(60, 227),False],
-											   "1": [(216, 227),False],
-											 "2": [(60, 353),False],
-											 "3": [(216, 353),False],
-											 "4": [(60, 477),False],
-											 "5": [(216, 477),False],
-											 "6": [(60, 605),False],
-											 "7": [(216, 607),False],
-											 "8": [(60, 729),False],
-											 "9": [(216, 729),False]}
+						listEmplacements = {"0": [(60, 227),False],
+											"1": [(216, 227),False],
+											"2": [(60, 353),False],
+											"3": [(216, 353),False],
+											"4": [(60, 477),False],
+											"5": [(216, 477),False],
+											"6": [(60, 605),False],
+											"7": [(216, 607),False],
+											"8": [(60, 729),False],
+											"9": [(216, 729),False]}
 						screen2.blit(inventaire, (10, 15))
 						for i in range(13):
 							for j in range(13):
@@ -510,7 +506,7 @@ while running:
 										screen2.blit(mur1,((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)																		
 									elif theGame.theGame().getFloor()._visibleMap[j][i] == "~":
 										screen2.blit(nuage, ((screen2.get_width() - 13 * 66) / 2 + i * 66,(screen2.get_height() - 13 * 66) / 2 + j * 66,),)
-									elif  theGame.theGame().getFloor()._visibleMap[j][i]!=theGame.theGame().getFloor().empty:
+									elif theGame.theGame().getFloor()._visibleMap[j][i]!=theGame.theGame().getFloor().empty:
 										elem=theGame.theGame().getFloor()._visibleMap[j][i]
 										if not isinstance(theGame.theGame().getFloor()._visibleMap[j][i],str):
 											elem=elem.get_abbrv()

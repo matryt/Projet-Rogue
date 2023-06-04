@@ -24,7 +24,7 @@ class Chest(Element.Element):
     def meet(self, hero):
         """Permet d'ouvrir le coffre à condition d'avoir une clé'"""
         if self.chestopened:
-            theGame.theGame().addMessage(f"the chest has already been opened")
+            theGame.theGame().addMessage("the chest has already been opened")
             return
         if len(hero.getInventory()) > 10:
             return
@@ -32,13 +32,13 @@ class Chest(Element.Element):
             i = 0
             keyFound = False
             while i < len(hero.getInventory()) and not keyFound:
-                object = hero.getInventory()[i]
-                if object.getName() == "key":
-                    hero._inventory.remove(object)
+                obj = hero.getInventory()[i]
+                if obj.getName() == "key":
+                    hero._inventory.remove(obj)
                     self.chestopened = True
                     Totalequipments = theGame.theGame().equipments
-                    theGame.theGame().addMessage(f"you open the chest with the key")
-                    theGame.theGame().addMessage(f"wowie, you just gained gold and stuff : ")
+                    theGame.theGame().addMessage("you open the chest with the key")
+                    theGame.theGame().addMessage("wowie, you just gained gold and stuff : ")
                     hero.GoldCount += random.randint(5 * theGame.theGame().getLevel(), 25 * theGame.theGame().getLevel())
                     for rarete in Totalequipments:
                         #if rarete >= 2 * theGame.theGame()._level and len(hero.getInventory()) <= 10:
@@ -50,20 +50,18 @@ class Chest(Element.Element):
 
             if self.chestopened:
                 self._abbrv="Mo"
-                theGame.theGame().addMessage(f"the chest has been opened")
+                theGame.theGame().addMessage("the chest has been opened")
                 return
-            theGame.theGame().addMessage(f"it seems that a key is needed to open this chest")
-
-        # note: on supprimera plutot le coffre, c'est plus simple mais dans l'ideal on preferera le laisser sur la map,ouvert.
+            theGame.theGame().addMessage("it seems that a key is needed to open this chest")
 
         if self.size == "big":
-            for object in hero.getInventory():
-                if object.getName() == "key":
-                    hero.removeFromInventory(object)
+            for obj in hero.getInventory():
+                if obj.getName() == "key":
+                    hero.removeFromInventory(obj)
                     self.chestopened = True
                     Totalequipments = theGame.theGame().equipments
-                    theGame.theGame().addMessage(f"you open the chest with the key")
-                    theGame.theGame().addMessage(f"wowie, you just gained a lot of gold and rare stuff : ")
+                    theGame.theGame().addMessage("you open the chest with the key")
+                    theGame.theGame().addMessage("wowie, you just gained a lot of gold and rare stuff : ")
                     hero.GoldCount += random.randint(5 * theGame.theGame().getLevel(), 25 * theGame.theGame().getLevel())
                     for rarete in Totalequipments:
                         # if rarete >= 2 * theGame.theGame()._level and len(hero.getInventory()) <= 10:
@@ -74,12 +72,13 @@ class Chest(Element.Element):
                                 pass
 
             if self.chestopened:
-                theGame.theGame().addMessage(f"the luxurious chest has been opened")
+                theGame.theGame().addMessage("the luxurious chest has been opened")
                 return
-            theGame.theGame().addMessage(f"it seems that a key is needed to open this luxurious chest ! ")
+            theGame.theGame().addMessage("it seems that a key is needed to open this luxurious chest ! ")
 
     def meetAffichage(self, hero):
         return self.meet(hero)
+
 
 class Tresor(Chest):
     def __init__(self, chestopened=False):

@@ -50,7 +50,7 @@ class Game(object):
 	equipments = {
 		0: [
 			Equipment.Equipment("potion", "p", usage=lambda self, hero: heal(hero)),
-			Wearable.Wearable("broken sword",abbrv="n",durability=1, place="right hand", effect={"strength": 1}, usage=lambda self, hero: equip(hero, self)),
+			Wearable.Wearable("broken sword", abbrv="n",durability=1, place="right hand", effect={"strength": 1}, usage=lambda self, hero: equip(hero, self)),
 			Wearable.Wearable("trident", place="right hand", durability=7, effect={"strength": 3}, usage=lambda self, hero: equip(hero, self)),
 			Wearable.Wearable(
 				"double_epee", place="right hand", durability=5, effect={"strength": 2}, usage=lambda self, hero: equip(hero, self)
@@ -236,7 +236,7 @@ class Game(object):
 				print("Wrong password !")
 				return
 			self.authenticated = True
-		c = fenetreInput("Cmd","Commande de test: ", "str")
+		c = fenetreInput("Cmd", "Commande de test: ", "str")
 		exec(c)
 
 	def randElement(self, collection):
@@ -398,8 +398,9 @@ class Game(object):
 		return self._level
 
 	def playSimulation(self):
-		self.dir = {Coord.Coord(0, -1): "z", Coord.Coord(0, 1): "s", Coord.Coord(1, 0): "d", Coord.Coord(-1, 0): "q"}
 		"""Main game loop"""
+		self.dir = {Coord.Coord(0, -1): "z", Coord.Coord(0, 1): "s", Coord.Coord(1, 0): "d", Coord.Coord(-1, 0): "q"}
+
 		self.seed = setSeed()
 		self.buildFloor(True)
 		print("--- Welcome Hero! ---")
@@ -433,9 +434,7 @@ class Game(object):
 		print("--- Game Over ---")
 
 	def floorInfos(self):
-		"""
-		Affiche l'étage actuel
-		"""
+		"""Affiche l'étage actuel"""
 		theGame.theGame().addMessage(f"You are at floor {self._level}")
 
 

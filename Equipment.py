@@ -54,7 +54,8 @@ class Equipment(Element.Element):
         -------
         bool
             True
-        inventaire limité: return False quand un equipment est rencontré par un element si l'inventaire du héro dépasse X valeur."""
+        inventaire limité: return False quand un equipment est rencontré par un element si l'inventaire du héro dépasse X valeur.
+        """
         elem._invisible = False
         if len(theGame.theGame().getHero().getInventory()) == 10 and self._name != "gold":
             theGame.theGame().addMessage(
