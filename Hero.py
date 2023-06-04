@@ -125,7 +125,7 @@ class Hero(Creature.Creature):
 		"""
 		random_nb = random.randint(0,4) #random.randint(0,4)
 		if random_nb == 1:
-			messageFenetre_esquive("Vous avez été attaqué deux fois ","furie !")
+			messageFenetre_esquive("Vous avez été attaqué \ndeux fois ","furie !")
 			self.meet(creature)
 
 		if not self._invisible:
@@ -399,6 +399,7 @@ def messageFenetre(message, titre="Entrée"):
 	label.config(font=("Arial", 24))
 	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
+	root2.mainloop()
 	
 
 def messageFenetre_esquive(message, titre="Entrée"):
@@ -416,4 +417,3 @@ def messageFenetre_esquive(message, titre="Entrée"):
 	label.config(font=("Arial", 24))
 	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
-	root2.mainloop()

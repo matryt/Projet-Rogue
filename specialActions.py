@@ -11,22 +11,22 @@ root2 = tk.Tk()
 root2.withdraw()
 
 def heal(creature):
-    """
-    Soigne une créature
+	"""
+	Soigne une créature
 
-    Parameters
-    ----------
-    creature : Creature.Creature
-            La créature à soigner
+	Parameters
+	----------
+	creature : Creature.Creature
+			La créature à soigner
 
-    Returns
-    -------
-    bool
-            True
+	Returns
+	-------
+	bool
+			True
 
-    """
-    creature.heal()
-    return True
+	"""
+	creature.heal()
+	return True
 
 
 def teleport(creature, unique):
@@ -61,41 +61,41 @@ def teleport(creature, unique):
 	return unique
 
 def equip(creature,outfit):
-	
-    """
-    Equipe une créature d'une arme ou tenue et lui applique ses effets
 
-    Parameters
-    ----------
-    creature : Creature.Creature
-        La créature à équiper
-    outfit : Wearable.Wearable
-        L'objet à équiper
+	"""
+	Equipe une créature d'une arme ou tenue et lui applique ses effets
 
-    Returns
-    -------
-    bool
-        True si l'équipement a été effectué avec succès, False sinon
-    """
+	Parameters
+	----------
+	creature : Creature.Creature
+		La créature à équiper
+	outfit : Wearable.Wearable
+		L'objet à équiper
 
-    for key in outfit.effect:
-	if key == 'strength':
-		if creature._arme_equipee is not None:
-			creature._strength -= creature._arme_equipee.effect.get('strength', 0)
-		creature._arme_equipee = outfit
-		creature._strength += outfit.effect[key]
-			
-		return True
+	Returns
+	-------
+	bool
+		True si l'équipement a été effectué avec succès, False sinon
+	"""
 
-	if key == 'armor':
-		if creature._armure_equipee is not None:
-			creature.armor -= creature._armure_equipee.effect.get('armor', 0)
-		creature.armor += outfit.effect[key]
-		creature._armure_equipee = outfit
-		
-		return True
+	for key in outfit.effect:
+		if key == 'strength':
+			if creature._arme_equipee is not None:
+				creature._strength -= creature._arme_equipee.effect.get('strength', 0)
+			creature._arme_equipee = outfit
+			creature._strength += outfit.effect[key]
 
-	return False
+			return True
+
+		if key == 'armor':
+			if creature._armure_equipee is not None:
+				creature.armor -= creature._armure_equipee.effect.get('armor', 0)
+			creature.armor += outfit.effect[key]
+			creature._armure_equipee = outfit
+
+			return True
+
+		return False
 
 
 def recover(creature, unique):
@@ -241,12 +241,12 @@ def supervisionAffichage(*args):
 
 def revive(creature):
 	"""
-	réanime le héro 
+	réanime le héro
 
 	Parameters
 	----------
 	creature : Creature.Creature
-		La créature à revive 
+		La créature à revive
 
 	Returns
 	-------
