@@ -1,3 +1,4 @@
+
 import copy
 import time
 import random
@@ -483,3 +484,6 @@ def messageFenetre(message, titre="Entrée"):
 	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
+
+
+

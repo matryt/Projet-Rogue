@@ -324,6 +324,10 @@ class Hero(Creature.Creature):
 			self.addSkills(specialActions.supervisionAffichage)
 			messageFenetre("You gained a new skill : \nSuper-Vision")
 			theGame.theGame().levelsUsed[1] = []
+		if self._level == 15 and specialActions.tornadoAffichage not in self._skills:
+			self.addSkills(specialActions.tornadoAffichage)
+			messageFenetre("You gained a new skill : \nTornado")
+			theGame.theGame().levelsUsed[2] = []
 
 	def addSkills(self, skill):
 		"""
