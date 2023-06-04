@@ -61,50 +61,41 @@ def teleport(creature, unique):
 	return unique
 
 def equip(creature,outfit):
-	"""
-	equipe une créature d'une arme ou tenue et lui applique ses effets 
+	
+    """
+    Equipe une créature d'une arme ou tenue et lui applique ses effets
 
-	Parameters
-	----------
-	creature : Creature.Creature
-		La créature à equiper
-	outfit : Wearable.Wearable
-		l'objet à equiper
+    Parameters
+    ----------
+    creature : Creature.Creature
+        La créature à équiper
+    outfit : Wearable.Wearable
+        L'objet à équiper
 
-	Returns
-	-------
-	bool
-		True
+    Returns
+    -------
+    bool
+        True si l'équipement a été effectué avec succès, False sinon
+    """
 
-	"""
+    if outfit.effect.get('strength') is not None:
+        if creature._arme_equipee is not None:
+            # Réinitialiser la force à la valeur initiale
+            creature._strength -= creature._arme_equipee.effect.get('strength', 0)
+            creature._inventory.append(creature._arme_equipee)
 
-		#return True 
-	for key in outfit.effect:
-		if key == 'strength':
-			if creature._arme_equipee != outfit :
-				creature._inventory.append(creature._arme_equipee)
-				creature._strength -= creature._arme_equipee2.effect.get('strength', 0)
-			creature._arme_equipee = outfit
-			#if creature.strengthMax != creature._strength + outfit.effect[key]:
-			#	theGame.theGame().equiped_outfits.append(outfit)
-			#	return True 
-			#JE SAIS PAS PUTAIN
-			creature._strength += outfit.effect.get('strength', 0)
-			creature._arme_equipee2 = outfit
-			if outfit.durability > 0:
-					creature._strength += outfit.effect[key]
-					outfit.durability -= 1
-					#creature._strength -= outfit.effect.get('strength', 0)
-					#pass
-			else:
-		
-				return True
+        creature._arme_equipee = outfit
+        creature._inventory.remove(outfit)
 
-		if key == 'armor':
-			creature.armor += outfit.effect[key]
-			creature._inventory.remove(outfit)
+        creature._strength += outfit.effect.get('strength', 0)
+        return True
 
-		return False
+    if outfit.effect.get('armor') is not None:
+        creature.armor += outfit.effect.get('armor', 0)
+        creature._inventory.remove(outfit)
+        return True
+
+    return False
 
 def recover(creature, unique):
 	"""
