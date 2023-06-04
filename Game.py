@@ -108,7 +108,7 @@ class Game(object):
 		"t": lambda hero: theGame.theGame().cheatAffichage(),
 	}
 
-	def __init__(self, hero=None, level=1, floor=None, messages=None, equiped_outfits=None):
+	def __init__(self, hero=None, level=0, floor=None, messages=None, equiped_outfits=None):
 		"""
 		Parameters
 		----------
@@ -254,7 +254,7 @@ class Game(object):
 		Element.Element
 				L'élément tiré au hasard
 		"""
-		x = int(random.expovariate(1 / self._level))
+		x = int(random.expovariate(1 / (self._level + 1)))
 		while not collection.get(x):
 			x -= 1
 		return copy.copy(random.choice(collection[x]))
@@ -299,8 +299,8 @@ class Game(object):
 			item = random.choice(Game.equipments[level])
 			if s.checkItem(item):
 				continue
-			price = int(random.expovariate(1 / self._level)) + 1
-			number = int(random.expovariate(1 / self._level)) + 1
+			price = int(random.expovariate(1 / (self._level + 1))) + 1
+			number = int(random.expovariate(1 / (self._level + 1))) + 1
 			s.addItem(copy.copy(item), number, price)
 			items += 1
 		element = ""
