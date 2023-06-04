@@ -30,5 +30,5 @@ Ce jeu nécessite Python 3.10 ou supérieur pour fonctionner correctement en rai
 
 ## Fonctionnalités ajoutées
 - Esquive qui se produit aléatoirement mais avec de plus en plus de chance au fur et à mesure que le héros gagne en level 
-- Multiple action des monstres (Déplacement/Attaque rapide) de manière aléatoire 
+- Attaque rapide des monstres de manière aléatoire 
 - Compétence débloquée lorsque le héros atteint le niveau 5,10,15
