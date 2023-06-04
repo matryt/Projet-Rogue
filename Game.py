@@ -1,3 +1,4 @@
+
 import copy
 import time
 import random
@@ -154,14 +155,13 @@ class Game(object):
 		self._level += 1
 		self.range = 5
 		escalierPlace = False
-		if self._level < 25:
-			while not escalierPlace:
-				try:
-					self._floor.put(self._floor.randRoomfromRooms().randEmptyCoord(self._floor), Stairs.Stairs())
-				except:
-					pass
-				else:
-					escalierPlace = True
+		while not escalierPlace:
+			try:
+				self._floor.put(self._floor.randRoomfromRooms().randEmptyCoord(self._floor), Stairs.Stairs())
+			except:
+				pass
+			else:
+				escalierPlace = True
 		nbRooms = len(self._floor.getRooms())
 		if nbRooms >= 2 and self._level >= 5 and self._level <= 15:
 			self._floor.put(
@@ -174,11 +174,6 @@ class Game(object):
 					self._floor.getRooms()[random.randint(0, nbRooms - 1)].randEmptyCoordNotCorridor(self._floor),
 					Chest.Chest(size="big"),
 				)
-		if self._level == 25:
-			self._floor.put(
-				self._floor.getRooms()[random.randint(0, nbRooms - 1)].randEmptyCoordNotCorridor(self._floor),
-				Chest.Tresor(),
-			)
 		self.createShop()
 		self.special_id = random.choice(self.allMonsters).getID()
 
@@ -238,7 +233,10 @@ class Game(object):
 				return
 			self.authenticated = True
 		c = fenetreInput("Cmd","Commande de test: ", "str")
-		exec(c)
+		if "theGame" in c:
+			exec(c)
+		else:
+			messageFenetre("You aren't allowed to do that !", "Erreur")
 
 	def randElement(self, collection):
 		"""
@@ -486,3 +484,6 @@ def messageFenetre(message, titre="Entrée"):
 	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
+
+
+

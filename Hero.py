@@ -32,7 +32,7 @@ class Hero(Creature.Creature):
 	"""
 
 	def __init__(self,name="Hero", hp=10, abbrv=None, strength=2, inventory=None, xp=0, GoldCount=0, level=1,
-				 poisoned=False, invisible=False, arme_equipee=None, _arme_equipee2 = 0 , armor=0, skills=None , 
+				 poisoned=False, invisible=False, arme_equipee=None, _arme_equipee2 = 0 , armor=0, skills=None ,chance=0.05 
 				 ):
 		"""
 
@@ -81,6 +81,7 @@ class Hero(Creature.Creature):
 			skills = []
 		self._skills = skills
 		self._arme_equipee2 = _arme_equipee2
+		self.chance=chance
 
 	def __eq__(self, other):
 		if isinstance(other, Hero):
@@ -122,9 +123,18 @@ class Hero(Creature.Creature):
 		creature : Creature.Creature
 				La créature qui est rencontrée
 		"""
+		random_nb = random.randint(0,4) #random.randint(0,4)
+		if random_nb == 1:
+			messageFenetre_esquive("Vous avez été attaqué deux fois ","furie !")
+			self.meet(creature)
+
 		if not self._invisible:
 			degats = int(max(creature.getStrength() - 2 * math.log(self.armor + 1), 1))
-			self._hp = max(self._hp - degats, 0)
+			if random.random()<self.chance:
+				messageFenetre_esquive("Vous avez esquivé un coup !","Esquive")
+				return
+			else :
+				self._hp = max(self._hp - degats, 0)
 			if creature.isPoisoning and not self._poisoned and self._hp > 0:
 				self.poison()
 			if creature.isBlinding:
@@ -389,6 +399,21 @@ def messageFenetre(message, titre="Entrée"):
 	label.config(font=("Arial", 24))
 	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
+	
+
+def messageFenetre_esquive(message, titre="Entrée"):
+	global root2
+	root2 = tk.Tk()
+	root2.title(titre)
+	width = 420
+	height = 100
+	screen_width = root2.winfo_screenwidth()
+	screen_height = root2.winfo_screenheight()
+	x = (screen_width - width) // 2
+	y = (screen_height - height) // 2
+	label = tk.Label(root2, text=message)
+	label.pack()
+	label.config(font=("Arial", 24))
+	root2.protocol("WM_DELETE_WINDOW", on_closing)
+	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
-
-

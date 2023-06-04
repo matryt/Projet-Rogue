@@ -61,42 +61,43 @@ def teleport(creature, unique):
 	return unique
 
 def equip(creature,outfit):
-	"""
-	equipe une créature d'une arme ou tenue et lui applique ses effets 
+	
+    """
+    Equipe une créature d'une arme ou tenue et lui applique ses effets
 
-	Parameters
-	----------
-	creature : Creature.Creature
-		La créature à equiper
-	outfit : Wearable.Wearable
-		l'objet à equiper
+    Parameters
+    ----------
+    creature : Creature.Creature
+        La créature à équiper
+    outfit : Wearable.Wearable
+        L'objet à équiper
 
-	Returns
-	-------
-	bool
-		True
+    Returns
+    -------
+    bool
+        True si l'équipement a été effectué avec succès, False sinon
+    """
 
-	"""
+    if outfit.effect.get('strength') is not None:
+        if creature._arme_equipee is not None:
+            # Réinitialiser la force à la valeur initiale
+            creature._strength -= creature._arme_equipee.effect.get('strength', 0)
+            creature._inventory.append(creature._arme_equipee)
 
-		#return True 
-	for key in outfit.effect:
-		if key == 'strength':
-			if creature._arme_equipee is not None:
-				creature._strength -= creature._arme_equipee.effect.get('strength', 0)
-			creature._arme_equipee = outfit
-			#if creature.strengthMax != creature._strength + outfit.effect[key]:
-			#	theGame.theGame().equiped_outfits.append(outfit)
-			#	return True 
-			#JE SAIS PAS PUTAIN
-			creature._strength += outfit.effect[key]
+        creature._arme_equipee = outfit
+        creature._inventory.remove(outfit)
 
-		if key == 'armor':
-			if creature._armure_equipee is not None:
-				creature.armor -= creature._armure_equipee.effect.get('armor', 0)
-			creature.armor += outfit.effect[key]
-			creature._armure_equipee = outfit
+        creature._strength += outfit.effect.get('strength', 0)
+        return True
 
-		return False
+    if outfit.effect.get('armor') is not None:
+        creature.armor += outfit.effect.get('armor', 0)
+        creature._inventory.remove(outfit)
+        return True
+
+
+    return False
+
 
 def recover(creature, unique):
 	"""
