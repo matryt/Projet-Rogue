@@ -407,8 +407,9 @@ while running:
 				message = "0 : 'use' \n1: 'drop' \n2: 'destroy'"
 				image_path = "assets/chooseaction6.png"
 				resultat = int(textInput("Inventaire", message, "int"))
+				obj = theGame.theGame()._hero._inventory[a]
 				if resultat == 0: 	#"use item"
-						theGame.theGame()._hero.use(theGame.theGame()._hero._inventory[a])
+						theGame.theGame()._hero.use(obj)
 				if resultat == 1: 	#"drop item"
 					voisins = theGame.theGame().getFloor().pos(theGame.theGame()._hero).voisins(theGame.theGame().getFloor())
 					for v in voisins:
@@ -416,15 +417,28 @@ while running:
 							voisins.remove(v)
 					if len(voisins)>0:
 						try:
-							theGame.theGame()._floor.put(random.choice(voisins), theGame.theGame()._hero._inventory[a]) #  cette ligne fait de la D mais tkt dans le try ça rend bien
+							theGame.theGame()._floor.put(random.choice(voisins), obj) #  cette ligne fait de la D mais tkt dans le try ça rend bien
 						except:
 							messageFenetre("There is no place \nto drop the item")
 						else:
-							theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
+							theGame.theGame()._hero._inventory.remove(obj)
+							if obj == theGame.theGame()._hero._arme_equipee:
+								theGame.theGame()._hero._arme_equipee = None
+								theGame.theGame()._hero._strength -= obj.effect.get('strength', 0)
+							if obj == theGame.theGame()._hero._armure_equipee:
+								theGame.theGame()._hero._armure_equipee = None
+								theGame.theGame()._hero._defense -= obj.effect.get('armor', 0)
 					else:
 						messageFenetre("There is no place \nto drop the item")
-				if resultat == 2: 	#  "destroy item"
-					theGame.theGame()._hero._inventory.remove(theGame.theGame()._hero._inventory[a])
+				if resultat == 2:	#  "destroy item"
+					obj = theGame.theGame()._hero._inventory[a]
+					theGame.theGame()._hero._inventory.remove(obj)
+					if obj == theGame.theGame()._hero._arme_equipee:
+						theGame.theGame()._hero._arme_equipee = None
+						theGame.theGame()._hero._strength -= obj.effect.get('strength', 0)
+					if obj == theGame.theGame()._hero._armure_equipee:
+						theGame.theGame()._hero._armure_equipee = None
+						theGame.theGame()._hero._defense -= obj.effect.get('armor', 0)
 				displayInventory(screen2)
 			for i in range(13):
 					for j in range(13):

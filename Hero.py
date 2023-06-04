@@ -80,6 +80,7 @@ class Hero(Creature.Creature):
         self._skills = skills
         self._arme_equipee2 = _arme_equipee2
         self.chance=chance
+        self._armure_equipee = None
 
     def __eq__(self, other):
         if isinstance(other, Hero):
