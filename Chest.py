@@ -41,7 +41,6 @@ class Chest(Element.Element):
                     theGame.theGame().addMessage("wowie, you just gained gold and stuff : ")
                     hero.GoldCount += random.randint(5 * theGame.theGame().getLevel(), 25 * theGame.theGame().getLevel())
                     for rarete in Totalequipments:
-                        #if rarete >= 2 * theGame.theGame()._level and len(hero.getInventory()) <= 10:
                         if len(hero.getInventory()) < 10:
                             hero.take(Totalequipments[rarete][random.randint(0, len(Totalequipments[rarete]) - 1)])
 
@@ -64,7 +63,6 @@ class Chest(Element.Element):
                     theGame.theGame().addMessage("wowie, you just gained a lot of gold and rare stuff : ")
                     hero.GoldCount += random.randint(5 * theGame.theGame().getLevel(), 25 * theGame.theGame().getLevel())
                     for rarete in Totalequipments:
-                        # if rarete >= 2 * theGame.theGame()._level and len(hero.getInventory()) <= 10:
                         if len(hero.getInventory()) < 10:
                             try:
                                 hero.take(Totalequipments[rarete][random.randint(3, len(Totalequipments[rarete]) - 1)])
