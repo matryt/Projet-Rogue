@@ -152,7 +152,7 @@ def update_xp(surface):
 	textRect.center = (screen2.get_width() - 170, 295)
 	screen2.blit(text, textRect)
 	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 325, 400, 50])
-	varXP = f"XP : {str(theGame.theGame().getHero().xp)}/{str(theGame.theGame().getHero()._level*20 )}"
+	varXP = f"XP : {str(theGame.theGame().getHero().xp)}/{str(theGame.theGame().getHero().xpMax)}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varXP, True, "black")
 	textRect2 = text.get_rect()
@@ -175,33 +175,37 @@ def update_strength(surface):
 	textRect = text.get_rect()
 	textRect.center = (screen2.get_width() - 170, 425)
 	surface.blit(text, textRect)
+	surface.blit(epeeIcon, (screen2.get_width() - 310, 410))
 
 def update_armor(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 440, 400, 50])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 465, 400, 50])
 	varArmor = f"Armor : {str(theGame.theGame().getHero().armor)}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varArmor, True, "black")
 	textRect = text.get_rect()
-	textRect.center = (screen2.get_width() - 170, 455)
+	textRect.center = (screen2.get_width() - 170, 480)
 	surface.blit(text, textRect)
+	surface.blit(bouclier, (screen2.get_width() - 315, 465))
 
 def update_floor(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 555, 400, 50])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 580, 400, 50])
 	varFloor = f"Floor : {theGame.theGame().getLevel()}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varFloor, True, "black")
 	textRect = text.get_rect()
 	textRect.center = (screen2.get_width() - 170, 595)
 	surface.blit(text, textRect)
+	surface.blit(floor, (screen2.get_width() - 320, 570))
 
 def update_gold(surface):
-	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 505, 400, 50])
+	pygame.draw.rect(surface, "white", [screen2.get_width() - 300, 525, 400, 50])
 	varHP = f"Gold(s) : {str(theGame.theGame().getHero().getGoldCount())}"
 	font = pygame.font.Font("freesansbold.ttf", 30)
 	text = font.render(varHP, True, "black")
 	textRect = text.get_rect()
-	textRect.center = (screen2.get_width() - 170, 525)
+	textRect.center = (screen2.get_width() - 170, 545)
 	surface.blit(text, textRect)
+	surface.blit(gold, (screen2.get_width() - 315, 525))
 	
 pygame.init()
 running = True
@@ -219,8 +223,10 @@ mur2 = pygame.transform.scale(pygame.image.load("assets/mur2.png").convert(), (6
 inventaire = pygame.transform.scale(pygame.image.load("assets/inventaireV2_r.png").convert_alpha(), (320, 840))
 hero = pygame.transform.scale(pygame.image.load("assets/hero.png").convert_alpha(), (150, 150))
 nuage = pygame.transform.scale(pygame.image.load("assets/sol/nuage_sol.png").convert_alpha(), (66, 66))
-
-
+bouclier = pygame.transform.scale(pygame.image.load("assets/shield_icon.png").convert_alpha(), (35, 35))
+epeeIcon = pygame.transform.scale(pygame.image.load("assets/strength_icon.png").convert_alpha(), (26, 43))
+gold = pygame.transform.scale(pygame.image.load("assets/coin.png").convert_alpha(), (35, 35))
+floor = pygame.transform.scale(pygame.image.load("assets/floor2_icon.png").convert_alpha(), (40, 40))
 
 
 equipments = {
@@ -377,12 +383,6 @@ while running:
 	while game and theGame.theGame().getHero().getHP() > 0:
 		screen2.blit(inventaire, (10, 15))
 		screen2.blit(hero, (screen2.get_width()-250, 0))
-		varText = "Press ESCAPE to quit"
-		font = pygame.font.Font("freesansbold.ttf", 26)
-		text = font.render(varText, True, "black")
-		textRect = text.get_rect()
-		textRect.center = (210, screen2.get_size()[1] - 25)
-		screen2.blit(text, textRect)
 		update_all(screen2)
 		displayInventory(screen2)
 		for event in pygame.event.get():
@@ -496,6 +496,7 @@ while running:
 					if retry_button_rect.collidepoint(event.pos):
 						screen2 = pygame.display.set_mode((0, 0), flags)
 						screen2.fill("white")
+						theGame.theGame()._level=0
 						theGame.theGame().buildFloor()
 						theGame.theGame()._hero=Hero.Hero()
 						theGame.theGame()._floor.setVisible(theGame.theGame()._floor.rangeElement(theGame.theGame()._floor._hero))

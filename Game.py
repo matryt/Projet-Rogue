@@ -1,4 +1,3 @@
-
 import copy
 import time
 import random
@@ -109,7 +108,7 @@ class Game(object):
 		"t": lambda hero: theGame.theGame().cheatAffichage(),
 	}
 
-	def __init__(self, hero=None, level=1, floor=None, messages=None, equiped_outfits=None):
+	def __init__(self, hero=None, level=0, floor=None, messages=None, equiped_outfits=None):
 		"""
 		Parameters
 		----------
@@ -155,13 +154,14 @@ class Game(object):
 		self._level += 1
 		self.range = 5
 		escalierPlace = False
-		while not escalierPlace:
-			try:
-				self._floor.put(self._floor.randRoomfromRooms().randEmptyCoord(self._floor), Stairs.Stairs())
-			except:
-				pass
-			else:
-				escalierPlace = True
+		if self._level < 25:
+			while not escalierPlace:
+				try:
+					self._floor.put(self._floor.randRoomfromRooms().randEmptyCoord(self._floor), Stairs.Stairs())
+				except:
+					pass
+				else:
+					escalierPlace = True
 		nbRooms = len(self._floor.getRooms())
 		if nbRooms >= 2 and self._level >= 5 and self._level <= 15:
 			self._floor.put(
@@ -174,6 +174,11 @@ class Game(object):
 					self._floor.getRooms()[random.randint(0, nbRooms - 1)].randEmptyCoordNotCorridor(self._floor),
 					Chest.Chest(size="big"),
 				)
+		if self._level == 25:
+			self._floor.put(
+				self._floor.getRooms()[random.randint(0, nbRooms - 1)].randEmptyCoordNotCorridor(self._floor),
+				Chest.Tresor(),
+			)
 		self.createShop()
 		self.special_id = random.choice(self.allMonsters).getID()
 
@@ -233,10 +238,7 @@ class Game(object):
 				return
 			self.authenticated = True
 		c = fenetreInput("Cmd","Commande de test: ", "str")
-		if "theGame" in c:
-			exec(c)
-		else:
-			messageFenetre("You aren't allowed to do that !", "Erreur")
+		exec(c)
 
 	def randElement(self, collection):
 		"""
@@ -252,7 +254,7 @@ class Game(object):
 		Element.Element
 				L'élément tiré au hasard
 		"""
-		x = int(random.expovariate(1 / self._level))
+		x = int(random.expovariate(1 / (self._level + 1)))
 		while not collection.get(x):
 			x -= 1
 		return copy.copy(random.choice(collection[x]))
@@ -297,8 +299,8 @@ class Game(object):
 			item = random.choice(Game.equipments[level])
 			if s.checkItem(item):
 				continue
-			price = int(random.expovariate(1 / self._level)) + 1
-			number = int(random.expovariate(1 / self._level)) + 1
+			price = int(random.expovariate(1 / (self._level + 1))) + 1
+			number = int(random.expovariate(1 / (self._level + 1))) + 1
 			s.addItem(copy.copy(item), number, price)
 			items += 1
 		element = ""
@@ -484,6 +486,3 @@ def messageFenetre(message, titre="Entrée"):
 	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
-
-
-
