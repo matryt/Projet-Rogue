@@ -31,15 +31,15 @@ class Chest(Element.Element):
         if self.size == "normal":
             i = 0
             keyFound = False
-            while i < len(hero._inventory) and not keyFound:
-                object = hero._inventory[i]
-                if object._name == "key":
+            while i < len(hero.getInventory()) and not keyFound:
+                object = hero.getInventory()[i]
+                if object.getName() == "key":
                     hero._inventory.remove(object)
                     self.chestopened = True
                     Totalequipments = theGame.theGame().equipments
                     theGame.theGame().addMessage(f"you open the chest with the key")
                     theGame.theGame().addMessage(f"wowie, you just gained gold and stuff : ")
-                    hero.GoldCount += random.randint(5 * theGame.theGame()._level, 25 * theGame.theGame()._level)
+                    hero.GoldCount += random.randint(5 * theGame.theGame().getLevel(), 25 * theGame.theGame().getLevel())
                     for rarete in Totalequipments:
                         #if rarete >= 2 * theGame.theGame()._level and len(hero.getInventory()) <= 10:
                         if len(hero.getInventory()) < 10:
@@ -57,14 +57,14 @@ class Chest(Element.Element):
         # note: on supprimera plutot le coffre, c'est plus simple mais dans l'ideal on preferera le laisser sur la map,ouvert.
 
         if self.size == "big":
-            for object in hero._inventory:
-                if object._name == "key":
-                    hero._inventory.remove(object)
+            for object in hero.getInventory():
+                if object.getName() == "key":
+                    hero.removeFromInventory(object)
                     self.chestopened = True
                     Totalequipments = theGame.theGame().equipments
                     theGame.theGame().addMessage(f"you open the chest with the key")
                     theGame.theGame().addMessage(f"wowie, you just gained a lot of gold and rare stuff : ")
-                    hero.GoldCount += random.randint(5 * theGame.theGame()._level, 25 * theGame.theGame()._level)
+                    hero.GoldCount += random.randint(5 * theGame.theGame().getLevel(), 25 * theGame.theGame().getLevel())
                     for rarete in Totalequipments:
                         # if rarete >= 2 * theGame.theGame()._level and len(hero.getInventory()) <= 10:
                         if len(hero.getInventory()) < 10:

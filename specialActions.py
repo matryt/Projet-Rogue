@@ -112,7 +112,7 @@ def recover(creature, unique):
 	creature.recover()
 	return unique
 
-def fireballThrow(creature, map, levelsUsed = []):
+def fireballThrow(creature, map, levelsUsed=None):
 	"""
 	Lance une boule de feu dans une direction
 	Parameters
@@ -124,6 +124,8 @@ def fireballThrow(creature, map, levelsUsed = []):
 	levelsUsed : list
 		La liste des niveaux auxquels la boule de feu a déjà été lancée
 	"""
+	if levelsUsed is None:
+		levelsUsed = []
 	if theGame.theGame().getLevel() in levelsUsed:
 		theGame.theGame().addMessage("You can't use this power again on this level")
 		return
@@ -140,7 +142,7 @@ def fireballThrow(creature, map, levelsUsed = []):
 		if isinstance(g, Creature.Creature):
 			g._hp -= case[1]
 			theGame.theGame().addMessage(
-				f"The fireball hits the {g._name} and causes him {case[1]} damage"
+				f"The fireball hits the {g.getName()} and causes him {case[1]} damage"
 			)
 	return levelsUsed
 
@@ -178,7 +180,7 @@ def messageFenetre(message, titre="Entrée"):
 	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
 
-def fireballThrowAffichage(creature, map, levelsUsed = []):
+def fireballThrowAffichage(creature, map, levelsUsed=None):
 	"""
 	Lance une boule de feu dans une direction
 	Parameters
@@ -190,6 +192,8 @@ def fireballThrowAffichage(creature, map, levelsUsed = []):
 	levelsUsed : list
 		La liste des niveaux auxquels la boule de feu a déjà été lancée
 	"""
+	if levelsUsed is None:
+		levelsUsed = []
 	if theGame.theGame().getLevel() in levelsUsed:
 		messageFenetre("You can't use this power \nagain on this level", "Erreur")
 		return

@@ -17,6 +17,9 @@ class Noeud(object):
             return self.pos == other.pos
         raise NotImplementedError
 
+    def __hash__(self):
+        return hash(self.pos)
+
     def manhattanDistance(self, other):
         if isinstance(other, Noeud):
             return abs(self.pos.x - other.pos.x) + abs(self.pos.y - other.pos.y)

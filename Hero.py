@@ -230,7 +230,7 @@ class Hero(Creature.Creature):
 
 		except:
 			print("t con où ? faut rentrer un chiffre")
-			self.opendescription(item)
+			self.opendescription(item, map)
 
 		## il y a parfois des problèmes de confusion entre les touches de l'inventaire et de cette methode:
 		# pour palier à ça on pourrait remplacer les numeros par d'autres input qui sont pas des chiffres
@@ -245,15 +245,11 @@ class Hero(Creature.Creature):
 			for v in voisins:
 				if map.get(v) != Map.Map.empty:
 					voisins.remove(v)
-			if v:
+			if voisins:
 				map.put(random.choice(voisins), item)
 				self._inventory.remove(item)
 			else:
 				theGame.theGame().addMessage("There is no place to drop the item")
-
-		# itemdescription = {0: "Use" , 1: "description", 2: "jeter"}
-
-		# return itemdescription[int(choice)]
 
 	def addItem(self, item):
 		self._inventory.append(item)
@@ -400,7 +396,7 @@ def messageFenetre(message, titre="Entrée"):
 	root2.protocol("WM_DELETE_WINDOW", on_closing)
 	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
-	
+
 
 def messageFenetre_esquive(message, titre="Entrée"):
 	global root2

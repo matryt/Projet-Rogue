@@ -101,7 +101,6 @@ class Game(object):
 		"i": lambda hero: theGame.theGame().addMessage(hero.fullDescription()),
 		"k": lambda hero: hero.__setattr__("_hp", 0),
 		" ": lambda hero: None,
-		#"u": lambda hero: hero.opendescription(theGame.theGame().select(hero._inventory), theGame.theGame().getFloor()),
 		"p": lambda hero: theGame.theGame().addMessage(f"Seed: {theGame.theGame().seed}"),
 		"f": lambda hero: theGame.theGame().floorInfos(),
 		"c": lambda hero: hero.useSkillsAffichage(),
@@ -141,8 +140,8 @@ class Game(object):
 	def getRarety(self, equipment, i=0):
 		if i > 4:
 			raise KeyError("Equipment not found")
-		for equip in Game.equipments[i]:
-			if equip.getName() == equipment.getName():
+		for obj in Game.equipments[i]:
+			if obj.getName() == equipment.getName():
 				return i
 		return self.getRarety(equipment, i + 1)
 
@@ -449,7 +448,6 @@ def setSeed():
 			La graine aléatoire
 	"""
 	r = random.randint(0, 1000000000)
-	# r = 102781142
 	random.seed(r)
 	return r
 
