@@ -78,25 +78,24 @@ def equip(creature,outfit):
         True si l'équipement a été effectué avec succès, False sinon
     """
 
-    if outfit.effect.get('strength') is not None:
-        if creature._arme_equipee is not None:
-            # Réinitialiser la force à la valeur initiale
-            creature._strength -= creature._arme_equipee.effect.get('strength', 0)
-            creature._inventory.append(creature._arme_equipee)
+    for key in outfit.effect:
+	if key == 'strength':
+		if creature._arme_equipee is not None:
+			creature._strength -= creature._arme_equipee.effect.get('strength', 0)
+		creature._arme_equipee = outfit
+		creature._strength += outfit.effect[key]
+			
+		return True
 
-        creature._arme_equipee = outfit
-        creature._inventory.remove(outfit)
+	if key == 'armor':
+		if creature._armure_equipee is not None:
+			creature.armor -= creature._armure_equipee.effect.get('armor', 0)
+		creature.armor += outfit.effect[key]
+		creature._armure_equipee = outfit
+		
+		return True
 
-        creature._strength += outfit.effect.get('strength', 0)
-        return True
-
-    if outfit.effect.get('armor') is not None:
-        creature.armor += outfit.effect.get('armor', 0)
-        creature._inventory.remove(outfit)
-        return True
-
-
-    return False
+	return False
 
 
 def recover(creature, unique):
