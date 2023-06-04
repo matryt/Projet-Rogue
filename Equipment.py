@@ -34,6 +34,14 @@ class Equipment(Element.Element):
         super().__init__(name, abbrv, resum)
         self.usage = usage
 
+    def __eq__(self, other):
+        if isinstance(other, Equipment):
+            return self._name == other._name
+        return False
+
+    def __hash__(self):
+        return hash(f"{self._name},{self._abbrv}")
+
     def meet(self, elem):
         """
         Méthode appelée quand l'objet est rencontré par un autre élément

@@ -13,6 +13,14 @@ class Wearable(Equipment.Equipment):
         self.effect = effect
         self.durability = durability
 
+    def __eq__(self, other):
+        if isinstance(other, Wearable):
+            return self._name == other._name
+        return False
+
+    def __hash__(self):
+        return hash(f"{self._name}")
+
     def use(self, creature):
         """
         Permet d'utiliser l'objet

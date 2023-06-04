@@ -85,15 +85,11 @@ def equip(creature,outfit):
 			creature._arme_equipee = outfit
 			creature._strength += outfit.effect[key]
 
-			return True
-
 		if key == 'armor':
 			if creature._armure_equipee is not None:
 				creature.armor -= creature._armure_equipee.effect.get('armor', 0)
 			creature.armor += outfit.effect[key]
 			creature._armure_equipee = outfit
-
-			return True
 
 		return False
 

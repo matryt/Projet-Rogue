@@ -231,8 +231,6 @@ class Map(object):
         self.checkElement(e)
         if self.get(c) != Map.ground:
             raise ValueError("Incorrect cell")
-        if e in self._elem:
-            raise KeyError("Already placed")
 
         self._mat[c.y][c.x] = e
         self._visibleMap = self._mat
