@@ -34,6 +34,14 @@ class Equipment(Element.Element):
         super().__init__(name, abbrv, resum)
         self.usage = usage
 
+    def __eq__(self, other):
+        if isinstance(other, Equipment):
+            return self._name == other._name
+        return False
+
+    def __hash__(self):
+        return hash(f"{self._name},{self._abbrv}")
+
     def meet(self, elem):
         """
         Méthode appelée quand l'objet est rencontré par un autre élément
@@ -46,10 +54,13 @@ class Equipment(Element.Element):
         -------
         bool
             True
-        inventaire limité: return False quand un equipment est rencontré par un element si l'inventaire du héro dépasse X valeur."""
+        inventaire limité: return False quand un equipment est rencontré par un element si l'inventaire du héro dépasse X valeur.
+        """
         elem._invisible = False
-        if len(theGame.theGame()._hero._inventory) == 10 and self._name != "gold":
-            theGame.theGame().addMessage("Your inventory is full "+str(theGame.theGame()._hero._name))
+        if len(theGame.theGame().getHero().getInventory()) == 10 and self._name != "gold":
+            theGame.theGame().addMessage(
+                f"Your inventory is full {str(theGame.theGame().getHero().getName())}"
+            )
             return False
 
         elem.take(self)

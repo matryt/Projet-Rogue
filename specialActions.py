@@ -60,8 +60,7 @@ def teleport(creature, unique):
 		i += 1
 	return unique
 
-def equip(creature,outfit):
-
+def equip(creature, outfit):
 	"""
 	Equipe une créature d'une arme ou tenue et lui applique ses effets
 
@@ -77,7 +76,6 @@ def equip(creature,outfit):
 	bool
 		True si l'équipement a été effectué avec succès, False sinon
 	"""
-
 	for key in outfit.effect:
 		if key == 'strength':
 			if creature._arme_equipee is not None:
@@ -85,15 +83,11 @@ def equip(creature,outfit):
 			creature._arme_equipee = outfit
 			creature._strength += outfit.effect[key]
 
-			return True
-
 		if key == 'armor':
 			if creature._armure_equipee is not None:
 				creature.armor -= creature._armure_equipee.effect.get('armor', 0)
 			creature.armor += outfit.effect[key]
 			creature._armure_equipee = outfit
-
-			return True
 
 		return False
 
@@ -116,18 +110,20 @@ def recover(creature, unique):
 	creature.recover()
 	return unique
 
-def fireballThrow(creature, map, levelsUsed = []):
+def fireballThrow(creature, floor, levelsUsed=None):
 	"""
 	Lance une boule de feu dans une direction
 	Parameters
 	----------
 	creature : Creature.Creature
 		La créature qui lance la boule de feu
-	map : Map.Map
+	floor : Map.Map
 		La carte sur laquelle la boule de feu est lancée
 	levelsUsed : list
 		La liste des niveaux auxquels la boule de feu a déjà été lancée
 	"""
+	if levelsUsed is None:
+		levelsUsed = []
 	if theGame.theGame().getLevel() in levelsUsed:
 		theGame.theGame().addMessage("You can't use this power again on this level")
 		return
@@ -135,16 +131,16 @@ def fireballThrow(creature, map, levelsUsed = []):
 	d = getch()
 	while d not in ['z', 'q', 's', 'd']:
 		theGame.theGame().addMessage("Please enter a valid direction")
-		fireballThrow(creature, map)
+		fireballThrow(creature, floor)
 	direction = theGame.theGame().getFloor().dir[d]
-	pos = map.pos(creature)
+	pos = floor.pos(creature)
 	casesConcernees = [(pos+direction*i, 10-2*i) for i in range(1, 5)]
 	for case in casesConcernees:
-		g = map.get(case[0])
+		g = floor.get(case[0])
 		if isinstance(g, Creature.Creature):
 			g._hp -= case[1]
 			theGame.theGame().addMessage(
-				f"The fireball hits the {g._name} and causes him {case[1]} damage"
+				f"The fireball hits the {g.getName()} and causes him {case[1]} damage"
 			)
 	return levelsUsed
 
@@ -182,31 +178,33 @@ def messageFenetre(message, titre="Entrée"):
 	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
 
-def fireballThrowAffichage(creature, map, levelsUsed = []):
+def fireballThrowAffichage(creature, floor, levelsUsed=None):
 	"""
 	Lance une boule de feu dans une direction
 	Parameters
 	----------
 	creature : Creature.Creature
 		La créature qui lance la boule de feu
-	map : Map.Map
+	floor : Map.Map
 		La carte sur laquelle la boule de feu est lancée
 	levelsUsed : list
 		La liste des niveaux auxquels la boule de feu a déjà été lancée
 	"""
+	if levelsUsed is None:
+		levelsUsed = []
 	if theGame.theGame().getLevel() in levelsUsed:
 		messageFenetre("You can't use this power \nagain on this level", "Erreur")
 		return
 	d = fenetreInput("Direction", "In which direction do you want \n to throw the fireball ?", "str")
 	while d not in ['z', 'q', 's', 'd']:
 		messageFenetre("Please enter a valid direction")
-		fireballThrowAffichage(creature, map)
+		fireballThrowAffichage(creature, floor)
 	direction = theGame.theGame().getFloor().dir[d]
-	pos = map.pos(creature)
+	pos = floor.pos(creature)
 	casesConcernees = [(pos+direction*i, 10-2*i) for i in range(1, 5)]
 	for case in casesConcernees:
 		try:
-			g = map.get(case[0])
+			g = floor.get(case[0])
 		except IndexError:
 			continue
 		if isinstance(g, Creature.Creature):

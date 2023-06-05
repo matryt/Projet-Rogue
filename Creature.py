@@ -5,6 +5,8 @@ import Equipment
 import tkinter as tk
 
 theGame = importlib.import_module("theGame")
+root2 = tk.Tk()
+root2.withdraw()
 
 
 class Creature(Element.Element):
@@ -20,6 +22,7 @@ class Creature(Element.Element):
     _strength
     _idCreature
     """
+
     def __init__(self, name, hp, abbrv=None, strength=1, idCreature=None, isPoisoning=False, isBlinding=False):
         """
 
@@ -113,12 +116,12 @@ class Creature(Element.Element):
         """
         Parameters
         ----------
-        creature : self
+        creature : Hero.Hero
                 La créature
         """
         creature.xp += random.randint(1 * self._strength, 20 * self._strength)
         creature.xpMax += creature.xp
-        if self._idCreature == theGame.theGame().special_id and len(creature._inventory) < 10:
+        if self._idCreature == theGame.theGame().special_id and len(creature.getInventory()) < 10:
             creature._inventory.append(Equipment.Equipment("key", "k"))
             theGame.theGame().addMessage("vous avez trouvé un objet ! ")
         if creature.xp >= 20 * creature._level:
@@ -132,7 +135,7 @@ class Creature(Element.Element):
             creature.xp = 0
             creature._hp = creature.hpMax
             creature._strength = creature.strengthMax
-            if creature._arme_equipee != None:
+            if creature._arme_equipee is not None:
                 creature._strength += creature._arme_equipee.effect.get('strength', 0)
 
     def meet(self, creature):
@@ -149,10 +152,10 @@ class Creature(Element.Element):
         bool
                 True si la créature a encore des points de vie, False sinon
         """
-        self._hp  = max(self._hp - creature.getStrength(), 0)
+        self._hp = max(self._hp - creature.getStrength(), 0)
         theGame.theGame().addMessage(f"The {creature.getName()} hits the {self.description()}")
         creature._invisible = False
-        if creature._arme_equipee != None:
+        if creature._arme_equipee is not None:
             creature._arme_equipee.durability -= 1
             if creature._arme_equipee.durability == 0:
                 theGame.theGame().addMessage(
@@ -162,11 +165,11 @@ class Creature(Element.Element):
                 creature._strength -= creature._arme_equipee.effect.get('strength', 0)
                 creature.strengthMax -= creature._arme_equipee.effect.get('strength', 0)
                 creature._arme_equipee = None
-        if creature._armure_equipee != None:
+        if creature._armure_equipee is not None:
             creature._armure_equipee.durability -= 1
             if creature._armure_equipee.durability == 0:
                 theGame.theGame.addMessage(
-                    f"Your {str(creature._armure_equipee._name)} just broke"
+                    f"Your {str(creature._armure_equipee.getName())} just broke"
                 )
                 creature._inventory.remove(creature._armure_equipee)
                 creature.armor -= creature._armure_equipee.effect.get('armor', 0)
@@ -179,19 +182,19 @@ class Creature(Element.Element):
     def meetAffichage(self, creature):
         self._hp = max(self._hp - creature.getStrength(), 0)
         creature._invisible = False
-        if creature._arme_equipee != None:
+        if creature._arme_equipee is not None:
             creature._arme_equipee.durability -= 1
             if creature._arme_equipee.durability == 0:
-                messageFenetre(f"Your {str(creature._arme_equipee._name)} just broke")
-                creature._inventory.remove(creature._arme_equipee)
+                messageFenetre(f"Your {str(creature._arme_equipee.getName())} just broke")
+                creature.removeFromInventory(creature._arme_equipee)
                 creature._strength -= creature._arme_equipee.effect.get('strength', 0)
                 creature.strengthMax -= creature._arme_equipee.effect.get('strength', 0)
                 creature._arme_equipee = None
-        if creature._armure_equipee != None:
+        if creature._armure_equipee is not None:
             creature._armure_equipee.durability -= 1
             if creature._armure_equipee.durability == 0:
-                messageFenetre(f"Your {str(creature._armure_equipee._name)} just broke")
-                creature._inventory.remove(creature._armure_equipee)
+                messageFenetre(f"Your {str(creature._armure_equipee.getName())} just broke")
+                creature.removeFromInventory(creature._armure_equipee)
                 creature.armor -= creature._armure_equipee.effect.get('armor', 0)
                 creature._armure_equipee = None
         if self._hp <= 0:

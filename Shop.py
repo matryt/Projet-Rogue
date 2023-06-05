@@ -9,9 +9,11 @@ from utils import getch
 root2 = tk.Tk()
 root2.withdraw()
 
+
 def on_closing():
 	root2.quit()
 	root2.destroy()
+
 
 def fenetreInput(titre, message, typeInput):
 	root2 = tk.Tk()
@@ -43,6 +45,7 @@ def messageFenetre(message, titre="Entrée"):
 	root2.geometry(f"{width}x{height}+{x}+{y}")
 	root2.mainloop()
 
+
 class Shop(Element.Element):
 	def __init__(self):
 		super().__init__("Shop", "e", "a shop")
@@ -50,7 +53,7 @@ class Shop(Element.Element):
 
 	def checkItem(self, item):
 		return any(item.getName() == i.getName() for i in self._items)
-	
+
 	def __repr__(self):
 		return self._abbrv
 
@@ -103,6 +106,8 @@ class Shop(Element.Element):
 		while choix != "f":
 			choix = fenetreInput("Choix", f"{self.description()} \nQue voulez-vous faire ? (a)cheter, (v)endre, (f)inir : ", "str")
 			if choix == "a":
+				if len(theGame.theGame().getHero().getInventory()) > 9:
+					continue
 				item = fenetreInput("Choix", f"{self.description()} \nQuel item voulez-vous acheter ? ", "int")
 				try:
 					item = self.getElementByNumber(int(item))
@@ -115,7 +120,7 @@ class Shop(Element.Element):
 				theGame.theGame().getHero().addGold(-self.getElem(item)["price"])
 				theGame.theGame().getHero().addItem(item)
 				self.removeItem(item)
-				messageFenetre(f"Vous avez acheté \n{item}", "Achat")
+				messageFenetre(f"Vous avez acheté \n{item.getName()}", "Achat")
 			if choix == "v":
 				inventory = "".join([f"({i}) {item.getName()}\n" for i, item in enumerate(theGame.theGame().getHero().getInventory())])
 				item = fenetreInput("Choix", "Here is your inventory : \n" + inventory + "\n" + "Quel item voulez-vous vendre ? ", "int")

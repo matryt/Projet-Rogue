@@ -3,7 +3,6 @@ from tkinter import simpledialog
 from PIL import Image, ImageTk
 
 
-
 class CustomDialog(simpledialog.Dialog):
 	def __init__(self, parent, title=None, image_path=None):
 		self.image_path = image_path

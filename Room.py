@@ -37,7 +37,7 @@ class Room(object):
     def __eq__(self, other):
         if type(self) is type(other):
             return self.c1 == other.c1 and self.c2 == other.c2
-        raise NotImplemented
+        raise NotImplementedError
 
     def __hash__(self):
         return hash((self.c1, self.c2))

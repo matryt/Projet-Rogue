@@ -46,6 +46,7 @@ class Coord(object):
     def __mul__(self, other):
         if isinstance(other, int):
             return Coord(self.x * other, self.y * other)
+        raise TypeError("Coord cannot be multiplied by a non-integer")
 
     def distance(self, other):
         """
@@ -63,7 +64,7 @@ class Coord(object):
         """
         return math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
 
-    def voisins(self, map):
+    def voisins(self, floor):
         listeVoisins = [
             Coord(self.x, self.y + 1),
             Coord(self.x, self.y - 1),
@@ -73,7 +74,7 @@ class Coord(object):
         i = 0
         while i < len(listeVoisins):
             v = listeVoisins[i]
-            if v not in map or map.get(v) == Map.Map.empty:
+            if v not in floor or floor.get(v) == Map.Map.empty:
                 listeVoisins.pop(i)
             else:
                 i += 1
